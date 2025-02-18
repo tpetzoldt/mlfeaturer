@@ -9,7 +9,7 @@ Description: Utilities for scaling and transformation of features in the context
   of machine learning regression problems.
 License: GPL (>= 2)
 Depends: R (>= 4.1.0), dplyr, tidyr, purrr, lubridate, ggplot2
-Imports: stats, graphics, utils
+Imports: stats, graphics, utils, methods
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2

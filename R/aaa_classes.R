@@ -22,7 +22,8 @@ setClassUnion("list_or_NULL", c("list", "NULL"))
 #' @slot max_vals Numeric vector storing the maximum values for normalization.
 #' @slot fun_transform List of functions for data transformation.
 #' @slot fun_inverse List of functions for inverse data transformation.
-#' @slot transformed Boolean value, TRUE if object contains transformed values.
+#' @slot transformed Boolean value, `TRUE` if object contains transformed values,
+#'   `NA` if it is the result of an inverse transformation.
 #' @exportClass preproc_parms
 setClass("preproc_parms",
          slots = list(

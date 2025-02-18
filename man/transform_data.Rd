@@ -3,11 +3,14 @@
 \name{transform_data}
 \alias{transform_data}
 \alias{transform_data,preproc_data,list-method}
+\alias{transform_data,preproc_data,ANY-method}
 \title{Transform Data}
 \usage{
 transform_data(object, funs)
 
 \S4method{transform_data}{preproc_data,list}(object, funs)
+
+\S4method{transform_data}{preproc_data,ANY}(object)
 }
 \arguments{
 \item{object}{A `preproc_data` object.}
@@ -23,5 +26,7 @@ Transforms the data using the provided functions.
 \section{Methods (by class)}{
 \itemize{
 \item \code{transform_data(object = preproc_data, funs = list)}: Method for transforming data in a `preproc_data` object.
+
+\item \code{transform_data(object = preproc_data, funs = ANY)}: Method for transforming data in a `preproc_data` object.
 
 }}

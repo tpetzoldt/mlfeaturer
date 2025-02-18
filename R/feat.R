@@ -29,7 +29,7 @@ setGeneric("inverse_transform", function(object) standardGeneric("inverse_transf
 #'
 #' @return A `preproc_data` object with the scaled data.
 #' @export
-setGeneric("scale_data", function(object) standardGeneric("scale_data"))
+setGeneric("scale_x", function(object) standardGeneric("scale_x"))
 
 
 #' @title Get Training Data (X)
@@ -115,30 +115,49 @@ setMethod("transform_data", signature = c(object = "preproc_data", funs = "list"
               df <- df |>
                 mutate(across(all_of(col), .fns = funs[[col]]))
             }
+            object@params@transformed <- TRUE
             object@data <- df
             return(object)
           })
-
-#' @describeIn inverse_transform Method for inverse transforming data in a `preproc_data` object.
-setMethod("inverse_transform", signature = c(object = "preproc_data"),
+#' @describeIn transform_data Method for transforming data in a `preproc_data` object.
+setMethod("transform_data", signature = c(object = "preproc_data"),
           function(object) {
-            if (obj@params@transformed) {
             df <- object@data
-            funs <- object@params@fun_inverse
+            funs <- object@params@fun_transform
             for (col in intersect(names(df), names(funs))) {
               df <- df |>
                 mutate(across(all_of(col), .fns = funs[[col]]))
             }
+            object@params@transformed <- TRUE
             object@data <- df
-            object@params@transformed <- FALSE
-            } else {
-              warning("No inverse transformation. Object was not transformed.")
-            }
             return(object)
           })
 
-#' @describeIn scale_data Method for scaling data in a `preproc_data` object.
-setMethod("scale_data", signature = "preproc_data",
+
+
+
+#' @describeIn inverse_transform Method for inverse transforming data in a `preproc_data` object.
+setMethod("inverse_transform", signature = c(object = "preproc_data"),
+          function(object) {
+            if (object@params@transformed) {
+              df <- object@data
+              funs <- object@params@fun_inverse
+              for (col in intersect(names(df), names(funs))) {
+                df <- df |>
+                  mutate(across(all_of(col), .fns = funs[[col]]))
+              }
+              object@data <- df
+              object@params@transformed <- FALSE
+            } else {
+              warning("No inverse transformation. Object was not transformed.")
+            }
+            # mark inverse transformed object with NA to avoid further transformations
+            object@params@transformed <- NA
+            return(object)
+          })
+
+#' @describeIn scale_x Method for scaling data in a `preproc_data` object.
+setMethod("scale_x", signature = "preproc_data",
           function(object) {
             params <- object@params
             df <- object@data
@@ -257,6 +276,7 @@ setMethod("get_y_all", signature = "preproc_data",
 #' @param scale_method Character string specifying the scaling method. Must be one of "scale" (standardization) or "norm" (normalization). Defaults to "scale".
 #' @param fun_transform A named list of functions to apply to the data *before* scaling.  The names of the list elements should correspond to the columns to transform.
 #' @param fun_inverse A named list of functions representing the inverse transformations of `fun_transform`.  These are applied during the `inverse_transform` method.
+#' @param autotransform If `TRUE` variables are transformed during object creation.
 #'
 #' @return A `preproc_data` object.
 #'

@@ -20,43 +20,59 @@ inverse_transformations <- list(
   z = sqrt
 )
 
-prep_data <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split",
-                                      fun_transform = transformations, fun_inverse = inverse_transformations)
-
-
-prep_data <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split")
-
+foo <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split",
+                                      fun_transform = transformations, fun_inverse = inverse_transformations,
+                                      autotransform = FALSE)
 
 
 df
-print(prep_data@data)
+foo@data
+get_all_vars(foo)
+
+get_x_test(foo)
+get_y_test(foo)
+get_y_all(foo)
+get_x_all(foo)
+
+str(get_x_all(foo, as_data_frame=FALSE))
 
 
 ## set slots directly
-prep_data <- set_transformations(prep_data, transformations, inverse_transformations)
+#foo <- set_transformations(foo, transformations, inverse_transformations)
+#foo <- transform_data(foo, transformations) # Apply transformations
+#print(foo@data)
 
-prep_data <- transform_data(prep_data, transformations) # Apply transformations
-print(prep_data@data)
+## todo: implement a method for base::transform
+foo2 <- transform_data(foo)
 
-prep_data2 <- inverse_transform(prep_data)
-print(prep_data2@data)
+## untransformed data don't allow inverse
+foo3 <- inverse_transform(foo)
 
+# transformed data can be re-transformed
+foo3 <- inverse_transform(foo2)
 
-str(get_x_all(prep_data, return_matrix=FALSE))
+foo3@data
 
-prep_data <- scale_data(prep_data) # Scale the data
-print(prep_data@data)
+## transformed slot is NA to indicate back-and-forth tranform
+foo3@params@transformed
 
-prep_data2 <- inverse_transform(prep_data)
-print(prep_data2@data)
+str(get_x_all(foo))
+
+foo <- scale_data(foo) # Scale the data
+print(foo@data)
+
+foo2 <- inverse_transform(foo)
+print(foo2@data)
 
 #Access data subsets
-print(get_x_train(prep_data))
+print(get_x_train(foo))
 
 
-prep_data@params@fun_transform
-prep_data@params@fun_inverse
+foo@params@fun_transform
+foo@params@fun_inverse
 
-prep_data2 <- inverse_transform(prep_data) # error
-prep_data2@data
 
+foo3 <- scale_data(foo2)
+
+foo2@data
+foo3@data

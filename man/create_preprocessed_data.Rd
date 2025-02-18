@@ -32,6 +32,8 @@ create_preprocessed_data(
 \item{fun_transform}{A named list of functions to apply to the data *before* scaling.  The names of the list elements should correspond to the columns to transform.}
 
 \item{fun_inverse}{A named list of functions representing the inverse transformations of `fun_transform`.  These are applied during the `inverse_transform` method.}
+
+\item{autotransform}{If `TRUE` variables are transformed during object creation.}
 }
 \value{
 A `preproc_data` object.
