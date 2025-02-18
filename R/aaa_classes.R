@@ -24,8 +24,8 @@ setClassUnion("list_or_NULL", c("list", "NULL"))
 #' @slot fun_inverse List of functions for inverse data transformation.
 #' @slot transformed Boolean value, `TRUE` if object contains transformed values,
 #'   `NA` if it is the result of an inverse transformation.
-#' @exportClass preproc_parms
-setClass("preproc_parms",
+#' @exportClass preproc_params
+setClass("preproc_params",
          slots = list(
            id_col = "character",
            target_col = "character",
@@ -46,10 +46,39 @@ setClass("preproc_parms",
 #' @description An S4 class to store the preprocessed data and its associated parameters.
 #'
 #' @slot data Data frame containing the preprocessed data.
-#' @slot params `preproc_parms` object storing the parameters used in preprocessing.
+#' @slot params `preproc_params` object storing the parameters used in preprocessing.
 #' @exportClass preproc_data
 setClass("preproc_data",
          slots = list(
            data = "data.frame",
-           params = "preproc_parms"
+           params = "preproc_params"
+         ))
+
+
+#' @title List Representation of Preprocessed Data
+#'
+#' @description An S4 class to represent the preprocessed data as a list.
+#'
+#' @slot x_train Training data (X).
+#' @slot x_test Test data (X).
+#' @slot x_all All data (X).
+#' @slot y_train Training data (Y).
+#' @slot y_test Test data (Y).
+#' @slot y_all All data (Y).
+#' @slot x_train_scaled Scaled training data (X).
+#' @slot x_test_scaled Scaled test data (X).
+#' @slot x_all_scaled Scaled all data (X).
+#' @exportClass preproc_data_list
+setClass("preproc_data_list",
+         contains = "list",
+         slots = list(
+           x_train = "ANY",
+           x_test = "ANY",
+           x_all = "ANY",
+           y_train = "ANY",
+           y_test = "ANY",
+           y_all = "ANY",
+           x_train_scaled = "ANY",
+           x_test_scaled = "ANY",
+           x_all_scaled = "ANY"
          ))

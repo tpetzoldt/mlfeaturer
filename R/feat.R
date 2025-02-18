@@ -342,7 +342,7 @@ create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
   max_vals  <- apply(data_for_scaling, 2, max)
 
 
-  params <- new("preproc_parms",
+  params <- new("preproc_params",
                 id_col = id_col, target_col = target_col, split_col = split_col,
                 scale_option = scale_option, scale_method = scale_method,
                 mean_vals = mean_vals, sd_vals = sd_vals,

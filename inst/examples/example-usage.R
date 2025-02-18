@@ -27,12 +27,20 @@ foo <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col =
 
 df
 foo@data
-get_all_vars(foo)
+
+
+L <- as(foo, "preproc_data_list")
+
+L <- as(foo, "list")
+
+as.list(foo)
+
 
 get_x_test(foo)
 get_y_test(foo)
 get_y_all(foo)
 get_x_all(foo)
+get_x_train_scaled(foo)
 
 str(get_x_all(foo, as_data_frame=FALSE))
 

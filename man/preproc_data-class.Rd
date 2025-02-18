@@ -12,6 +12,6 @@ An S4 class to store the preprocessed data and its associated parameters.
 \describe{
 \item{\code{data}}{Data frame containing the preprocessed data.}
 
-\item{\code{params}}{`preproc_parms` object storing the parameters used in preprocessing.}
+\item{\code{params}}{`preproc_params` object storing the parameters used in preprocessing.}
 }}
 
