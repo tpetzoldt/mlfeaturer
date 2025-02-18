@@ -12,7 +12,8 @@ create_preprocessed_data(
   scale_option = "train",
   scale_method = "scale",
   fun_transform = NULL,
-  fun_inverse = NULL
+  fun_inverse = NULL,
+  autotransform = FALSE
 )
 }
 \arguments{

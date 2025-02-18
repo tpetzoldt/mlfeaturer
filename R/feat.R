@@ -37,6 +37,7 @@ setGeneric("scale_data", function(object) standardGeneric("scale_data"))
 #' @description Extracts the training data (X) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param as_data_frame logical TRUE if the function should return a data frame.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A data frame or matrix containing the training data (X).
@@ -48,6 +49,7 @@ setGeneric("get_x_train", function(object, ...) standardGeneric("get_x_train"))
 #' @description Extracts the test data (X) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param as_data_frame logical TRUE if the function should return a data frame.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A data frame or matrix containing the test data (X).
@@ -59,6 +61,7 @@ setGeneric("get_x_test", function(object, ...) standardGeneric("get_x_test"))
 #' @description Extracts all the data (X) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param as_data_frame logical TRUE if the function should return a data frame.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A data frame or matrix containing all the data (X).
@@ -70,6 +73,7 @@ setGeneric("get_x_all", function(object, ...) standardGeneric("get_x_all"))
 #' @description Extracts the training data (Y) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param as_data_frame logical TRUE if the function should return a data frame.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A data frame or matrix containing the training data (Y).
@@ -81,6 +85,7 @@ setGeneric("get_y_train", function(object, ...) standardGeneric("get_y_train"))
 #' @description Extracts the test data (Y) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param as_data_frame logical TRUE if the function should return a data frame.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A data frame or matrix containing the test data (Y).
@@ -92,6 +97,7 @@ setGeneric("get_y_test", function(object, ...) standardGeneric("get_y_test"))
 #' @description Extracts all the data (Y) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param as_data_frame logical TRUE if the function should return a data frame.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A data frame or matrix containing all the data (Y).
@@ -159,12 +165,12 @@ setMethod("scale_data", signature = "preproc_data",
 
 #' @describeIn get_x_train Method for extracting training data (X).
 setMethod("get_x_train", signature = "preproc_data",
-          function(object, return_matrix = TRUE) {  # Added return_matrix argument
+          function(object, as_data_frame = FALSE) {
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
             x_train <- df |> filter(!.data[[params@split_col]]) |> select(-all_of(cols_to_remove))
-            if (return_matrix) {
+            if (!as_data_frame) {
               return(as.matrix(x_train))
             } else {
               return(x_train)
@@ -173,12 +179,12 @@ setMethod("get_x_train", signature = "preproc_data",
 
 #' @describeIn get_x_test Method for extracting test data (X).
 setMethod("get_x_test", signature = "preproc_data",
-          function(object, return_matrix = TRUE) {  # Added return_matrix argument
+          function(object, as_data_frame = FALSE) {
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
             x_test <- df |> filter(.data[[params@split_col]]) |> select(-all_of(cols_to_remove))
-            if (return_matrix) {
+            if (!as_data_frame) {
               return(as.matrix(x_test))
             } else {
               return(x_test)
@@ -187,12 +193,12 @@ setMethod("get_x_test", signature = "preproc_data",
 
 #' @describeIn get_x_all Method for extracting all data (X).
 setMethod("get_x_all", signature = "preproc_data",
-          function(object, return_matrix = TRUE) {  # Added return_matrix argument
+          function(object, as_data_frame = FALSE) {
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
             x_all <- df |> select(-all_of(cols_to_remove))
-            if (return_matrix) {
+            if (!as_data_frame) {
               return(as.matrix(x_all))
             } else {
               return(x_all)
@@ -201,11 +207,11 @@ setMethod("get_x_all", signature = "preproc_data",
 
 #' @describeIn get_y_train Method for extracting training data (Y).
 setMethod("get_y_train", signature = "preproc_data",
-          function(object, return_matrix = TRUE) {  # Added return_matrix argument
+          function(object, as_data_frame = FALSE) {
             params <- object@params
             df <- object@data
             y_train <- df |> filter(!.data[[params@split_col]]) |> select(all_of(params@target_col))
-            if (return_matrix) {
+            if (!as_data_frame) {
               return(as.matrix(y_train))
             } else {
               return(y_train)
@@ -214,11 +220,11 @@ setMethod("get_y_train", signature = "preproc_data",
 
 #' @describeIn get_y_test Method for extracting test data (Y).
 setMethod("get_y_test", signature = "preproc_data",
-          function(object, return_matrix = TRUE) {  # Added return_matrix argument
+          function(object, as_data_frame = FALSE) {
             params <- object@params
             df <- object@data
             y_test <- df |> filter(.data[[params@split_col]]) |> select(all_of(params@target_col))
-            if (return_matrix) {
+            if (!as_data_frame) {
               return(as.matrix(y_test))
             } else {
               return(y_test)
@@ -227,11 +233,11 @@ setMethod("get_y_test", signature = "preproc_data",
 
 #' @describeIn get_y_all Method for extracting all data (Y).
 setMethod("get_y_all", signature = "preproc_data",
-          function(object, return_matrix = TRUE) {  # Added return_matrix argument
+          function(object, as_data_frame = FALSE) {
             params <- object@params
             df <- object@data
             y_all <- df |> select(all_of(params@target_col))
-            if (return_matrix) {
+            if (!as_data_frame) {
               return(as.matrix(y_all))
             } else {
               return(y_all)

@@ -31,5 +31,7 @@ An S4 class to store the parameters used in the preprocessing pipeline.
 \item{\code{fun_transform}}{List of functions for data transformation.}
 
 \item{\code{fun_inverse}}{List of functions for inverse data transformation.}
+
+\item{\code{transformed}}{Boolean value, TRUE if object contains transformed values.}
 }}
 

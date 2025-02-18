@@ -7,12 +7,14 @@
 \usage{
 get_x_train(object, ...)
 
-\S4method{get_x_train}{preproc_data}(object, return_matrix = TRUE)
+\S4method{get_x_train}{preproc_data}(object, as_data_frame = FALSE)
 }
 \arguments{
 \item{object}{A `preproc_data` object.}
 
 \item{...}{Additional arguments (currently not used).}
+
+\item{as_data_frame}{logical TRUE if the function should return a data frame.}
 }
 \value{
 A data frame or matrix containing the training data (X).
