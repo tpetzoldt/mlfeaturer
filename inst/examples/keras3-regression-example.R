@@ -2,33 +2,30 @@
 ## ThPe, based on code snippets from different documentations
 
 library(keras3)
-
+library(dplyr)
+library(mlfeatr)
 ## generate some  data
 set.seed(123)
-x <- runif(500, 0, 50)
-y <- 0.5 + (sin(x/5) + rnorm(100, 0, 0.05))/3
-plot(x, y, type="p")
+
+df <- data.frame(id = 1:500,
+                  x = runif(500, 0, 50)) |>
+           mutate(y = 0.5 + (sin(x/5) + rnorm(100, 0, 0.05))/3,
+              split = c(rep(TRUE, 400), rep(FALSE, 100)))
+
+
+plot(y ~ x, data=df, type="p")
 
 ## split data into training and test sets
-train_size <- 0.8*length(x)
-x_train <- x[1:train_size]
-y_train <- y[1:train_size]
-x_test <- x[(train_size + 1):100]
-y_test <- y[(train_size + 1):100]
-
-## normalize the input data
-## use same scaling for training and test set taken from training set!
-x_train_mean <- mean(x_train)
-x_train_sd <- sd(x_train)
-x_train_scaled <- (x_train - x_train_mean) / x_train_sd
-x_test_scaled <- (x_test - x_train_mean) / x_train_sd
+td <- df |> create_preprocessed_data(id_col = "id", target_col = "y",
+                               scale_method = "scale",
+                               split_col = "split") |> scale_x()
 
 
 ## build a Keras model
 model <- keras_model_sequential(input_shape = c(1), input_dtype = "float32") |>
   layer_dense(units = 16, activation = "relu") |>  # Hidden layer
   layer_dense(units = 16, activation = "tanh") |>  # Hidden layer
-  layer_dense(units = 1)                          # Output layer
+  layer_dense(units = 1)                           # Output layer
 
 ## compile the model
 model |> compile(
@@ -40,38 +37,30 @@ model |> compile(
 
 ## train the model
 history <- model |> fit(
-  x_train_scaled, y_train,
+  get_x_train(td), get_y_train(td),
   epochs = 100,          # adjust as needed
   ## 4 is very small but worked for this example well,
-  ## usually bigger values are better, start e.g. with 32
+  ## usually bigger values are common, start e.g. with 32
   batch_size = 4,
-  validation_split = 0.2, # 20% of training data for validation
-  ## early stopping if model converged
-  callbacks = list(
-    callback_early_stopping(
-      monitor = "val_loss",
-      patience = 20,
-      restore_best_weights = TRUE)
-    )
+  validation_split = 0.2
 )
 
 ## Evaluate the model
-loss <- model |> evaluate(x_test_scaled, y_test)
+loss <- evaluate(model, get_x_test(td), get_y_test(td))
 cat("Loss of test data set =", loss$loss, "\n")
 cat("MAE of test data set  =", loss$mae, "\n")
 
-predictions <- model |> predict(x_test_scaled)
-residuals  <-  y_test - predictions
+predictions <- predict(model, get_x_test(td))
+residuals  <-  get_y_test(td) - predictions
 
 plot(residuals ~ predictions)
-plot(predictions ~ y_test)
+plot(predictions ~ get_y_test(td))
 abline(a=0, b=1, col="red", lwd=2)
-cat("R2=", 1 - var(residuals)/var(y_test), "\n")
+cat("R2=", 1 - var(residuals)/var(get_y_test(td)), "\n")
 
 ## Compare data and predictions
-head(cbind(x_test,y_test,predictions))
-plot(x_test, y_test, main = "Regression Results", xlab = "X", ylab = "Y")
-points(x_test, predictions, col = "red", pch=16)
+plot(get_x_test(td), get_y_test(td), main = "Regression Results", xlab = "X", ylab = "Y")
+points(get_x_test(td), predictions, col = "red", pch=16)
 
 
 # ## Save fitted model
