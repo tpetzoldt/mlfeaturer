@@ -20,8 +20,8 @@ inverse_transformations <- list(
   z = sqrt
 )
 
-#prep_data <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split",
-#                                      fun_transform = transformations, fun_inverse = inverse_transformations)
+prep_data <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split",
+                                      fun_transform = transformations, fun_inverse = inverse_transformations)
 
 
 prep_data <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split")

@@ -116,6 +116,7 @@ setMethod("transform_data", signature = c(object = "preproc_data", funs = "list"
 #' @describeIn inverse_transform Method for inverse transforming data in a `preproc_data` object.
 setMethod("inverse_transform", signature = c(object = "preproc_data"),
           function(object) {
+            if (obj@params@transformed) {
             df <- object@data
             funs <- object@params@fun_inverse
             for (col in intersect(names(df), names(funs))) {
@@ -123,6 +124,10 @@ setMethod("inverse_transform", signature = c(object = "preproc_data"),
                 mutate(across(all_of(col), .fns = funs[[col]]))
             }
             object@data <- df
+            object@params@transformed <- FALSE
+            } else {
+              warning("No inverse transformation. Object was not transformed.")
+            }
             return(object)
           })
 
@@ -134,7 +139,8 @@ setMethod("scale_data", signature = "preproc_data",
 
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
 
-            scaled_df <- df |> select(-all_of(cols_to_remove)) |>
+            scaled_df <- df |>
+              select(-all_of(cols_to_remove)) |>
               mutate(across(everything(), ~ {
                 if (params@scale_method == "scale") {
                   ( .x - params@mean_vals[cur_column()] ) / params@sd_vals[cur_column()]
@@ -280,7 +286,8 @@ setMethod("get_y_all", signature = "preproc_data",
 #' @export
 create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
                                      scale_option = "train", scale_method = "scale",
-                                     fun_transform = NULL, fun_inverse = NULL) {
+                                     fun_transform = NULL, fun_inverse = NULL,
+                                     autotransform = FALSE) {
 
 
   ## define which columns to use
@@ -304,9 +311,9 @@ create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
     )
 
   mean_vals <- apply(data_for_scaling, 2, mean)
-  sd_vals <- apply(data_for_scaling, 2, sd)
-  min_vals <- apply(data_for_scaling, 2, min)
-  max_vals <- apply(data_for_scaling, 2, max)
+  sd_vals   <- apply(data_for_scaling, 2, sd)
+  min_vals  <- apply(data_for_scaling, 2, min)
+  max_vals  <- apply(data_for_scaling, 2, max)
 
 
   params <- new("preproc_parms",
@@ -314,10 +321,11 @@ create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
                 scale_option = scale_option, scale_method = scale_method,
                 mean_vals = mean_vals, sd_vals = sd_vals,
                 min_vals = min_vals, max_vals = max_vals,
-                fun_transform = fun_transform, fun_inverse = fun_inverse)
+                fun_transform = fun_transform, fun_inverse = fun_inverse,
+                transformed = autotransform)
 
-  # Apply initial transformation if provided
-  if (!is.null(fun_transform)) {
+  # Apply initial transformation if provided and autotransform = TRUE
+  if (!is.null(fun_transform) & autotransform) {
     data <- transform_data(new("preproc_data", data = data, params = params), fun_transform)@data
   }
 
