@@ -1,0 +1,15 @@
+Package: mlfeatr
+Type: Package
+Title: Machine Learning Feature Preprocessing with R
+Version: 0.1.0
+Authors@R: c(person("Thomas","Petzoldt", role = c("aut", "cre"),
+                     email = "thomas.petzoldt@tu-dresden.de",
+                     comment = c(ORCID = "0000-0002-4951-6468")))
+Description: Utilities for scaling and transformation of features in the context 
+  of machine learning regression problems.
+License: GPL (>= 2)
+Depends: R (>= 4.1.0), dplyr, tidyr, purrr, lubridate, ggplot2
+Imports: stats, graphics, utils
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
