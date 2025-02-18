@@ -166,12 +166,13 @@ setMethod("scale_x", signature = "preproc_data",
 
             scaled_df <- df |>
               select(-all_of(cols_to_remove)) |>
-              mutate(across(everything(), ~ {
-                if (params@scale_method == "scale") {
-                  ( .x - params@mean_vals[cur_column()] ) / params@sd_vals[cur_column()]
-                } else if (params@scale_method == "norm") {
-                  ( .x - params@min_vals[cur_column()] ) / (params@max_vals[cur_column()] - params@min_vals[cur_column()])
-                } else {
+              mutate(across(everything(),
+                \(.x) {
+                  if (params@scale_method == "scale") {
+                    (.x - params@mean_vals[cur_column()] ) / params@sd_vals[cur_column()]
+                  } else if (params@scale_method == "norm") {
+                    (.x - params@min_vals[cur_column()] ) / (params@max_vals[cur_column()] - params@min_vals[cur_column()])
+                  } else {
                   .x
                 }
               }))
@@ -324,8 +325,8 @@ create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
   }
 
   ## split data
-  train_data <- data |> filter(!.data[[split_col]])
-  test_data <- data |> filter(.data[[split_col]])
+  train_data <- data |> filter(.data[[split_col]])
+  test_data <- data |> filter(!.data[[split_col]])
   all_data <- data
 
   ## calculate scaling parameters
