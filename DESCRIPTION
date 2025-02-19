@@ -24,5 +24,7 @@ Collate:
     'as.list.R'
     'feat.R'
     'predict.R'
+    'residuals.R'
+    'rsquared.R'
     'setAs.R'
     'set_transformations.R'

@@ -57,19 +57,31 @@ residuals  <-  get_y_test(td) - predictions
 
 ## use of mlfeatr package
 
-predictions <- predict(td, model, "all")
-predictions <- predict(td, model, "test")
-predictions <- predict(td, model, "train")
+predictions_all <- predict(td, model, "all")
+predictions_test <- predict(td, model, "test")
+predictions_train <- predict(td, model, "train")
 
+residuals_all <- residuals(td, model)
 
-plot(residuals ~ predictions)
-plot(predictions ~ get_y_test(td))
+plot(predictions_all, residuals_all)
 abline(a=0, b=1, col="red", lwd=2)
 cat("R2=", 1 - var(residuals)/var(get_y_test(td)), "\n")
 
 ## Compare data and predictions
 plot(get_x_test(td), get_y_test(td), main = "Regression Results", xlab = "X", ylab = "Y")
-points(get_x_test(td), predictions, col = "red", pch=16)
+points(get_x_test(td), predict(td, model, type="test"), col = "red", pch=16)
+points(get_x_train(td), predict(td, model, type="train"), col = "blue", pch=16)
+
+library(qualV)
+
+
+compareME(get_y_all(td), predict(td, model, "all"))
+EF(get_y_all(td), predict(td, model, "all"))
+
+rsquared(td, model, "train")
+rsquared(td, model, "all")
+rsquared(td, model, "test")
+
 
 
 # ## Save fitted model
