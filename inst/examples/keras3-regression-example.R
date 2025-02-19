@@ -51,8 +51,16 @@ loss <- evaluate(model, get_x_test(td), get_y_test(td))
 cat("Loss of test data set =", loss$loss, "\n")
 cat("MAE of test data set  =", loss$mae, "\n")
 
+## classical way
 predictions <- predict(model, get_x_test(td))
 residuals  <-  get_y_test(td) - predictions
+
+## use of mlfeatr package
+
+predictions <- predict(td, model, "all")
+predictions <- predict(td, model, "test")
+predictions <- predict(td, model, "train")
+
 
 plot(residuals ~ predictions)
 plot(predictions ~ get_y_test(td))

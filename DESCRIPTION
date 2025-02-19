@@ -11,7 +11,9 @@ Description: Utilities for scaling and transformation of features in the context
 URL: https://github.com/tpetzoldt/mlfeatr  
 License: GPL (>= 2)
 Depends: R (>= 4.1.0)
-Imports: dplyr, stats, graphics, utils, methods, tidyr, purrr, lubridate, knitr, jsonlite
+Imports: dplyr, stats, graphics, utils, methods, tidyr, purrr, lubridate, 
+  knitr, jsonlite
+Suggests: keras3
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
@@ -21,5 +23,6 @@ Collate:
     'aaa_classes.R'
     'as.list.R'
     'feat.R'
+    'predict.R'
     'setAs.R'
     'set_transformations.R'

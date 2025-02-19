@@ -17,6 +17,7 @@ exportClasses(preproc_data)
 exportClasses(preproc_data_list)
 exportClasses(preproc_params)
 exportMethods(as.list)
+exportMethods(predict)
 import(dplyr, except = c("filter", "lag"))
 
 import(graphics)
