@@ -108,6 +108,7 @@ setGeneric("get_y_test", function(object, ...) standardGeneric("get_y_test"))
 setGeneric("get_y_all", function(object, ...) standardGeneric("get_y_all"))
 
 
+
 # Implement methods for the generics
 
 #' @describeIn transform_data Method for transforming data in a `preproc_data` object.
@@ -164,24 +165,25 @@ setMethod("scale_x", signature = "preproc_data",
           function(object) {
             params <- object@params
             df <- object@data
-
+            cols <- names(object@data)
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
 
             scaled_df <- df |>
               select(-all_of(cols_to_remove)) |>
               mutate(across(everything(),
                 \(.x) {
-                  if (params@scale_method == "scale") {
-                    (.x - params@mean_vals[cur_column()] ) / params@sd_vals[cur_column()]
-                  } else if (params@scale_method == "norm") {
-                    (.x - params@min_vals[cur_column()] ) / (params@max_vals[cur_column()] - params@min_vals[cur_column()])
+                  if (params@scale_method == "zscore") {
+                    scale(.x, params@mean_vals[cur_column()], params@sd_vals[cur_column()])
+                  } else if (params@scale_method == "minmax") {
+                    ml_norm(.x, params@min_vals[cur_column()], params@max_vals[cur_column()])
                   } else {
                   .x
                 }
               }))
 
             non_scaled_df <- df |> select(all_of(cols_to_remove))
-            object@data <- bind_cols(non_scaled_df, scaled_df)
+            object@data <- bind_cols(non_scaled_df, scaled_df) |>
+              select(cols)
 
             return(object)
           })
@@ -283,8 +285,8 @@ setMethod("get_y_all", signature = "preproc_data",
 #' @param scale_option Character string specifying the scaling option.
 #'   Must be one of "train", "test", or "both". Defaults to "train".
 #' @param scale_method Character string specifying the scaling method.
-#'   Must be one of "scale" (standardization) or "norm" (normalization).
-#'   Defaults to "scale".
+#'   Must be one of "zscore" (standardization) or "minmax" (normalization).
+#'   Defaults to "zscore".
 #' @param fun_transform A named list of functions to apply to the data *before* scaling.
 #'   The names of the list elements should correspond to the columns to transform.
 #' @param fun_inverse A named list of functions representing the inverse
@@ -330,10 +332,13 @@ setMethod("get_y_all", signature = "preproc_data",
 #'
 #' @export
 create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
-                                     scale_option = "train", scale_method = "scale",
+                                     scale_option = c("train", "test", "both"),
+                                     scale_method = c("zscore", "minmax"),
                                      fun_transform = NULL, fun_inverse = NULL,
                                      autotransform = FALSE) {
 
+  scale_option <- match.arg(scale_option)
+  scale_method <- match.arg(scale_method)
 
   ## define which columns to use
   cols_to_remove <- if (!is.null(id_col)) {

@@ -7,10 +7,13 @@ library(mlfeatr)
 ## generate some  data
 set.seed(123)
 
-df <- data.frame(id = 1:500,
-                  x = runif(500, 0, 50)) |>
-           mutate(y = 0.5 + (sin(x/5) + rnorm(100, 0, 0.05))/3,
-              split = c(rep(TRUE, 400), rep(FALSE, 100)))
+df <- tibble(
+  id = 1:500,
+  x = runif(500, 0, 50),
+  y = 0.5 + (sin(x/5) + rnorm(500, 0, 0.05))/3,
+  split = c(rep(TRUE, 400), rep(FALSE, 100))
+)
+
 
 head(df)
 
@@ -18,7 +21,7 @@ plot(y ~ x, data=df, type="p")
 
 ## split data into training and test sets
 td <- df |> create_preprocessed_data(id_col = "id", target_col = "y",
-                               scale_method = "scale",
+                               scale_method = "zscore",
                                split_col = "split") |> scale_x()
 
 

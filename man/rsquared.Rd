@@ -12,6 +12,8 @@ rsquared(object, ...)
 \arguments{
 \item{object}{A `preproc_data` object.}
 
+\item{...}{Additional arguments (currently not used).}
+
 \item{model}{A fitted model object.}
 
 \item{type}{Subset of the `preproc` data set.}

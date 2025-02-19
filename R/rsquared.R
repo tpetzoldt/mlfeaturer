@@ -6,6 +6,7 @@
 #' @param object A `preproc_data` object.
 #' @param model A fitted model object.
 #' @param type Subset of the `preproc` data set.
+#' @param ... Additional arguments (currently not used).
 #'
 #' @return The coefficient of determination.
 #'

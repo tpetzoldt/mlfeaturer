@@ -41,6 +41,8 @@ get_y_test(foo)
 get_y_all(foo)
 get_x_all(foo)
 
+get_id_train(foo)
+
 str(get_x_all(foo, as_data_frame=FALSE))
 
 

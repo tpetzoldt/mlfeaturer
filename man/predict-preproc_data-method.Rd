@@ -12,6 +12,8 @@
 \item{model}{A fitted model object.}
 
 \item{type}{Subset of the `preproc` data set.}
+
+\item{...}{Additional arguments (currently not used).}
 }
 \value{
 A matrix or vector with the predictions.

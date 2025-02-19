@@ -9,8 +9,8 @@ create_preprocessed_data(
   id_col = NULL,
   target_col,
   split_col,
-  scale_option = "train",
-  scale_method = "scale",
+  scale_option = c("train", "test", "both"),
+  scale_method = c("zscore", "minmax"),
   fun_transform = NULL,
   fun_inverse = NULL,
   autotransform = FALSE
@@ -30,8 +30,8 @@ train/test split.}
 Must be one of "train", "test", or "both". Defaults to "train".}
 
 \item{scale_method}{Character string specifying the scaling method.
-Must be one of "scale" (standardization) or "norm" (normalization).
-Defaults to "scale".}
+Must be one of "zscore" (standardization) or "minmax" (normalization).
+Defaults to "zscore".}
 
 \item{fun_transform}{A named list of functions to apply to the data *before* scaling.
 The names of the list elements should correspond to the columns to transform.}

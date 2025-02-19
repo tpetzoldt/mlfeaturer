@@ -2,6 +2,9 @@
 
 export(as)
 export(create_preprocessed_data)
+export(get_id_all)
+export(get_id_test)
+export(get_id_train)
 export(get_x_all)
 export(get_x_test)
 export(get_x_train)
