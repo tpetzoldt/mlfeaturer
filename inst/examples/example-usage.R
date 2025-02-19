@@ -40,7 +40,6 @@ get_x_test(foo)
 get_y_test(foo)
 get_y_all(foo)
 get_x_all(foo)
-get_x_train_scaled(foo)
 
 str(get_x_all(foo, as_data_frame=FALSE))
 
@@ -66,7 +65,7 @@ foo3@params@transformed
 
 str(get_x_all(foo))
 
-foo <- scale_data(foo) # Scale the data
+foo <- scale_x(foo) # Scale the data
 print(foo@data)
 
 foo2 <- inverse_transform(foo)

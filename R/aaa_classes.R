@@ -3,6 +3,9 @@
 #' Class to slots that can be empty
 #'
 #' @name list_or_NULL-class
+#'
+#' @include mlfeatr-package.R
+#'
 #' @exportClass list_or_NULL
 #'
 setClassUnion("list_or_NULL", c("list", "NULL"))
@@ -70,7 +73,7 @@ setClass("preproc_data",
 #' @slot x_all_scaled Scaled all data (X).
 #' @exportClass preproc_data_list
 setClass("preproc_data_list",
-         contains = "list",
+         #contains = "list",
          slots = list(
            x_train = "ANY",
            x_test = "ANY",

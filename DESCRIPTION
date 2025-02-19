@@ -1,15 +1,25 @@
 Package: mlfeatr
 Type: Package
-Title: Machine Learning Feature Preprocessing with R
+Title: Machine Learning Feature Engineering with R
 Version: 0.1.1
+Date: 2025-02-18
 Authors@R: c(person("Thomas","Petzoldt", role = c("aut", "cre"),
                      email = "thomas.petzoldt@tu-dresden.de",
                      comment = c(ORCID = "0000-0002-4951-6468")))
 Description: Utilities for scaling and transformation of features in the context 
   of machine learning regression problems.
+URL: https://github.com/tpetzoldt/mlfeatr  
 License: GPL (>= 2)
-Depends: R (>= 4.1.0), dplyr, tidyr, purrr, lubridate, ggplot2
-Imports: stats, graphics, utils, methods
+Depends: R (>= 4.1.0)
+Imports: dplyr, stats, graphics, utils, methods, tidyr, purrr, lubridate, knitr, jsonlite
 Encoding: UTF-8
 LazyData: true
+VignetteBuilder: knitr
 RoxygenNote: 7.3.2
+Collate: 
+    'mlfeatr-package.R'
+    'aaa_classes.R'
+    'as.list.R'
+    'feat.R'
+    'setAs.R'
+    'set_transformations.R'

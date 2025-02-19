@@ -12,6 +12,7 @@ df <- data.frame(id = 1:500,
            mutate(y = 0.5 + (sin(x/5) + rnorm(100, 0, 0.05))/3,
               split = c(rep(TRUE, 400), rep(FALSE, 100)))
 
+head(df)
 
 plot(y ~ x, data=df, type="p")
 

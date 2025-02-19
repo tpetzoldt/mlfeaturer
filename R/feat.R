@@ -8,6 +8,9 @@
 #' @param funs A named list of functions to apply to the data.
 #'
 #' @return A `preproc_data` object with the transformed data.
+#'
+#' @include aaa_classes.R
+#'
 #' @export
 setGeneric("transform_data", function(object, funs) standardGeneric("transform_data"))
 
@@ -189,7 +192,7 @@ setMethod("get_x_train", signature = "preproc_data",
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
-            x_train <- df |> filter(!.data[[params@split_col]]) |> select(-all_of(cols_to_remove))
+            x_train <- df |> dplyr::filter(!.data[[params@split_col]]) |> select(-all_of(cols_to_remove))
             if (!as_data_frame) {
               return(as.matrix(x_train))
             } else {
@@ -203,7 +206,7 @@ setMethod("get_x_test", signature = "preproc_data",
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
-            x_test <- df |> filter(.data[[params@split_col]]) |> select(-all_of(cols_to_remove))
+            x_test <- df |> dplyr::filter(.data[[params@split_col]]) |> select(-all_of(cols_to_remove))
             if (!as_data_frame) {
               return(as.matrix(x_test))
             } else {
@@ -230,7 +233,8 @@ setMethod("get_y_train", signature = "preproc_data",
           function(object, as_data_frame = FALSE) {
             params <- object@params
             df <- object@data
-            y_train <- df |> filter(!.data[[params@split_col]]) |> select(all_of(params@target_col))
+            y_train <- df |> dplyr::filter(!.data[[params@split_col]]) |>
+              select(all_of(params@target_col))
             if (!as_data_frame) {
               return(as.matrix(y_train))
             } else {
@@ -243,7 +247,8 @@ setMethod("get_y_test", signature = "preproc_data",
           function(object, as_data_frame = FALSE) {
             params <- object@params
             df <- object@data
-            y_test <- df |> filter(.data[[params@split_col]]) |> select(all_of(params@target_col))
+            y_test <- df |> dplyr::filter(.data[[params@split_col]]) |>
+              select(all_of(params@target_col))
             if (!as_data_frame) {
               return(as.matrix(y_test))
             } else {
@@ -267,22 +272,34 @@ setMethod("get_y_all", signature = "preproc_data",
 
 #' @title Create Preprocessed Data Object
 #'
-#' @description Constructs a `preproc_data` object, calculates scaling parameters, and optionally applies initial data transformations.
+#' @description Constructs a `preproc_data` object, calculates scaling parameters,
+#'   and optionally applies initial data transformations.
 #'
 #' @param data A data frame containing the raw data.
 #' @param id_col Character vector specifying the name of the ID column (optional).
 #' @param target_col Character vector specifying the name of the target variable column.
-#' @param split_col Character vector specifying the name of the column used for train/test split.
-#' @param scale_option Character string specifying the scaling option. Must be one of "train", "test", or "both". Defaults to "train".
-#' @param scale_method Character string specifying the scaling method. Must be one of "scale" (standardization) or "norm" (normalization). Defaults to "scale".
-#' @param fun_transform A named list of functions to apply to the data *before* scaling.  The names of the list elements should correspond to the columns to transform.
-#' @param fun_inverse A named list of functions representing the inverse transformations of `fun_transform`.  These are applied during the `inverse_transform` method.
+#' @param split_col Character vector specifying the name of the column used for
+#'   train/test split.
+#' @param scale_option Character string specifying the scaling option.
+#'   Must be one of "train", "test", or "both". Defaults to "train".
+#' @param scale_method Character string specifying the scaling method.
+#'   Must be one of "scale" (standardization) or "norm" (normalization).
+#'   Defaults to "scale".
+#' @param fun_transform A named list of functions to apply to the data *before* scaling.
+#'   The names of the list elements should correspond to the columns to transform.
+#' @param fun_inverse A named list of functions representing the inverse
+#'   transformations of `fun_transform`.  These are applied during the
+#'   `inverse_transform` method.
 #' @param autotransform If `TRUE` variables are transformed during object creation.
 #'
 #' @return A `preproc_data` object.
 #'
 #' @details
-#' This function calculates scaling parameters (mean, standard deviation, min, max) based on the specified `scale_option` and `scale_method`. It then creates a `preproc_data` object, storing the original data and the calculated parameters.  If `fun_transform` is provided, it applies the specified transformations to the data before creating the object.
+#' This function calculates scaling parameters (mean, standard deviation, min, max)
+#' based on the specified `scale_option` and `scale_method`. It then creates a
+#' `preproc_data` object, storing the original data and the calculated parameters.
+#' If `fun_transform` is provided, it applies the specified transformations to
+#' the data before creating the object.
 #'
 #' @examples
 #' # Example usage (replace with your actual data and column names)
@@ -306,8 +323,9 @@ setMethod("get_y_all", signature = "preproc_data",
 #'   z = sqrt
 #' )
 #'
-#' prep_data <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split",
-#'                                       fun_transform = transformations, fun_inverse = inverse_transformations)
+#' prep_data <- create_preprocessed_data(
+#'   df, id_col = "id", target_col = "y", split_col = "split",
+#'   fun_transform = transformations, fun_inverse = inverse_transformations)
 #' print(prep_data)
 #'
 #' @export
@@ -325,8 +343,8 @@ create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
   }
 
   ## split data
-  train_data <- data |> filter(.data[[split_col]])
-  test_data <- data |> filter(!.data[[split_col]])
+  train_data <- data |> dplyr::filter(.data[[split_col]])
+  test_data <- data |> dplyr::filter(!.data[[split_col]])
   all_data <- data
 
   ## calculate scaling parameters

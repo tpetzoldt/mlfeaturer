@@ -6,7 +6,15 @@
 \alias{mlfeatr-package}
 \title{Machine Learning and Feature Engineering for Regression Models}
 \description{
-This package provides preprocessing tools using S4 classes for data transformation, scaling, and inverse transformation.
+This package provides preprocessing tools using S4 classes for data
+transformation, scaling, and inverse transformation.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/tpetzoldt/mlfeatr}
+}
+
 }
 \author{
 \strong{Maintainer}: Thomas Petzoldt \email{thomas.petzoldt@tu-dresden.de} (\href{https://orcid.org/0000-0002-4951-6468}{ORCID})

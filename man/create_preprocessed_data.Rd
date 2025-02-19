@@ -23,15 +23,22 @@ create_preprocessed_data(
 
 \item{target_col}{Character vector specifying the name of the target variable column.}
 
-\item{split_col}{Character vector specifying the name of the column used for train/test split.}
+\item{split_col}{Character vector specifying the name of the column used for
+train/test split.}
 
-\item{scale_option}{Character string specifying the scaling option. Must be one of "train", "test", or "both". Defaults to "train".}
+\item{scale_option}{Character string specifying the scaling option.
+Must be one of "train", "test", or "both". Defaults to "train".}
 
-\item{scale_method}{Character string specifying the scaling method. Must be one of "scale" (standardization) or "norm" (normalization). Defaults to "scale".}
+\item{scale_method}{Character string specifying the scaling method.
+Must be one of "scale" (standardization) or "norm" (normalization).
+Defaults to "scale".}
 
-\item{fun_transform}{A named list of functions to apply to the data *before* scaling.  The names of the list elements should correspond to the columns to transform.}
+\item{fun_transform}{A named list of functions to apply to the data *before* scaling.
+The names of the list elements should correspond to the columns to transform.}
 
-\item{fun_inverse}{A named list of functions representing the inverse transformations of `fun_transform`.  These are applied during the `inverse_transform` method.}
+\item{fun_inverse}{A named list of functions representing the inverse
+transformations of `fun_transform`.  These are applied during the
+`inverse_transform` method.}
 
 \item{autotransform}{If `TRUE` variables are transformed during object creation.}
 }
@@ -39,10 +46,15 @@ create_preprocessed_data(
 A `preproc_data` object.
 }
 \description{
-Constructs a `preproc_data` object, calculates scaling parameters, and optionally applies initial data transformations.
+Constructs a `preproc_data` object, calculates scaling parameters,
+  and optionally applies initial data transformations.
 }
 \details{
-This function calculates scaling parameters (mean, standard deviation, min, max) based on the specified `scale_option` and `scale_method`. It then creates a `preproc_data` object, storing the original data and the calculated parameters.  If `fun_transform` is provided, it applies the specified transformations to the data before creating the object.
+This function calculates scaling parameters (mean, standard deviation, min, max)
+based on the specified `scale_option` and `scale_method`. It then creates a
+`preproc_data` object, storing the original data and the calculated parameters.
+If `fun_transform` is provided, it applies the specified transformations to
+the data before creating the object.
 }
 \examples{
 # Example usage (replace with your actual data and column names)
@@ -66,8 +78,9 @@ inverse_transformations <- list(
   z = sqrt
 )
 
-prep_data <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split",
-                                      fun_transform = transformations, fun_inverse = inverse_transformations)
+prep_data <- create_preprocessed_data(
+  df, id_col = "id", target_col = "y", split_col = "split",
+  fun_transform = transformations, fun_inverse = inverse_transformations)
 print(prep_data)
 
 }

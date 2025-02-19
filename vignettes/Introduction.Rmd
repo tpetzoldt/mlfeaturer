@@ -1,0 +1,57 @@
+---
+title: "Transformation of Features with Package mlfeatr"
+author: "Thomas Petzoldt"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+    number_sections: yes  
+bibliography: bib.bib
+vignette: >
+  %\VignetteIndexEntry{Transformation of Features with Package mlfeatr}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+
+```{r opts, echo = FALSE, message = FALSE}
+library("dplyr")
+```
+
+<!--
+possible output options are:
+rmarkdown::pdf_document
+rmarkdown::html_vignette
+
+set to UTF if necessary with:
+%\VignetteEncoding{UTF-8}
+
+Bibliographies may need to set the LANG environment variable
+LANG=en_US.UTF-8
+-->
+
+
+
+Introduction
+============
+
+Lorem ipsum ...
+
+
+Acknowledgments
+===============
+
+Many thanks to the R Core Team
+[@RCore2024] for developing and maintaining **R**. This documentation
+was written using **knitr** [@knitr] and **rmarkdown**
+[@rmarkdown].
+
+
+References
+==========
+
+<div id="refs"></div>
+
+----
+
+**Copyright and original author:** [tpetzoldt](https://github.com/tpetzoldt), `r Sys.Date()`
+
