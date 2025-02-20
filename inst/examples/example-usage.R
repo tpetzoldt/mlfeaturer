@@ -1,4 +1,6 @@
 # Example Usage
+library(mlfeatr)
+library(dplyr)
 
 df <- tibble(
   id = 1:10,
@@ -40,22 +42,26 @@ as.list(foo)
 get_x_test(foo, type="scale")
 get_x_test(foo, type="both") # default is both
 get_x_test(foo) # default is both
+get_x_test(foo, type="transform")
 get_x_test(foo, type="none")
 
-get_x_train(foo)
+foo@data
+get_y_all(foo, type="none")
 
-get_y_test(foo)
-
-get_y_all(foo)
+get_y_all(foo) # transform is default
 get_y_all(foo, type="transform")
 
-get_x_all(foo)
-get_y_all(foo)
+
+get_y_all(foo, type="scale")
+get_y_all(foo, type="both")
+
 
 
 get_id_train(foo)
+get_id_test(foo)
+get_id_all(foo)
 
-str(get_x_all(foo, as_data_frame=TRUE))
+str(get_x_all(foo, as_matrix = FALSE))
 
 
 ## set slots directly
@@ -67,7 +73,7 @@ str(get_x_all(foo, as_data_frame=TRUE))
 foo2 <- transform_data(foo)
 
 ## untransformed data don't allow inverse
-foo3 <- inverse_transform(foo)
+foo3 <- inverse_transform(foo) ## should return error
 
 # transformed data can be re-transformed
 foo3 <- inverse_transform(foo2)

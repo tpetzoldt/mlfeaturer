@@ -7,14 +7,15 @@
 \usage{
 get_id_train(object, ...)
 
-\S4method{get_id_train}{preproc_data}(object, as_data_frame = FALSE)
+\S4method{get_id_train}{preproc_data}(object, as_matrix = TRUE)
 }
 \arguments{
 \item{object}{A `preproc_data` object.}
 
 \item{...}{Additional arguments (currently not used).}
 
-\item{as_data_frame}{logical TRUE if the function should return a data frame.}
+\item{as_matrix}{logical TRUE if the function should return matrix,
+or a data frame or tibble otherwise.}
 }
 \value{
 A data frame or matrix containing the ID column(s).

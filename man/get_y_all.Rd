@@ -10,7 +10,7 @@ get_y_all(object, ...)
 \S4method{get_y_all}{preproc_data}(
   object,
   type = c("transform", "none", "scale", "both"),
-  as_data_frame = FALSE
+  as_matrix = TRUE
 )
 }
 \arguments{
@@ -18,7 +18,8 @@ get_y_all(object, ...)
 
 \item{...}{Additional arguments (currently not used).}
 
-\item{as_data_frame}{logical TRUE if the function should return a data frame.}
+\item{as_matrix}{logical TRUE if the function should return matrix,
+or a data frame or tibble otherwise.}
 }
 \value{
 A data frame or matrix containing all the data (Y).
