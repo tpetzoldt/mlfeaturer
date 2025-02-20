@@ -28,12 +28,12 @@ plot(y ~ x, data=df, type="p")
 ## split data into training and test sets
 td <- df |> create_preprocessed_data(id_col = "id", target_col = "y",
                                scale_method = "zscore",
-                               #fun_transform = transformations,
+                               fun_transform = transformations,
                                split_col = "split")
 
 
 ## transform + scale or both is broken
-plot(get_x_all(td), get_y_all(td))
+plot(get_x_all(td, "both"), get_y_all(td, "both"))
 
 ## build a Keras model
 model <- keras_model_sequential(input_shape = c(1), input_dtype = "float32") |>
