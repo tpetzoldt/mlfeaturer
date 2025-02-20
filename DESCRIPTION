@@ -22,6 +22,7 @@ Collate:
     'mlfeatr-package.R'
     'aaa_classes.R'
     'as.list.R'
+    'create_preprocessed_data.R'
     'feat.R'
     'get_id.R'
     'inverse_transform.R'
