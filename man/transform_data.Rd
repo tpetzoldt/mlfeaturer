@@ -18,7 +18,7 @@ transform_data(object, params, funs, ...)
 \arguments{
 \item{object}{A `preproc_data` object or a data frame.}
 
-\item{params}{A `preproc_parms` object with scaling parameters}
+\item{params}{A `preproc_params` object with scaling parameters}
 
 \item{...}{Additional arguments (currently not used).}
 }

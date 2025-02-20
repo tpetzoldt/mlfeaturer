@@ -3,7 +3,7 @@
 #' @description Transforms the data using the provided functions.
 #'
 #' @param object A `preproc_data` object or a data frame.
-#' @param params A `preproc_parms` object with scaling parameters
+#' @param params A `preproc_params` object with scaling parameters
 #' @param ... Additional arguments (currently not used).
 
 

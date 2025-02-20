@@ -2,22 +2,22 @@
 % Please edit documentation in R/scale_x.R
 \name{scale_x}
 \alias{scale_x}
-\alias{scale_x,preproc_data-method}
-\alias{scale_x,data.frame-method}
+\alias{scale_x,preproc_data,missing-method}
+\alias{scale_x,data.frame,preproc_params-method}
 \title{Scale Data}
 \usage{
-scale_x(object, ...)
+scale_x(object, params, ...)
 
-\S4method{scale_x}{preproc_data}(object, ...)
+\S4method{scale_x}{preproc_data,missing}(object, params, ...)
 
-\S4method{scale_x}{data.frame}(object, params, ...)
+\S4method{scale_x}{data.frame,preproc_params}(object, params, ...)
 }
 \arguments{
 \item{object}{A `preproc_data` object or a data frame.}
 
-\item{...}{Additional arguments (currently not used).}
+\item{params}{n `preproc_params` object with scaling parameters}
 
-\item{params}{n `preproc_parms` object with scaling parameters}
+\item{...}{Additional arguments (currently not used).}
 }
 \value{
 A `preproc_data` object with the scaled data.
@@ -27,8 +27,8 @@ Scales the data using the stored parameters.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{scale_x(preproc_data)}: Method for scaling data in a `preproc_data` object.
+\item \code{scale_x(object = preproc_data, params = missing)}: Method for scaling data in a `preproc_data` object.
 
-\item \code{scale_x(data.frame)}: Method for scaling data in a `preproc_data` object.
+\item \code{scale_x(object = data.frame, params = preproc_params)}: Method for scaling data in a `preproc_data` object.
 
 }}

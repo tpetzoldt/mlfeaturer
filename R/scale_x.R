@@ -3,15 +3,15 @@
 #' @description Scales the data using the stored parameters.
 #'
 #' @param object A `preproc_data` object or a data frame.
-#' @param params n `preproc_parms` object with scaling parameters
+#' @param params n `preproc_params` object with scaling parameters
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A `preproc_data` object with the scaled data.
 #' @export
-setGeneric("scale_x", function(object, ...) standardGeneric("scale_x"))
+setGeneric("scale_x", function(object, params, ...) standardGeneric("scale_x"))
 
 #' @describeIn scale_x Method for scaling data in a `preproc_data` object.
-setMethod("scale_x", signature = "preproc_data",
+setMethod("scale_x", signature = c(object = "preproc_data", params = "missing"),
           function(object, ...) {
             params <- object@params
             df <- object@data
@@ -45,11 +45,22 @@ setMethod("scale_x", signature = "preproc_data",
           })
 
 #' @describeIn scale_x Method for scaling data in a `preproc_data` object.
-setMethod("scale_x", signature = "data.frame",
+setMethod("scale_x", signature = c(object = "data.frame", params = "preproc_params"),
           function(object, params, ...) {
             #cat("data frame method \n")
+            #print(str(params))
             #params <- object@params
             df <- object
+
+            ## todo: make this more elegant avoiding redundant calculations
+            # for (col in names(params@mean_vals)) {
+            #   mean_vals <- transform(params@mean_vals[col], params@fun_transform[col])
+            #   sd_vals   <- transform(params@sd_vals[col], params@fun_transform[col])
+            #   min_vals  <- transform(params@min_vals[col], params@fun_transform[col])
+            #   max_vals  <- transform(params@max_vals[col], params@fun_transform[col])
+            # }
+
+            # todo: rescaled parameters are not used
             scaled_df <- df |>
               mutate(across(everything(),
                             \(.x) {
