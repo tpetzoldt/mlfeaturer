@@ -50,38 +50,45 @@ setMethod("scale_x", signature = c(object = "data.frame", params = "preproc_para
             #cat("data frame method \n")
             df <- object
 
-            # create local copies of scaling parameters
-            .mean_vals <- params@mean_vals
-            .sd_vals <- params@sd_vals
-            .min_vals <- params@min_vals
-            .max_vals <- params@max_vals
+            columns <- names(params@fun_transform)
+            if (length(columns) > 0) {
 
-            # transform scaling parameters
-            # todo: check if y can also be scaled with this method
-            columns <- names(params@mean_vals)
-            for (col in columns) {
-              .mean_vals[col] <- params@fun_transform[[col]](params@mean_vals[col])
-              .sd_vals[col]   <- params@fun_transform[[col]](params@sd_vals[col])
-              .min_vals[col]  <- params@fun_transform[[col]](params@min_vals[col])
-              .max_vals[col]  <- params@fun_transform[[col]](params@max_vals[col])
+              # create local copies of scaling parameters
+              .mean_vals <- params@mean_vals
+              .sd_vals   <- params@sd_vals
+              .min_vals  <- params@min_vals
+              .max_vals  <- params@max_vals
+
+              # transform scaling parameters
+              # todo: check if y can also be scaled with this method
+              for (col in columns) {
+                #cat(col, "\n")
+                .mean_vals[col] <- params@fun_transform[[col]](params@mean_vals[col])
+                # todo: fix tranformation of sd !!!
+                .sd_vals[col]   <- params@fun_transform[[col]](params@sd_vals[col])
+                .min_vals[col]  <- params@fun_transform[[col]](params@min_vals[col])
+                .max_vals[col]  <- params@fun_transform[[col]](params@max_vals[col])
+              }
+
+              # use transformed local scaling parameters
+              scaled_df <- df |>
+                mutate(across(everything(),
+                              \(.x) {
+                                if (params@scale_method == "zscore") {
+                                  scale(.x,
+                                        .mean_vals[cur_column()],
+                                        .sd_vals[cur_column()])
+                                } else if (params@scale_method == "minmax") {
+                                  ml_norm(.x,
+                                          .min_vals[cur_column()],
+                                          .max_vals[cur_column()])
+                                } else {
+                                  .x
+                                }
+                              }))
+
+              return(scaled_df)
+            } else {
+              return(df)
             }
-
-            # use transformed local scaling parameters
-            scaled_df <- df |>
-              mutate(across(everything(),
-                            \(.x) {
-                              if (params@scale_method == "zscore") {
-                                scale(.x,
-                                      .mean_vals[cur_column()],
-                                      .sd_vals[cur_column()])
-                              } else if (params@scale_method == "minmax") {
-                                ml_norm(.x,
-                                        .min_vals[cur_column()],
-                                        .max_vals[cur_column()])
-                              } else {
-                                .x
-                              }
-                            }))
-
-            return(scaled_df)
           })
