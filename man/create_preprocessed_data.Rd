@@ -12,8 +12,7 @@ create_preprocessed_data(
   scale_option = c("train", "test", "both"),
   scale_method = c("zscore", "minmax"),
   fun_transform = NULL,
-  fun_inverse = NULL,
-  autotransform = FALSE
+  fun_inverse = NULL
 )
 }
 \arguments{
@@ -39,8 +38,6 @@ The names of the list elements should correspond to the columns to transform.}
 \item{fun_inverse}{A named list of functions representing the inverse
 transformations of `fun_transform`.  These are applied during the
 `inverse_transform` method.}
-
-\item{autotransform}{If `TRUE` variables are transformed during object creation.}
 }
 \value{
 A `preproc_data` object.

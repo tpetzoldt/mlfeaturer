@@ -23,7 +23,7 @@ inverse_transformations <- list(
 )
 
 foo <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split",
- fun_transform = transformations, fun_inverse = inverse_transformations, autotransform = FALSE)
+ fun_transform = transformations, fun_inverse = inverse_transformations)
 
 
 df
