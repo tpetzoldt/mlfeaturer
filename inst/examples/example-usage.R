@@ -1,12 +1,14 @@
 # Example Usage
 
-df <- data.frame(
+df <- tibble(
   id = 1:10,
   x = runif(10),
   y = rnorm(10),
   z = 1:10,
   split = sample(c(TRUE, FALSE), 10, replace = TRUE)
 )
+
+df <- as.data.frame(df)
 
 transformations <- list(
   x = log,
@@ -21,12 +23,11 @@ inverse_transformations <- list(
 )
 
 foo <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col = "split",
-                                      fun_transform = transformations, fun_inverse = inverse_transformations,
-                                      autotransform = FALSE)
+ fun_transform = transformations, fun_inverse = inverse_transformations, autotransform = FALSE)
 
 
 df
-foo@data
+foo@data # does not work for tibble
 
 
 L <- as(foo, "preproc_data_list")
@@ -38,12 +39,14 @@ as.list(foo)
 
 get_x_test(foo)
 get_y_test(foo)
-get_y_all(foo)
+
 get_x_all(foo)
+get_y_all(foo)
+
 
 get_id_train(foo)
 
-str(get_x_all(foo, as_data_frame=FALSE))
+str(get_x_all(foo, as_data_frame=TRUE))
 
 
 ## set slots directly

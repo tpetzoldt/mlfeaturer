@@ -7,7 +7,11 @@
 \usage{
 get_x_test(object, ...)
 
-\S4method{get_x_test}{preproc_data}(object, as_data_frame = FALSE)
+\S4method{get_x_test}{preproc_data}(
+  object,
+  type = c("both", "scale", "transfor", "none"),
+  as_data_frame = FALSE
+)
 }
 \arguments{
 \item{object}{A `preproc_data` object.}

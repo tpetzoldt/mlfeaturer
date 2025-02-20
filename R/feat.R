@@ -24,16 +24,6 @@ setGeneric("transform_data", function(object, funs) standardGeneric("transform_d
 #' @export
 setGeneric("inverse_transform", function(object) standardGeneric("inverse_transform"))
 
-#' @title Scale Data
-#'
-#' @description Scales the data using the stored parameters.
-#'
-#' @param object A `preproc_data` object.
-#'
-#' @return A `preproc_data` object with the scaled data.
-#' @export
-setGeneric("scale_x", function(object) standardGeneric("scale_x"))
-
 
 #' @title Get Training Data (X)
 #'
@@ -160,41 +150,17 @@ setMethod("inverse_transform", signature = c(object = "preproc_data"),
             return(object)
           })
 
-#' @describeIn scale_x Method for scaling data in a `preproc_data` object.
-setMethod("scale_x", signature = "preproc_data",
-          function(object) {
-            params <- object@params
-            df <- object@data
-            cols <- names(object@data)
-            cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
-
-            scaled_df <- df |>
-              select(-all_of(cols_to_remove)) |>
-              mutate(across(everything(),
-                \(.x) {
-                  if (params@scale_method == "zscore") {
-                    scale(.x, params@mean_vals[cur_column()], params@sd_vals[cur_column()])
-                  } else if (params@scale_method == "minmax") {
-                    ml_norm(.x, params@min_vals[cur_column()], params@max_vals[cur_column()])
-                  } else {
-                  .x
-                }
-              }))
-
-            non_scaled_df <- df |> select(all_of(cols_to_remove))
-            object@data <- bind_cols(non_scaled_df, scaled_df) |>
-              select(cols)
-
-            return(object)
-          })
-
 #' @describeIn get_x_train Method for extracting training data (X).
 setMethod("get_x_train", signature = "preproc_data",
-          function(object, as_data_frame = FALSE) {
+          function(object, type = c("both", "scale", "transform", "none"), as_data_frame = FALSE) {
+            type = match.arg(type)
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
-            x_train <- df |> dplyr::filter(!.data[[params@split_col]]) |> select(-all_of(cols_to_remove))
+            x_train <- df |>
+              dplyr::filter(!.data[[params@split_col]]) |>
+              select(-all_of(cols_to_remove)) |>
+              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
             if (!as_data_frame) {
               return(as.matrix(x_train))
             } else {
@@ -204,11 +170,15 @@ setMethod("get_x_train", signature = "preproc_data",
 
 #' @describeIn get_x_test Method for extracting test data (X).
 setMethod("get_x_test", signature = "preproc_data",
-          function(object, as_data_frame = FALSE) {
+          function(object, type=c("both", "scale", "transform", "none"), as_data_frame = FALSE) {
+            type = match.arg(type)
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
-            x_test <- df |> dplyr::filter(.data[[params@split_col]]) |> select(-all_of(cols_to_remove))
+            x_test <- df |>
+              dplyr::filter(.data[[params@split_col]]) |>
+              select(-all_of(cols_to_remove)) |>
+              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
             if (!as_data_frame) {
               return(as.matrix(x_test))
             } else {
@@ -222,7 +192,8 @@ setMethod("get_x_all", signature = "preproc_data",
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
-            x_all <- df |> select(-all_of(cols_to_remove))
+            x_all <- df |>
+              select(-all_of(cols_to_remove))
             if (!as_data_frame) {
               return(as.matrix(x_all))
             } else {

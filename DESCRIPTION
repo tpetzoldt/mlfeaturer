@@ -27,6 +27,7 @@ Collate:
     'predict.R'
     'residuals.R'
     'rsquared.R'
+    'scale_x.R'
     'setAs.R'
     'set_transformations.R'
     'utilities.R'
