@@ -7,7 +7,11 @@
 \usage{
 get_x_all(object, ...)
 
-\S4method{get_x_all}{preproc_data}(object, as_data_frame = FALSE)
+\S4method{get_x_all}{preproc_data}(
+  object,
+  type = c("both", "scale", "transform", "none"),
+  as_data_frame = FALSE
+)
 }
 \arguments{
 \item{object}{A `preproc_data` object.}

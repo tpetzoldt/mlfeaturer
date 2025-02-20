@@ -9,7 +9,7 @@ get_x_test(object, ...)
 
 \S4method{get_x_test}{preproc_data}(
   object,
-  type = c("both", "scale", "transfor", "none"),
+  type = c("both", "scale", "transform", "none"),
   as_data_frame = FALSE
 )
 }

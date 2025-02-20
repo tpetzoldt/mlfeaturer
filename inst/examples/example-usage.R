@@ -3,12 +3,12 @@
 df <- tibble(
   id = 1:10,
   x = runif(10),
-  y = rnorm(10),
+  y = rnorm(10) + 5,
   z = 1:10,
   split = sample(c(TRUE, FALSE), 10, replace = TRUE)
 )
 
-df <- as.data.frame(df)
+
 
 transformations <- list(
   x = log,
@@ -27,7 +27,7 @@ foo <- create_preprocessed_data(df, id_col = "id", target_col = "y", split_col =
 
 
 df
-foo@data # does not work for tibble
+foo@data
 
 
 L <- as(foo, "preproc_data_list")
@@ -37,8 +37,13 @@ L <- as(foo, "list")
 as.list(foo)
 
 
-get_x_test(foo)
+get_x_test(foo, type="scale")
+get_x_test(foo, type="both") # default is both
+get_x_test(foo) # default is both
+get_x_test(foo, type="none")
+
 get_y_test(foo)
+get_y_all(foo, type="scale")
 
 get_x_all(foo)
 get_y_all(foo)

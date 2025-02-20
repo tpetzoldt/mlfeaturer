@@ -13,11 +13,11 @@ scale_x(object, ...)
 \S4method{scale_x}{data.frame}(object, params, ...)
 }
 \arguments{
-\item{object}{A `preproc_data` object.}
+\item{object}{A `preproc_data` object or a data frame.}
 
 \item{...}{Additional arguments (currently not used).}
 
-\item{params}{An `preproc_parms` object with scaling parameters}
+\item{params}{n `preproc_parms` object with scaling parameters}
 }
 \value{
 A `preproc_data` object with the scaled data.

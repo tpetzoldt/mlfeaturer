@@ -2,8 +2,8 @@
 #'
 #' @description Scales the data using the stored parameters.
 #'
-#' @param object A `preproc_data` object.
-#' @param params An `preproc_parms` object with scaling parameters
+#' @param object A `preproc_data` object or a data frame.
+#' @param params n `preproc_parms` object with scaling parameters
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A `preproc_data` object with the scaled data.
@@ -47,7 +47,7 @@ setMethod("scale_x", signature = "preproc_data",
 #' @describeIn scale_x Method for scaling data in a `preproc_data` object.
 setMethod("scale_x", signature = "data.frame",
           function(object, params, ...) {
-            cat("data frame method \n")
+            #cat("data frame method \n")
             #params <- object@params
             df <- object
             scaled_df <- df |>

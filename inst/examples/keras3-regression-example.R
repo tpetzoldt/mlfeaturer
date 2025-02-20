@@ -14,6 +14,12 @@ df <- tibble(
   split = c(rep(TRUE, 400), rep(FALSE, 100))
 )
 
+# ToDo: correct handling of parameters after transformation
+
+transformations <- list(
+  # x = \(x) 2 + sqrt(5 + x),
+  y = \(y) log(y) + 2
+)
 
 head(df)
 
@@ -21,9 +27,12 @@ plot(y ~ x, data=df, type="p")
 
 ## split data into training and test sets
 td <- df |> create_preprocessed_data(id_col = "id", target_col = "y",
-                               scale_method = "zscore",
-                               split_col = "split") |> scale_x()
+                               scale_method = "minmax",
+                               fun_transform = transformations,
+                               split_col = "split")
 
+
+plot(get_x_all(td, type="transform"), get_y_all(td))
 
 ## build a Keras model
 model <- keras_model_sequential(input_shape = c(1), input_dtype = "float32") |>
@@ -67,6 +76,8 @@ predictions_train <- predict(td, model, "train")
 residuals_all <- residuals(td, model)
 
 plot(predictions_all, residuals_all)
+
+plot(get_y_all(td), predictions_all)
 abline(a=0, b=1, col="red", lwd=2)
 cat("R2=", 1 - var(residuals)/var(get_y_test(td)), "\n")
 
@@ -85,7 +96,11 @@ rsquared(td, model, "train")
 rsquared(td, model, "all")
 rsquared(td, model, "test")
 
+pred_df = data.frame(y=predictions_all)
 
+yy <- as.matrix(transform_data(pred_df, td@params))
+
+plot(yy, get_y_all(td, type="none"))
 
 # ## Save fitted model
 # save_model(model, "test-regression-model.keras")

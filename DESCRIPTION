@@ -30,4 +30,5 @@ Collate:
     'scale_x.R'
     'setAs.R'
     'set_transformations.R'
+    'transform_data.R'
     'utilities.R'
