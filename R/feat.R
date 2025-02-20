@@ -1,16 +1,5 @@
 # Define S4 generics
 
-#' @title Inverse Transform Data
-#'
-#' @description Applies the inverse transformation to the data.
-#'
-#' @param object A `preproc_data` object.
-#'
-#' @return A `preproc_data` object with the inverse transformed data.
-#' @export
-setGeneric("inverse_transform", function(object) standardGeneric("inverse_transform"))
-
-
 #' @title Get Training Data (X)
 #'
 #' @description Extracts the training data (X) from the preprocessed data.
@@ -83,26 +72,6 @@ setGeneric("get_y_test", function(object, ...) standardGeneric("get_y_test"))
 #' @export
 setGeneric("get_y_all", function(object, ...) standardGeneric("get_y_all"))
 
-
-#' @describeIn inverse_transform Method for inverse transforming data in a `preproc_data` object.
-setMethod("inverse_transform", signature = c(object = "preproc_data"),
-          function(object) {
-            if (object@params@transformed) {
-              df <- object@data
-              funs <- object@params@fun_inverse
-              for (col in intersect(names(df), names(funs))) {
-                df <- df |>
-                  mutate(across(all_of(col), .fns = funs[[col]]))
-              }
-              object@data <- df
-              object@params@transformed <- FALSE
-            } else {
-              warning("No inverse transformation. Object was not transformed.")
-            }
-            # mark inverse transformed object with NA to avoid further transformations
-            object@params@transformed <- NA
-            return(object)
-          })
 
 #' @describeIn get_x_train Method for extracting training data (X).
 setMethod("get_x_train", signature = "preproc_data",

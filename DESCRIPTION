@@ -24,6 +24,7 @@ Collate:
     'as.list.R'
     'feat.R'
     'get_id.R'
+    'inverse_transform.R'
     'predict.R'
     'residuals.R'
     'rsquared.R'
