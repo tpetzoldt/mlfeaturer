@@ -52,26 +52,34 @@ setMethod("scale_x", signature = c(object = "data.frame", params = "preproc_para
             #params <- object@params
             df <- object
 
-            ## todo: make this more elegant avoiding redundant calculations
-            # for (col in names(params@mean_vals)) {
-            #   mean_vals <- transform(params@mean_vals[col], params@fun_transform[col])
-            #   sd_vals   <- transform(params@sd_vals[col], params@fun_transform[col])
-            #   min_vals  <- transform(params@min_vals[col], params@fun_transform[col])
-            #   max_vals  <- transform(params@max_vals[col], params@fun_transform[col])
-            # }
+            # create local copies of scaling parameters
+            mean_vals <- params@mean_vals
+            sd_vals <- params@sd_vals
+            min_vals <- params@min_vals
+            max_vals <- params@max_vals
 
-            # todo: rescaled parameters are not used
+            # transform scaling parameters
+            # todo: y is not scaled with this method
+            columns <- intersect(names(params@mean_vals), names(params@mean_vals))
+            for (col in names(columns)) {
+              mean_vals[col] <- params@fun_transform[[col]](params@mean_vals[col])
+              sd_vals[col]   <- params@fun_transform[[col]](params@sd_vals[col])
+              min_vals[col]  <- params@fun_transform[[col]](params@min_vals[col])
+              max_vals[col]  <- params@fun_transform[[col]](params@max_vals[col])
+            }
+
+            # use transformed local scaling parameters
             scaled_df <- df |>
               mutate(across(everything(),
                             \(.x) {
                               if (params@scale_method == "zscore") {
                                 scale(.x,
-                                      params@mean_vals[cur_column()],
-                                      params@sd_vals[cur_column()])
+                                      mean_vals[cur_column()],
+                                      sd_vals[cur_column()])
                               } else if (params@scale_method == "minmax") {
                                 ml_norm(.x,
-                                        params@min_vals[cur_column()],
-                                        params@max_vals[cur_column()])
+                                        min_vals[cur_column()],
+                                        max_vals[cur_column()])
                               } else {
                                 .x
                               }

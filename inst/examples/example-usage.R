@@ -42,8 +42,12 @@ get_x_test(foo, type="both") # default is both
 get_x_test(foo) # default is both
 get_x_test(foo, type="none")
 
+get_x_train(foo)
+
 get_y_test(foo)
-get_y_all(foo, type="scale")
+
+get_y_all(foo)
+get_y_all(foo, type="transform")
 
 get_x_all(foo)
 get_y_all(foo)

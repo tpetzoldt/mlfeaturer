@@ -17,7 +17,7 @@ df <- tibble(
 # ToDo: correct handling of parameters after transformation
 
 transformations <- list(
-   x = \(x) 2 + sqrt(5 + x),
+  x = \(x) 2 + sqrt(5 + x),
   y = \(y) log(y) + 2
 )
 
@@ -27,13 +27,13 @@ plot(y ~ x, data=df, type="p")
 
 ## split data into training and test sets
 td <- df |> create_preprocessed_data(id_col = "id", target_col = "y",
-                               scale_method = "minmax",
-                               fun_transform = transformations,
+                               scale_method = "zscore",
+                               #fun_transform = transformations,
                                split_col = "split")
 
 
 ## transform + scale or both is broken
-plot(get_x_all(td, type="both"), get_y_all(td))
+plot(get_x_all(td), get_y_all(td))
 
 ## build a Keras model
 model <- keras_model_sequential(input_shape = c(1), input_dtype = "float32") |>
