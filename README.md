@@ -18,7 +18,7 @@ tutorials, and full-fledged packages like
 [recipes](https://recipes.tidymodels.org/) or
 [mlr3](https://mlr3.mlr-org.com/).
 
-It uses S4 object orientation, is intentionally simple and mostly
+It uses R's S4 object orientation, is intentionally simple and mostly
 intended for our own tasks.
 
 ## Installation
@@ -26,6 +26,10 @@ intended for our own tasks.
 ```
 remotes::install_.packages_github("https://github.com/tpetzoldt/mlfeaturer")
 ```
+
+## Documentation
+
+The documentation is found on [https://tpetzoldt.github.io/mlfeaturer/](https://tpetzoldt.github.io/mlfeaturer/).
 
 ## Status
 

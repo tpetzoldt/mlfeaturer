@@ -19,10 +19,6 @@ library("dplyr")
 Introduction
 ============
 
-# mlfeaturer
-
-## Machine Learning: Feature Engineering for Regression Models
-
 Package **mlfeaturer** aims to provide data manipulation support for a
 subset of machine learning problems, currently regression problems
 with multiple input variables $x$ and a single input variable and a
@@ -72,5 +68,4 @@ References
 
 ----
 
-**Copyright and original author:** [tpetzoldt](https://github.com/tpetzoldt)
 
