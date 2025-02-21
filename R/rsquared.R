@@ -16,7 +16,7 @@
 #' @export
 setGeneric("rsquared", function(object, ...) standardGeneric("rsquared"))
 
-#' @describeIn rsquared Method for estimating the coefficient of determinationof
+#' @describeIn rsquared Method for estimating the coefficient of determination of
 #'   a model for a `preproc_data` object.
 setMethod("rsquared", signature(object = "preproc_data"),
           function(object, model, type = c("all", "test", "train"), ...) {

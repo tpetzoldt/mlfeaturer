@@ -26,6 +26,7 @@ Collate:
     'get.R'
     'get_id.R'
     'inverse_transform.R'
+    'ml_evaluate.R'
     'predict.R'
     'residuals.R'
     'rsquared.R'

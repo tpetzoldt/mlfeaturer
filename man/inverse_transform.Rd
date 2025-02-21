@@ -21,6 +21,8 @@ inverse_transform(object, params, funs, ...)
 \item{params}{A `preproc_params` object with transformation and scaling parameters}
 
 \item{funs}{A list of inverse data transformation functions.}
+
+\item{...}{Additional arguments (currently not used).}
 }
 \value{
 A `preproc_data` object or a `data.frame` with the inverse transformed data.

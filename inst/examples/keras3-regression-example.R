@@ -112,9 +112,17 @@ yy <- as.matrix(inverse_transform(data.frame(y = predictions_all), td@params))
 
 plot(yy, get_y_all(td, type="none"))
 abline(a=0, b=1, col="red", lwd=3)
+
+
+ml_evaluate(td, model)
+
+
+
 # ## Save fitted model
 # save_model(model, "test-regression-model.keras")
 #
 # ## Load model
 # loaded_model <- load_model("test-regression-model.keras")
+
+
 

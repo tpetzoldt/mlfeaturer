@@ -30,7 +30,7 @@ Currently only certain Keras models can be used as fitted models.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{rsquared(preproc_data)}: Method for estimating the coefficient of determinationof
+\item \code{rsquared(preproc_data)}: Method for estimating the coefficient of determination of
 a model for a `preproc_data` object.
 
 }}

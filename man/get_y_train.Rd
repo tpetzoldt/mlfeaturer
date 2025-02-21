@@ -19,7 +19,7 @@ get_y_train(object, ...)
 \item{...}{Additional arguments (currently not used).}
 
 \item{type}{Character argument if transformed data ("transform"),
-scaled data ("scale" ), transfored and scaled data ("both") or
+scaled data ("scale" ), transformed and scaled data ("both") or
 original raw data ("none") will be returned.}
 
 \item{as_matrix}{logical TRUE if the function should return matrix,
