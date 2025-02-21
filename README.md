@@ -25,7 +25,7 @@ intended for our own tasks.
 
 ```
 remotes::install_.packages_github("https://github.com/tpetzoldt/mlfeaturer")
-`` 
+```
 
 ## Status
 
