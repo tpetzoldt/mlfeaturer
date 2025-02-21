@@ -12,7 +12,7 @@ URL: https://tpetzoldt.github.io/mlfeaturer/
 License: GPL (>= 2)
 Depends: R (>= 4.1.0)
 Imports: dplyr, stats, graphics, utils, methods, tidyr, purrr, lubridate, 
-  knitr, jsonlite
+  knitr, jsonlite, quarto
 Suggests: keras3
 Encoding: UTF-8
 LazyData: true
