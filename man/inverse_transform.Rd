@@ -17,9 +17,13 @@ inverse_transform(object, params, funs, ...)
 }
 \arguments{
 \item{object}{A `preproc_data` object.}
+
+\item{params}{A `preproc_params` object with transformation and scaling parameters}
+
+\item{funs}{A list of inverse data transformation functions.}
 }
 \value{
-A `preproc_data` object with the inverse transformed data.
+A `preproc_data` object or a `data.frame` with the inverse transformed data.
 }
 \description{
 Applies the inverse transformation to the data.

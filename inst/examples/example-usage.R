@@ -1,5 +1,5 @@
 # Example Usage
-library(mlfeatr)
+library(mlfeaturer)
 library(dplyr)
 
 df <- tibble(

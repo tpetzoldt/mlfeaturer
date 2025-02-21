@@ -5,6 +5,7 @@
 \alias{transform_data,preproc_data,ANY,ANY-method}
 \alias{transform_data,preproc_data,missing,list-method}
 \alias{transform_data,data.frame,preproc_params,missing-method}
+\alias{transform_data,data.frame,missing,list-method}
 \title{Transform Data}
 \usage{
 transform_data(object, params, funs, ...)
@@ -14,16 +15,20 @@ transform_data(object, params, funs, ...)
 \S4method{transform_data}{preproc_data,missing,list}(object, params, funs, ...)
 
 \S4method{transform_data}{data.frame,preproc_params,missing}(object, params, funs, ...)
+
+\S4method{transform_data}{data.frame,missing,list}(object, params, funs, ...)
 }
 \arguments{
 \item{object}{A `preproc_data` object or a data frame.}
 
-\item{params}{A `preproc_params` object with scaling parameters}
+\item{params}{A `preproc_params` object with transformation and scaling parameters}
+
+\item{funs}{A list of data transformation functions .}
 
 \item{...}{Additional arguments (currently not used).}
 }
 \value{
-A `preproc_data` object with the transformed data.
+A `preproc_data` object or a `data.frame` with the transformed data.
 }
 \description{
 Transforms the data using the provided functions.
@@ -35,5 +40,7 @@ Transforms the data using the provided functions.
 \item \code{transform_data(object = preproc_data, params = missing, funs = list)}: Method for transforming data in a `preproc_data` object and user-defined functions (deprecated).
 
 \item \code{transform_data(object = data.frame, params = preproc_params, funs = missing)}: Method for a `data frame`.
+
+\item \code{transform_data(object = data.frame, params = missing, funs = list)}: Method for a `data frame`.
 
 }}

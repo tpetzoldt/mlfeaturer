@@ -3,8 +3,11 @@
 #' @description Applies the inverse transformation to the data.
 #'
 #' @param object A `preproc_data` object.
+#' @param params A `preproc_params` object with transformation and scaling parameters
+#' @param funs A list of inverse data transformation functions.
+#' @return A `preproc_data` object or a `data.frame` with the inverse transformed data.
+#' @param ... Additional arguments (currently not used).
 #'
-#' @return A `preproc_data` object with the inverse transformed data.
 #' @export
 setGeneric("inverse_transform", function(object, params, funs, ...) standardGeneric("inverse_transform"))
 
@@ -15,6 +18,7 @@ setMethod("inverse_transform", signature = c(object = "preproc_data"),
             if (object@params@transformed) {
               df <- object@data
               funs <- object@params@fun_inverse
+              if (is.null(funs)) warning("Inverse transformations not available")
               for (col in intersect(names(df), names(funs))) {
                 df <- df |>
                   mutate(across(all_of(col), .fns = funs[[col]]))
@@ -34,6 +38,7 @@ setMethod("inverse_transform", signature = c(object = "preproc_data"),
 setMethod("inverse_transform", signature = c(object = "preproc_data", funs = "list", params = "missing"),
           function(object, funs, ...) {
             df <- object@data
+            if (is.null(funs)) warning("Inverse transformations not available")
             for (col in intersect(names(df), names(funs))) {
               df <- df |>
                 mutate(across(all_of(col), .fns = funs[[col]]))
@@ -48,6 +53,7 @@ setMethod("inverse_transform", signature = c(object = "data.frame", funs="missin
           function(object, params, ...) {
             df <- object
             funs <- params@fun_inverse
+            if (is.null(funs)) warning("Inverse transformations not available")
             for (col in intersect(names(df), names(funs))) {
               df <- df |>
                 mutate(across(all_of(col), .fns = funs[[col]]))

@@ -3,7 +3,7 @@
 
 library(keras3)
 library(dplyr)
-library(mlfeatr)
+library(mlfeaturer)
 ## generate some  data
 set.seed(123)
 
@@ -17,9 +17,15 @@ df <- tibble(
 # ToDo: correct handling of parameters after transformation
 
 transformations <- list(
-  x = \(x) 2 + sqrt(5 + x),
-  y = \(y) log(y) + 2
+  x = \(x) sqrt(x),
+  y = \(y) log(y)
 )
+
+inverse_transformations <- list(
+  x = \(x) x^2,
+  y = \(y) exp(y)
+)
+
 
 head(df)
 
@@ -29,6 +35,7 @@ plot(y ~ x, data=df, type="p")
 td <- df |> create_preprocessed_data(id_col = "id", target_col = "y",
                                scale_method = "zscore",
                                fun_transform = transformations,
+                               fun_inverse = inverse_transformations,
                                split_col = "split")
 
 
@@ -89,20 +96,22 @@ points(get_x_train(td), predict(td, model, type="train"), col = "blue", pch=16)
 
 library(qualV)
 
-
+## multiple metrics, cf. Jachner et al.
 compareME(get_y_all(td), predict(td, model, "all"))
+
+## Nash-Sutcliffe efficiency
 EF(get_y_all(td), predict(td, model, "all"))
 
+## coefficient of determination
 rsquared(td, model, "train")
 rsquared(td, model, "all")
 rsquared(td, model, "test")
 
-pred_df = data.frame(y=predictions_all)
-
-yy <- as.matrix(transform_data(pred_df, td@params))
+## compare retransformed predictions in original space
+yy <- as.matrix(inverse_transform(data.frame(y = predictions_all), td@params))
 
 plot(yy, get_y_all(td, type="none"))
-
+abline(a=0, b=1, col="red", lwd=3)
 # ## Save fitted model
 # save_model(model, "test-regression-model.keras")
 #

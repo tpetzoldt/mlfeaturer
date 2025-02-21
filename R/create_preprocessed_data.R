@@ -64,6 +64,7 @@ create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
   scale_option <- match.arg(scale_option)
   scale_method <- match.arg(scale_method)
 
+
   ## define which columns to use
   cols_to_remove <- if (!is.null(id_col)) {
     c(id_col, split_col)
@@ -71,23 +72,36 @@ create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
     c(split_col)
   }
 
-  ## split data
-  train_data <- data |> dplyr::filter(.data[[split_col]])
-  test_data <- data |> dplyr::filter(!.data[[split_col]])
-  all_data <- data
-
   ## calculate scaling parameters
   data_for_scaling <-
     switch(scale_option,
-           train = train_data |> select(-all_of(cols_to_remove)),
-           test =  test_data  |> select(-all_of(cols_to_remove)),
-           both =  all_data   |> select(-all_of(cols_to_remove))
+           train = data |>
+             dplyr::filter(.data[[split_col]]) |>
+             select(-all_of(cols_to_remove)),
+           test =  data |>
+             dplyr::filter(!.data[[split_col]]) |>
+             select(-all_of(cols_to_remove)),
+           both =  data   |>
+              select(-all_of(cols_to_remove)),
     )
 
+  ## calculate scaling parameters for original data
   mean_vals <- apply(data_for_scaling, 2, mean)
   sd_vals   <- apply(data_for_scaling, 2, sd)
   min_vals  <- apply(data_for_scaling, 2, min)
   max_vals  <- apply(data_for_scaling, 2, max)
+
+
+  ## scale data when necessary
+  if (!is.null((fun_transform)))
+    data_for_scaling <- transform_data(data_for_scaling, funs = fun_transform)
+
+  ## calculate scaling parameters for transformed data
+  ## identical if no transformation was done
+  t_mean_vals <- apply(data_for_scaling, 2, mean)
+  t_sd_vals   <- apply(data_for_scaling, 2, sd)
+  t_min_vals  <- apply(data_for_scaling, 2, min)
+  t_max_vals  <- apply(data_for_scaling, 2, max)
 
 
   params <- new("preproc_params",
@@ -95,6 +109,9 @@ create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
                 scale_option = scale_option, scale_method = scale_method,
                 mean_vals = mean_vals, sd_vals = sd_vals,
                 min_vals = min_vals, max_vals = max_vals,
+                t_mean_vals = t_mean_vals, t_sd_vals = t_sd_vals,
+                t_min_vals = t_min_vals, t_max_vals = t_max_vals,
+
                 fun_transform = fun_transform, fun_inverse = fun_inverse,
                 transformed = FALSE)
 

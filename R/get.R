@@ -5,6 +5,9 @@
 #' @description Extracts the training data (X) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param type Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transfored and scaled data ("both") or
+#'  original raw data ("none") will be returned.
 #' @param as_matrix logical TRUE if the function should return matrix,
 #'   or a data frame or tibble otherwise.
 #' @param ... Additional arguments (currently not used).
@@ -18,6 +21,9 @@ setGeneric("get_x_train", function(object, ...) standardGeneric("get_x_train"))
 #' @description Extracts the test data (X) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param type Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transfored and scaled data ("both") or
+#'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
 #'   or a data frame or tibble otherwise.
 #' @param ... Additional arguments (currently not used).
@@ -31,6 +37,9 @@ setGeneric("get_x_test", function(object, ...) standardGeneric("get_x_test"))
 #' @description Extracts all the data (X) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param type Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transfored and scaled data ("both") or
+#'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
 #'   or a data frame or tibble otherwise.
 #' @param ... Additional arguments (currently not used).
@@ -44,6 +53,9 @@ setGeneric("get_x_all", function(object, ...) standardGeneric("get_x_all"))
 #' @description Extracts the training data (Y) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param type Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transfored and scaled data ("both") or
+#'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
 #'   or a data frame or tibble otherwise.
 #' @param ... Additional arguments (currently not used).
@@ -57,6 +69,9 @@ setGeneric("get_y_train", function(object, ...) standardGeneric("get_y_train"))
 #' @description Extracts the test data (Y) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param type Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transfored and scaled data ("both") or
+#'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
 #'   or a data frame or tibble otherwise.
 #' @param ... Additional arguments (currently not used).
@@ -70,6 +85,9 @@ setGeneric("get_y_test", function(object, ...) standardGeneric("get_y_test"))
 #' @description Extracts all the data (Y) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
+#' @param type Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transfored and scaled data ("both") or
+#'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
 #'   or a data frame or tibble otherwise.
 #' @param ... Additional arguments (currently not used).

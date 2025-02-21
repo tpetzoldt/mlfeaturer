@@ -20,13 +20,21 @@ An S4 class to store the parameters used in the preprocessing pipeline.
 
 \item{\code{scale_method}}{Character string specifying the scaling method ("scale", "norm").}
 
-\item{\code{mean_vals}}{Numeric vector storing the mean values for scaling.}
+\item{\code{mean_vals}}{Numeric vector storing the mean values for z-score scaling.}
 
-\item{\code{sd_vals}}{Numeric vector storing the standard deviation values for scaling.}
+\item{\code{sd_vals}}{Numeric vector storing the standard deviation values for z-score scaling.}
 
-\item{\code{min_vals}}{Numeric vector storing the minimum values for normalization.}
+\item{\code{min_vals}}{Numeric vector storing the minimum values for minmax normalization.}
 
-\item{\code{max_vals}}{Numeric vector storing the maximum values for normalization.}
+\item{\code{max_vals}}{Numeric vector storing the maximum values for minmax normalization.}
+
+\item{\code{t_mean_vals}}{Numeric vector storing the mean of transformed values for z-score scaling.}
+
+\item{\code{t_sd_vals}}{Numeric vector storing the standard deviation of transformed values for z-score scaling.}
+
+\item{\code{t_min_vals}}{Numeric vector storing the minimum values of transformed for minmax normalization.}
+
+\item{\code{t_max_vals}}{Numeric vector storing the maximum values of transformed for minmax normalization.}
 
 \item{\code{fun_transform}}{List of functions for data transformation.}
 

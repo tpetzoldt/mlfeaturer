@@ -3,12 +3,11 @@
 #' @description Transforms the data using the provided functions.
 #'
 #' @param object A `preproc_data` object or a data frame.
-#' @param params A `preproc_params` object with scaling parameters
+#' @param params A `preproc_params` object with transformation and scaling parameters
+#' @param funs A list of data transformation functions .
 #' @param ... Additional arguments (currently not used).
-
-
 #'
-#' @return A `preproc_data` object with the transformed data.
+#' @return A `preproc_data` object or a `data.frame` with the transformed data.
 #'
 #' @include aaa_classes.R
 #'
@@ -52,8 +51,16 @@ setMethod("transform_data", signature = c(object = "data.frame", funs="missing",
               df <- df |>
                 mutate(across(all_of(col), .fns = funs[[col]]))
             }
-            #object@params@transformed <- TRUE
-            #object@data <- df
-            #return(object)
+            return(df)
+          })
+
+#' @describeIn transform_data Method for a `data frame`.
+setMethod("transform_data", signature = c(object = "data.frame", funs="list", params="missing"),
+          function(object, funs, ...) {
+            df <- object
+            for (col in intersect(names(df), names(funs))) {
+              df <- df |>
+                mutate(across(all_of(col), .fns = funs[[col]]))
+            }
             return(df)
           })

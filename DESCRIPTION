@@ -19,11 +19,11 @@ LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Collate: 
-    'mlfeatr-package.R'
+    'mlfeaturer-package.R'
     'aaa_classes.R'
     'as.list.R'
     'create_preprocessed_data.R'
-    'feat.R'
+    'get.R'
     'get_id.R'
     'inverse_transform.R'
     'predict.R'
