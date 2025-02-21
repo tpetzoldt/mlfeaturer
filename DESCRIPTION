@@ -16,7 +16,7 @@ Imports: dplyr, stats, graphics, utils, methods, tidyr, purrr, lubridate,
 Suggests: keras3
 Encoding: UTF-8
 LazyData: true
-VignetteBuilder: knitr
+VignetteBuilder: quarto
 RoxygenNote: 7.3.2
 Collate: 
     'mlfeaturer-package.R'

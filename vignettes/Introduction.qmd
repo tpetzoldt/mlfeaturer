@@ -2,32 +2,17 @@
 title: "Transformation of Features with Package mlfeaturer"
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
-output: 
-  rmarkdown::html_vignette:
-    toc: yes
-    number_sections: yes  
 bibliography: bib.bib
 vignette: >
   %\VignetteIndexEntry{Transformation of Features with Package mlfeaturer}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
 ---
 
 
 ```{r opts, echo = FALSE, message = FALSE}
 library("dplyr")
 ```
-
-<!--
-possible output options are:
-rmarkdown::pdf_document
-rmarkdown::html_vignette
-
-set to UTF if necessary with:
-%\VignetteEncoding{UTF-8}
-
-Bibliographies may need to set the LANG environment variable
-LANG=en_US.UTF-8
--->
 
 
 

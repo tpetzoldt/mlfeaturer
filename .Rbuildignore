@@ -3,3 +3,4 @@
 ^\.Rproj\.user$
 .gitignore
 LICENSE
+^vignettes/*_files$
