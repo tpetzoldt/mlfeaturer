@@ -1,5 +1,5 @@
 ---
-title: "Transformation of Features with Package mlfeatr"
+title: "Transformation of Features with Package mlfeaturer"
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
 output: 
@@ -8,7 +8,7 @@ output:
     number_sections: yes  
 bibliography: bib.bib
 vignette: >
-  %\VignetteIndexEntry{Transformation of Features with Package mlfeatr}
+  %\VignetteIndexEntry{Transformation of Features with Package mlfeaturer}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 

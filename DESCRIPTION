@@ -1,8 +1,8 @@
-Package: mlfeatr
+Package: mlfeaturer
 Type: Package
 Title: Machine Learning Feature Engineering with R
-Version: 0.1.2
-Date: 2025-02-19
+Version: 0.1.3
+Date: 2025-02-21
 Authors@R: c(person("Thomas","Petzoldt", role = c("aut", "cre"),
                      email = "thomas.petzoldt@tu-dresden.de",
                      comment = c(ORCID = "0000-0002-4951-6468")))

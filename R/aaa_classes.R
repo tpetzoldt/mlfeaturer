@@ -4,7 +4,7 @@
 #'
 #' @name list_or_NULL-class
 #'
-#' @include mlfeatr-package.R
+#' @include mlfeaturer-package.R
 #'
 #' @exportClass list_or_NULL
 #'
