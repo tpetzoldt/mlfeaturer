@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   Introduction: Introduction.html
-last_built: 2025-02-21T17:42Z
+last_built: 2025-02-21T17:46Z
 urls:
   reference: https://tpetzoldt.github.io/mlfeaturer/reference
   article: https://tpetzoldt.github.io/mlfeaturer/articles
