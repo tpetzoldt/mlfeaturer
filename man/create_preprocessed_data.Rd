@@ -6,9 +6,9 @@
 \usage{
 create_preprocessed_data(
   data,
-  id_col = NULL,
   target_col,
-  split_col,
+  id_col = NULL,
+  split_col = NULL,
   scale_option = c("train", "test", "both"),
   scale_method = c("zscore", "minmax"),
   fun_transform = NULL,
@@ -18,9 +18,9 @@ create_preprocessed_data(
 \arguments{
 \item{data}{A data frame containing the raw data.}
 
-\item{id_col}{Character vector specifying the name of the ID column (optional).}
-
 \item{target_col}{Character vector specifying the name of the target variable column.}
+
+\item{id_col}{Character vector specifying the name of the ID column (optional).}
 
 \item{split_col}{Character vector specifying the name of the column used for
 train/test split.}

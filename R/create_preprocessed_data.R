@@ -28,6 +28,10 @@
 #' If `fun_transform` is provided, it applies the specified transformations to
 #' the data before creating the object.
 #'
+#' If no `id_col` is given, an additional column `id` with row numers is created.
+#'
+#' If a `split_col` is missing, an random `split` column is created.
+#'
 #' @examples
 #' # Example usage (replace with your actual data and column names)
 #' df <- data.frame(
@@ -56,13 +60,31 @@
 #' print(prep_data)
 #'
 #' @export
-create_preprocessed_data <- function(data, id_col = NULL, target_col, split_col,
+create_preprocessed_data <- function(data, target_col,
+                                     id_col = NULL, split_col = NULL,
                                      scale_option = c("train", "test", "both"),
-                                     scale_method = c("zscore", "minmax"),
+                                     scale_method = c("zscore", "minmax", "none"),
                                      fun_transform = NULL, fun_inverse = NULL) {
 
   scale_option <- match.arg(scale_option)
   scale_method <- match.arg(scale_method)
+
+  ## dummy
+  if (is.null(fun_transform)) fun_transform <- list(x=\(x) x)
+
+  if (is.null(id_col)) {
+    if ("id" %in% names(data)) error('Column "id" not set as "id_col".')
+    data <- data |>
+      mutate(id = 1:n())
+    id_col <- "id"
+  }
+
+  if (is.null(split_col)) {
+    if ("split" %in% names(data)) error('Column "split" not set as "split_col".')
+    data <- data |>
+      mutate(split = sample(c(TRUE, FALSE), n(), replace = TRUE))
+    split_col <- "split"
+  }
 
 
   ## define which columns to use

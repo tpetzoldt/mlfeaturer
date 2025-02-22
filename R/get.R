@@ -96,6 +96,22 @@ setGeneric("get_y_test", function(object, ...) standardGeneric("get_y_test"))
 #' @export
 setGeneric("get_y_all", function(object, ...) standardGeneric("get_y_all"))
 
+#' @title Get All Data (X and Y)
+#'
+#' @description Access complete data set from the preprocessed data.
+#'
+#' @param object A `preproc_data` object.
+#' @param type Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transformed and scaled data ("both") or
+#'  original raw data ("none") will be returned.
+#' @param as_matrix  logical TRUE if the function should return matrix,
+#'   or a data frame or tibble otherwise.
+#' @param ... Additional arguments (currently not used).
+#'
+#' @return A data frame or matrix containing all data, including `id_col` and `split_col`.
+#' @export
+setGeneric("get_data", function(object, ...) standardGeneric("get_data"))
+
 
 #' @describeIn get_x_train Method for extracting training data (X).
 setMethod("get_x_train", signature = "preproc_data",
@@ -216,3 +232,26 @@ setMethod("get_y_all", signature = "preproc_data",
             }
           })
 
+
+#' @describeIn get_data Method for extracting all data.
+setMethod("get_data", signature = "preproc_data",
+          function(object, type = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+            type = match.arg(type)
+            params <- object@params
+            df <- object@data
+            cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
+            xy_all <- df |>
+              select(-all_of(cols_to_remove)) |>
+              (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
+              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
+
+            ## combine transformed/scaled columns with id, target and split
+            xy_all <- bind_cols(xy_all, select(df, all_of(cols_to_remove))) |>
+              select(names(df)) # restore original order
+
+            if (as_matrix) {
+              return(as.matrix(xy_all))
+            } else {
+              return(xy_all)
+            }
+          })

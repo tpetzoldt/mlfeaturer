@@ -12,7 +12,7 @@ transformation, scaling, and inverse transformation.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/tpetzoldt/mlfeatr}
+  \item \url{https://tpetzoldt.github.io/mlfeaturer/}
 }
 
 }
