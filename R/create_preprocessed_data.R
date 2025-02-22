@@ -69,8 +69,8 @@ create_preprocessed_data <- function(data, target_col,
   scale_option <- match.arg(scale_option)
   scale_method <- match.arg(scale_method)
 
-  ## dummy
-  if (is.null(fun_transform)) fun_transform <- list(x=\(x) x)
+  ## dummy bugfix
+  #if (is.null(fun_transform)) fun_transform <- list(x=\(x) x)
 
   if (is.null(id_col)) {
     if ("id" %in% names(data)) error('Column "id" not set as "id_col".')

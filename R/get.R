@@ -125,7 +125,8 @@ setMethod("get_x_train", signature = "preproc_data",
               dplyr::filter(!.data[[params@split_col]]) |>
               select(-all_of(cols_to_remove)) |>
               (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
+              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(x_train))
@@ -145,7 +146,8 @@ setMethod("get_x_test", signature = "preproc_data",
               dplyr::filter(.data[[params@split_col]]) |>
               select(-all_of(cols_to_remove))  |>
               (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
+              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(x_test))
@@ -164,7 +166,8 @@ setMethod("get_x_all", signature = "preproc_data",
             x_all <- df |>
               select(-all_of(cols_to_remove)) |>
               (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
+              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(x_all))
@@ -184,7 +187,8 @@ setMethod("get_y_train", signature = "preproc_data",
               dplyr::filter(!.data[[params@split_col]]) |>
               select(all_of(params@target_col)) |>
               (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
+              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(y_train))
@@ -204,7 +208,8 @@ setMethod("get_y_test", signature = "preproc_data",
               dplyr::filter(.data[[params@split_col]]) |>
               select(all_of(params@target_col)) |>
               (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
+              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(y_test))
@@ -223,7 +228,8 @@ setMethod("get_y_all", signature = "preproc_data",
             y_all <- df |>
               select(all_of(params@target_col)) |>
               (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
+              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(y_all))
@@ -239,13 +245,14 @@ setMethod("get_data", signature = "preproc_data",
             type = match.arg(type)
             params <- object@params
             df <- object@data
-            cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
+            cols_to_remove <- c(params@id_col, params@split_col)
             xy_all <- df |>
               select(-all_of(cols_to_remove)) |>
               (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("both", "scale")) scale_x(., params) else .)()
+              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
-            ## combine transformed/scaled columns with id, target and split
+            # combine transformed/scaled columns with id, target and split
             xy_all <- bind_cols(xy_all, select(df, all_of(cols_to_remove))) |>
               select(names(df)) # restore original order
 

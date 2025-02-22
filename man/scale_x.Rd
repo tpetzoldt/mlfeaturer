@@ -10,12 +10,12 @@ scale_x(object, params, ...)
 
 \S4method{scale_x}{preproc_data,missing}(object, params, ...)
 
-\S4method{scale_x}{data.frame,preproc_params}(object, params, ...)
+\S4method{scale_x}{data.frame,preproc_params}(object, params, transformed = FALSE, ...)
 }
 \arguments{
 \item{object}{A `preproc_data` object or a data frame.}
 
-\item{params}{n `preproc_params` object with scaling parameters}
+\item{params}{transform `TRUE` to use parameters of transformed data}
 
 \item{...}{Additional arguments (currently not used).}
 }

@@ -10,7 +10,7 @@ create_preprocessed_data(
   id_col = NULL,
   split_col = NULL,
   scale_option = c("train", "test", "both"),
-  scale_method = c("zscore", "minmax"),
+  scale_method = c("zscore", "minmax", "none"),
   fun_transform = NULL,
   fun_inverse = NULL
 )
@@ -52,6 +52,10 @@ based on the specified `scale_option` and `scale_method`. It then creates a
 `preproc_data` object, storing the original data and the calculated parameters.
 If `fun_transform` is provided, it applies the specified transformations to
 the data before creating the object.
+
+If no `id_col` is given, an additional column `id` with row numers is created.
+
+If a `split_col` is missing, an random `split` column is created.
 }
 \examples{
 # Example usage (replace with your actual data and column names)
