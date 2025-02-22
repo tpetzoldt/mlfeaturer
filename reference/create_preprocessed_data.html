@@ -9,7 +9,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mlfeaturer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,8 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Introduction.html">Transformation of Features with Package mlfeaturer</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/ann-simple.html">Neural Networks with nnet</a></li>
+    <li><a class="dropdown-item" href="../articles/Introduction.html">Transformation of Features with Package mlfeaturer</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -46,11 +47,11 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_preprocessed_data</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
-<span>  id_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">target_col</span>,</span>
-<span>  <span class="va">split_col</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  split_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  scale_option <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"train"</span>, <span class="st">"test"</span>, <span class="st">"both"</span><span class="op">)</span>,</span>
-<span>  scale_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"zscore"</span>, <span class="st">"minmax"</span><span class="op">)</span>,</span>
+<span>  scale_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"zscore"</span>, <span class="st">"minmax"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  fun_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fun_inverse <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -64,12 +65,12 @@
 <dd><p>A data frame containing the raw data.</p></dd>
 
 
-<dt id="arg-id-col">id_col<a class="anchor" aria-label="anchor" href="#arg-id-col"></a></dt>
-<dd><p>Character vector specifying the name of the ID column (optional).</p></dd>
-
-
 <dt id="arg-target-col">target_col<a class="anchor" aria-label="anchor" href="#arg-target-col"></a></dt>
 <dd><p>Character vector specifying the name of the target variable column.</p></dd>
+
+
+<dt id="arg-id-col">id_col<a class="anchor" aria-label="anchor" href="#arg-id-col"></a></dt>
+<dd><p>Character vector specifying the name of the ID column (optional).</p></dd>
 
 
 <dt id="arg-split-col">split_col<a class="anchor" aria-label="anchor" href="#arg-split-col"></a></dt>
@@ -110,6 +111,8 @@ based on the specified `scale_option` and `scale_method`. It then creates a
 `preproc_data` object, storing the original data and the calculated parameters.
 If `fun_transform` is provided, it applies the specified transformations to
 the data before creating the object.</p>
+<p>If no `id_col` is given, an additional column `id` with row numers is created.</p>
+<p>If a `split_col` is missing, an random `split` column is created.</p>
     </div>
 
     <div class="section level2">
@@ -209,12 +212,12 @@ the data before creating the object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (y) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sqrt(5 + y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5571d11d4b90&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x560e448ca558&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $z</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (z) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> z^2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5571d11d4b90&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x560e448ca558&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slot "fun_inverse":</span>
@@ -224,7 +227,7 @@ the data before creating the object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (y) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> y^2 - 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5571d11d4b90&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x560e448ca558&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $z</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x)  .Primitive("sqrt")</span>

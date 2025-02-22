@@ -11,7 +11,7 @@ Error (MAE), for different subsets of data (all, train, and test)."></head><body
 
     <a class="navbar-brand me-2" href="../index.html">mlfeaturer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +22,8 @@ Error (MAE), for different subsets of data (all, train, and test)."></head><body
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Introduction.html">Transformation of Features with Package mlfeaturer</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/ann-simple.html">Neural Networks with nnet</a></li>
+    <li><a class="dropdown-item" href="../articles/Introduction.html">Transformation of Features with Package mlfeaturer</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -53,8 +54,8 @@ Error (MAE), for different subsets of data (all, train, and test).</p>
 <span><span class="fu">ml_evaluate</span><span class="op">(</span></span>
 <span>  <span class="va">object</span>,</span>
 <span>  <span class="va">model</span>,</span>
-<span>  xtype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"scale"</span>, <span class="st">"transform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
-<span>  ytype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"transform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  xprep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"scale"</span>, <span class="st">"transform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  yprep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"scale"</span>, <span class="st">"transform"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -75,13 +76,13 @@ Error (MAE), for different subsets of data (all, train, and test).</p>
 <dd><p>Additional arguments (currently ignored).</p></dd>
 
 
-<dt id="arg-xtype">xtype<a class="anchor" aria-label="anchor" href="#arg-xtype"></a></dt>
+<dt id="arg-xprep">xprep<a class="anchor" aria-label="anchor" href="#arg-xprep"></a></dt>
 <dd><p>Character argument if transformed input data ("transform"),
 scaled data ("scale" ), transformed and scaled data ("both") or
 original raw x data ("none") are used.</p></dd>
 
 
-<dt id="arg-ytype">ytype<a class="anchor" aria-label="anchor" href="#arg-ytype"></a></dt>
+<dt id="arg-yprep">yprep<a class="anchor" aria-label="anchor" href="#arg-yprep"></a></dt>
 <dd><p>Character argument if transformed target values ("transform") or
 original raw y-values ("none") are used.</p></dd>
 
@@ -94,8 +95,8 @@ original raw y-values ("none") are used.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The `xtype` must be exactly the same that was used as input for the
-  fitted model, while `ytype` may be "transform" (the scale used for model
+    <p>The `xprep` must be exactly the same that was used as input for the
+  fitted model, while `yprep` may be "transform" (the scale used for model
   fitting) or "none", i.e. the original scale.</p>
     </div>
     <div class="section level2">
