@@ -179,8 +179,8 @@ setMethod("get_x_all", signature = "preproc_data",
 #' @describeIn get_y_train Method for extracting training data (Y).
 setMethod("get_y_train", signature = "preproc_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+
             prep = match.arg(prep)
-            #if (prep %in% c("both", "scale")) warning("scaling not implemented for y")
             params <- object@params
             df <- object@data
             y_train <- df |>
@@ -200,8 +200,8 @@ setMethod("get_y_train", signature = "preproc_data",
 #' @describeIn get_y_test Method for extracting test data (Y).
 setMethod("get_y_test", signature = "preproc_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+
             prep = match.arg(prep)
-            #if (prep %in% c("both", "scale")) warning("scaling not implemented for y")
             params <- object@params
             df <- object@data
             y_test <- df |>

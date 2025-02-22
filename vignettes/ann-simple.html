@@ -9,7 +9,7 @@
 <meta name="author" content="Thomas Petzoldt">
 <meta name="dcterms.date" content="2025-02-22">
 
-<title>Transformation of Features with Package mlfeaturer</title>
+<title>Neural Networks with nnet</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,7 +54,7 @@ margin-left: 2em;
 
 
 <header id="title-block-header">
-<h1 class="title">Transformation of Features with Package mlfeaturer</h1>
+<h1 class="title">Neural Networks with nnet</h1>
 <p class="author">Thomas Petzoldt</p>
 
 <p class="date">2025-02-22</p>
@@ -63,7 +63,7 @@ margin-left: 2em;
 
 <h1 id="introduction">Introduction</h1>
 <p>In the following, we show how to use <strong>mlfeaturer</strong> in the context of a simple artificial neural network (ANN).</p>
-<p>The data set was digitized from figures of <span class="citation" data-cites="dauta1990">(<strong>dauta1990?</strong>)</span>, who analyzed growth rate dependency of four algae species on light intensity at different temperatures. Now, we aim to create a regression model to predict growth rate (<span class="math inline"><em>μ</em></span>)) at any values of light and temperature within the measured range for each species. To save space, we demonstrate the procedure for only two of the four species.</p>
+<p>The data set was digitized from figures of <span class="citation" data-cites="Dauta1990">Dauta et al. (1990)</span>, who analyzed growth rate dependency of four algae species on light intensity at different temperatures. Now, we aim to create a regression model to predict growth rate (<span class="math inline"><em>μ</em></span>)) at any values of light and temperature within the measured range for each species. To save space, we demonstrate the procedure for only two of the four species.</p>
 <p>The data can also be fitted with parametric models instead of ML techniques. This is explained in another tutorial.</p>
 <h1 id="package-installation">Package installation</h1>
 <p>To install the package, first install <strong>remotes</strong> from CRAN. Then install <strong>mlfeatures</strong> from Github:</p>
@@ -74,6 +74,9 @@ margin-left: 2em;
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-rmarkdown" class="csl-entry" role="listitem">
 Allaire, JJ, Yihui Xie, Christophe Dervieux, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, et al. 2024. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://github.com/rstudio/rmarkdown">https://github.com/rstudio/rmarkdown</a>.
+</div>
+<div id="ref-Dauta1990" class="csl-entry" role="listitem">
+Dauta, Alain, Jean Devaux, Françoise Piquemal, and Lhoussaine Boumnich. 1990. <span>“Growth Rate of Four Algae in Relation to Light and Temperature.”</span> <em>Hydrobiologia</em> 207: 221–26. <a href="https://doi.org/10.1007/BF00041459">https://doi.org/10.1007/BF00041459</a>.
 </div>
 <div id="ref-RCore2024" class="csl-entry" role="listitem">
 R Core Team. 2024. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
