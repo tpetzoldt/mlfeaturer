@@ -1,0 +1,58 @@
+---
+title: "Transformation of Features with Package mlfeaturer"
+author: "Thomas Petzoldt"
+date: "`r Sys.Date()`"
+bibliography: bib.bib
+vignette: >
+  %\VignetteIndexEntry{Transformation of Features with Package mlfeaturer}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r opts, echo = FALSE, message = FALSE}
+library("dplyr")
+```
+
+
+
+Introduction
+============
+
+In the following, we show how to use **mlfeaturer** in the context of a simple 
+artificial neural network (ANN). 
+
+The data set was digitized from figures of @Dauta1990, who analyzed growth rate dependency of four algae species on light intensity at different temperatures. Now, we aim to create a regression model to predict growth rate ($\mu$)) at any values of light and temperature within the measured range for each species. To save space, we demonstrate the procedure for only two of the four species.
+
+The data can also be fitted with parametric models instead of ML techniques. This is explained in another tutorial.
+
+Package installation
+====================
+
+To install the package, first install **remotes** from CRAN. Then install 
+**mlfeatures** from Github:
+
+```
+remotes::install_.packages_github("https://github.com/tpetzoldt/mlfeaturer")
+```
+
+
+
+
+Acknowledgments
+===============
+
+Many thanks to the R Core Team
+[@RCore2024] for developing and maintaining **R**. This documentation
+was written using **knitr** [@knitr] and **rmarkdown**
+[@rmarkdown].
+
+
+References
+==========
+
+<div id="refs"></div>
+
+----
+
+
