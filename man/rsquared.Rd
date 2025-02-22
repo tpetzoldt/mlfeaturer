@@ -7,7 +7,13 @@
 \usage{
 rsquared(object, ...)
 
-\S4method{rsquared}{preproc_data}(object, model, type = c("all", "test", "train"), ...)
+\S4method{rsquared}{preproc_data}(
+  object,
+  model,
+  subset = c("all", "test", "train"),
+  prep = c("both", "scale", "transform", "none"),
+  ...
+)
 }
 \arguments{
 \item{object}{A `preproc_data` object.}
@@ -16,7 +22,11 @@ rsquared(object, ...)
 
 \item{model}{A fitted model object.}
 
-\item{type}{Subset of the `preproc` data set.}
+\item{subset}{Subset of the `preproc` data set.}
+
+\item{prep}{Character argument if transformed data ("transform"),
+scaled data ("scale" ), transformed and scaled data ("both") or
+original raw data ("none") will be returned.}
 }
 \value{
 The coefficient of determination.

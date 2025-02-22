@@ -9,7 +9,7 @@ get_x_train(object, ...)
 
 \S4method{get_x_train}{preproc_data}(
   object,
-  type = c("both", "scale", "transform", "none"),
+  prep = c("both", "scale", "transform", "none"),
   as_matrix = TRUE
 )
 }
@@ -18,7 +18,7 @@ get_x_train(object, ...)
 
 \item{...}{Additional arguments (currently not used).}
 
-\item{type}{Character argument if transformed data ("transform"),
+\item{prep}{Character argument if transformed data ("transform"),
 scaled data ("scale" ), transformed and scaled data ("both") or
 original raw data ("none") will be returned.}
 

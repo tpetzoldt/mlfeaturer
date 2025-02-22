@@ -1,10 +1,10 @@
 ---
-title: "Transformation of Features with Package mlfeaturer"
+title: "Neural Networks with nnet"
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
 bibliography: bib.bib
 vignette: >
-  %\VignetteIndexEntry{Transformation of Features with Package mlfeaturer}
+  %\VignetteIndexEntry{Neural Networks with nnet}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---

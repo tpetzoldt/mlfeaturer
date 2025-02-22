@@ -4,7 +4,7 @@
 #'
 #' @param object A `preproc_data` object or a data frame.
 #' @param params n `preproc_params` object with scaling parameters
-#' @param params transform `TRUE` to use parameters of transformed data
+#' @param transformed `TRUE` to use parameters of transformed data.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A `preproc_data` object with the scaled data.

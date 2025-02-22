@@ -5,7 +5,10 @@
 #'
 #' @param object A `preproc_data` object.
 #' @param model A fitted model object.
-#' @param type Subset of the `preproc` data set.
+#' @param subset Subset of the `preproc` data set.
+#' @param prep Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transformed and scaled data ("both") or
+#'  original raw data ("none") will be returned.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return The coefficient of determination.
@@ -19,14 +22,17 @@ setGeneric("rsquared", function(object, ...) standardGeneric("rsquared"))
 #' @describeIn rsquared Method for estimating the coefficient of determination of
 #'   a model for a `preproc_data` object.
 setMethod("rsquared", signature(object = "preproc_data"),
-          function(object, model, type = c("all", "test", "train"), ...) {
-            type <- match.arg(type)
-            x <- switch(type,
+          function(object, model,
+		    subset = c("all", "test", "train"),
+		    prep = c("both", "scale", "transform", "none"), ...) {
+
+			subset <- match.arg(subset)
+            x <- switch(subset,
               all = get_x_all(object),
               train = get_x_train(object),
               test = get_x_test(object)
             )
-            y <- switch(type,
+            y <- switch(subset,
                         all = get_y_all(object),
                         train = get_y_train(object),
                         test = get_y_test(object)

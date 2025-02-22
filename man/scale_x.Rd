@@ -15,9 +15,11 @@ scale_x(object, params, ...)
 \arguments{
 \item{object}{A `preproc_data` object or a data frame.}
 
-\item{params}{transform `TRUE` to use parameters of transformed data}
+\item{params}{n `preproc_params` object with scaling parameters}
 
 \item{...}{Additional arguments (currently not used).}
+
+\item{transformed}{`TRUE` to use parameters of transformed data.}
 }
 \value{
 A `preproc_data` object with the scaled data.

@@ -18,26 +18,26 @@ dt4 <-
                            )
   )
 
-boxplot(tibble(none = get_y_all(dt4, type="none"),
-               scale = get_y_all(dt4, type="scale"),
-               transform = get_y_all(dt4, type="transform"),
-               both = get_y_all(dt4, type="both")),
+boxplot(tibble(none = get_y_all(dt4, prep="none"),
+               scale = get_y_all(dt4, prep="scale"),
+               transform = get_y_all(dt4, prep="transform"),
+               both = get_y_all(dt4, prep="both")),
         main="target y: growthrate")
 
-boxplot(tibble(none = get_x_all(dt4, type="none")[,"temperature"],
-              scale = get_x_all(dt4, type="scale")[,"temperature"],
-              transform = get_x_all(dt4, type="transform")[,"temperature"],
-              both = get_x_all(dt4, type="both")[,"temperature"]),
+boxplot(tibble(none = get_x_all(dt4, prep="none")[,"temperature"],
+              scale = get_x_all(dt4, prep="scale")[,"temperature"],
+              transform = get_x_all(dt4, prep="transform")[,"temperature"],
+              both = get_x_all(dt4, prep="both")[,"temperature"]),
         main="input x: temperature")
 
-get_data(dt4, type="none") |>
+get_data(dt4, prep="none") |>
   ggplot(aes(light, growthrate)) + geom_point() + facet_grid(species ~ temperature)
 
-get_data(dt4, type="scale") |>
+get_data(dt4, prep="scale") |>
   ggplot(aes(light, growthrate)) + geom_point() + facet_grid(species ~ temperature)
 
-get_data(dt4, type="transform") |>
+get_data(dt4, prep="transform") |>
   ggplot(aes(light, growthrate)) + geom_point() + facet_grid(species ~ temperature)
 
-get_data(dt4, type="both") |>
+get_data(dt4, prep="both") |>
   ggplot(aes(light, growthrate)) + geom_point() +  facet_grid(species ~ temperature)

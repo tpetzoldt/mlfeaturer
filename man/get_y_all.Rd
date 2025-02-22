@@ -9,7 +9,7 @@ get_y_all(object, ...)
 
 \S4method{get_y_all}{preproc_data}(
   object,
-  type = c("transform", "none", "scale", "both"),
+  prep = c("both", "scale", "transform", "none"),
   as_matrix = TRUE
 )
 }
@@ -18,7 +18,7 @@ get_y_all(object, ...)
 
 \item{...}{Additional arguments (currently not used).}
 
-\item{type}{Character argument if transformed data ("transform"),
+\item{prep}{Character argument if transformed data ("transform"),
 scaled data ("scale" ), transformed and scaled data ("both") or
 original raw data ("none") will be returned.}
 

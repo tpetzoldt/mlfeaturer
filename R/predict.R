@@ -4,7 +4,10 @@
 #'
 #' @param object A `preproc_data` object.
 #' @param model A fitted model object.
-#' @param type Subset of the `preproc` data set.
+#' @param subset Subset of the `preproc` data set.
+#' @param prep Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transformed and scaled data ("both") or
+#'  original raw data ("none") will be returned.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A matrix or vector with the predictions.
@@ -14,12 +17,15 @@
 #'
 #' @export
 setMethod("predict", signature(object = "preproc_data"),
-          function(object, model, type = c("all", "test", "train"), ...) {
-            type <- match.arg(type)
-            x <- switch(type,
-              all = get_x_all(object),
-              train = get_x_train(object),
-              test = get_x_test(object)
+          function(object, model,
+		    subset = c("all", "test", "train"),
+            prep = c("both", "scale", "transform", "none"), ...) {
+            subset <- match.arg(subset)
+			prep <- match.arg(prep)
+            x <- switch(subset,
+              all = get_x_all(object, prep = prep),
+              train = get_x_train(object, prep = prep),
+              test = get_x_test(object, prep = prep)
             )
             predict(model, x)
           })

@@ -39,21 +39,21 @@ L <- as(foo, "list")
 as.list(foo)
 
 
-get_x_test(foo, type="scale")
-get_x_test(foo, type="both") # default is both
+get_x_test(foo, prep="scale")
+get_x_test(foo, prep="both") # default is both
 get_x_test(foo) # default is both
-get_x_test(foo, type="transform")
-get_x_test(foo, type="none")
+get_x_test(foo, prep="transform")
+get_x_test(foo, prep="none")
 
 foo@data
-get_y_all(foo, type="none")
+get_y_all(foo, prep="none")
 
 get_y_all(foo) # transform is default
-get_y_all(foo, type="transform")
+get_y_all(foo, prep="transform")
 
 
-get_y_all(foo, type="scale")
-get_y_all(foo, type="both")
+get_y_all(foo, prep="scale")
+get_y_all(foo, prep="both")
 
 
 

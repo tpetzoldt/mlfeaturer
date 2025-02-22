@@ -91,8 +91,8 @@ cat("R2=", 1 - var(residuals)/var(get_y_test(td)), "\n")
 
 ## Compare data and predictions
 plot(get_x_test(td), get_y_test(td), main = "Regression Results", xlab = "X", ylab = "Y")
-points(get_x_test(td), predict(td, model, type="test"), col = "red", pch=16)
-points(get_x_train(td), predict(td, model, type="train"), col = "blue", pch=16)
+points(get_x_test(td), predict(td, model, subset="test"), col = "red", pch=16)
+points(get_x_train(td), predict(td, model, subset="train"), col = "blue", pch=16)
 
 library(qualV)
 

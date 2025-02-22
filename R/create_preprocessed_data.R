@@ -73,7 +73,7 @@ create_preprocessed_data <- function(data, target_col,
   #if (is.null(fun_transform)) fun_transform <- list(x=\(x) x)
 
   if (is.null(id_col)) {
-    if ("id" %in% names(data)) error('Column "id" not set as "id_col".')
+    if ("id" %in% names(data)) stop('Column "id" not set as "id_col".')
     data <- data |>
       mutate(id = 1:n())
     id_col <- "id"

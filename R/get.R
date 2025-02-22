@@ -5,7 +5,7 @@
 #' @description Extracts the training data (X) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
-#' @param type Character argument if transformed data ("transform"),
+#' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
 #' @param as_matrix logical TRUE if the function should return matrix,
@@ -21,7 +21,7 @@ setGeneric("get_x_train", function(object, ...) standardGeneric("get_x_train"))
 #' @description Extracts the test data (X) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
-#' @param type Character argument if transformed data ("transform"),
+#' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
@@ -37,7 +37,7 @@ setGeneric("get_x_test", function(object, ...) standardGeneric("get_x_test"))
 #' @description Extracts all the data (X) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
-#' @param type Character argument if transformed data ("transform"),
+#' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
@@ -53,7 +53,7 @@ setGeneric("get_x_all", function(object, ...) standardGeneric("get_x_all"))
 #' @description Extracts the training data (Y) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
-#' @param type Character argument if transformed data ("transform"),
+#' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
@@ -69,7 +69,7 @@ setGeneric("get_y_train", function(object, ...) standardGeneric("get_y_train"))
 #' @description Extracts the test data (Y) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
-#' @param type Character argument if transformed data ("transform"),
+#' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
@@ -85,7 +85,7 @@ setGeneric("get_y_test", function(object, ...) standardGeneric("get_y_test"))
 #' @description Extracts all the data (Y) from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
-#' @param type Character argument if transformed data ("transform"),
+#' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
@@ -101,7 +101,7 @@ setGeneric("get_y_all", function(object, ...) standardGeneric("get_y_all"))
 #' @description Access complete data set from the preprocessed data.
 #'
 #' @param object A `preproc_data` object.
-#' @param type Character argument if transformed data ("transform"),
+#' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
 #' @param as_matrix  logical TRUE if the function should return matrix,
@@ -115,8 +115,8 @@ setGeneric("get_data", function(object, ...) standardGeneric("get_data"))
 
 #' @describeIn get_x_train Method for extracting training data (X).
 setMethod("get_x_train", signature = "preproc_data",
-          function(object, type = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
-            type = match.arg(type)
+          function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+            prep = match.arg(prep)
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
@@ -124,9 +124,9 @@ setMethod("get_x_train", signature = "preproc_data",
             x_train <- df |>
               dplyr::filter(!.data[[params@split_col]]) |>
               select(-all_of(cols_to_remove)) |>
-              (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
+              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(x_train))
@@ -137,17 +137,17 @@ setMethod("get_x_train", signature = "preproc_data",
 
 #' @describeIn get_x_test Method for extracting test data (X).
 setMethod("get_x_test", signature = "preproc_data",
-          function(object, type = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
-            type = match.arg(type)
+          function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+            prep = match.arg(prep)
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
             x_test <- df |>
               dplyr::filter(.data[[params@split_col]]) |>
               select(-all_of(cols_to_remove))  |>
-              (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
+              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(x_test))
@@ -158,16 +158,16 @@ setMethod("get_x_test", signature = "preproc_data",
 
 #' @describeIn get_x_all Method for extracting all data (X).
 setMethod("get_x_all", signature = "preproc_data",
-          function(object, type = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
-            type = match.arg(type)
+          function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+            prep = match.arg(prep)
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@target_col, params@split_col)
             x_all <- df |>
               select(-all_of(cols_to_remove)) |>
-              (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
+              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(x_all))
@@ -178,17 +178,17 @@ setMethod("get_x_all", signature = "preproc_data",
 
 #' @describeIn get_y_train Method for extracting training data (Y).
 setMethod("get_y_train", signature = "preproc_data",
-          function(object, type = c("transform", "none", "scale", "both"), as_matrix = TRUE) {
-            type = match.arg(type)
-            #if (type %in% c("both", "scale")) warning("scaling not implemented for y")
+          function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+            prep = match.arg(prep)
+            #if (prep %in% c("both", "scale")) warning("scaling not implemented for y")
             params <- object@params
             df <- object@data
             y_train <- df |>
               dplyr::filter(!.data[[params@split_col]]) |>
               select(all_of(params@target_col)) |>
-              (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
+              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(y_train))
@@ -199,17 +199,17 @@ setMethod("get_y_train", signature = "preproc_data",
 
 #' @describeIn get_y_test Method for extracting test data (Y).
 setMethod("get_y_test", signature = "preproc_data",
-          function(object, type = c("transform", "none", "scale", "both"), as_matrix = TRUE) {
-            type = match.arg(type)
-            #if (type %in% c("both", "scale")) warning("scaling not implemented for y")
+          function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+            prep = match.arg(prep)
+            #if (prep %in% c("both", "scale")) warning("scaling not implemented for y")
             params <- object@params
             df <- object@data
             y_test <- df |>
               dplyr::filter(.data[[params@split_col]]) |>
               select(all_of(params@target_col)) |>
-              (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
+              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(y_test))
@@ -220,16 +220,16 @@ setMethod("get_y_test", signature = "preproc_data",
 
 #' @describeIn get_y_all Method for extracting all data (Y).
 setMethod("get_y_all", signature = "preproc_data",
-          function(object, type = c("transform", "none", "scale", "both"), as_matrix = TRUE) {
-            type = match.arg(type)
-            #if (type %in% c("both", "scale")) warning("scaling not implemented for y")
+          function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+            prep = match.arg(prep)
+            #if (prep %in% c("both", "scale")) warning("scaling not implemented for y")
             params <- object@params
             df <- object@data
             y_all <- df |>
               select(all_of(params@target_col)) |>
-              (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
+              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(y_all))
@@ -241,16 +241,16 @@ setMethod("get_y_all", signature = "preproc_data",
 
 #' @describeIn get_data Method for extracting all data.
 setMethod("get_data", signature = "preproc_data",
-          function(object, type = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
-            type = match.arg(type)
+          function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
+            prep = match.arg(prep)
             params <- object@params
             df <- object@data
             cols_to_remove <- c(params@id_col, params@split_col)
             xy_all <- df |>
               select(-all_of(cols_to_remove)) |>
-              (\(.) if (type %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (type %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (type %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
+              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
 
             # combine transformed/scaled columns with id, target and split
             xy_all <- bind_cols(xy_all, select(df, all_of(cols_to_remove))) |>

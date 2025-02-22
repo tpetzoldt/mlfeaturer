@@ -6,10 +6,10 @@
 #'
 #' @param object An object of class `preproc_data` containing the data subsets.
 #' @param model The fitted model to be evaluated.
-#' @param xtype Character argument if transformed input data ("transform"),
+#' @param xprep Character argument if transformed input data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw x data ("none") are used.
-#' @param ytype Character argument if transformed target values ("transform") or
+#' @param yprep Character argument if transformed target values ("transform") or
 #'  original raw y-values ("none") are used.
 #' @param ... Additional arguments (currently ignored).
 #'
@@ -17,8 +17,8 @@
 #'   Rows represent the metrics (R2, MSE, RMSE, MAE), and columns represent the
 #'   data subsets (all, train, test).
 #'
-#' @details The `xtype` must be exactly the same that was used as input for the
-#'   fitted model, while `ytype` may be "transform" (the scale used for model
+#' @details The `xprep` must be exactly the same that was used as input for the
+#'   fitted model, while `yprep` may be "transform" (the scale used for model
 #'   fitting) or "none", i.e. the original scale.
 #'
 #' @rdname evaluate
@@ -29,24 +29,24 @@ setGeneric("ml_evaluate", function(object, model, ...) standardGeneric("ml_evalu
 #' for a model and a `preproc_data` object.
 setMethod("ml_evaluate", signature(object = "preproc_data"),
           function(object, model,
-                   xtype = c("both", "scale", "transform", "none"),
-                   ytype = c("transform", "none"), ...) {
+                   xprep = c("both", "scale", "transform", "none"),
+                   yprep = c("both", "scale", "transform", "none"), ...) {
 
-            xtype <- match.arg(xtype)
-            ytype <- match.arg(ytype)
+            xprep <- match.arg(xprep)
+            yprep <- match.arg(yprep)
 
             subsets <- c("all", "train", "test")
 
             results_list <- lapply(subsets, function(current_subset) {
               x <- switch(current_subset,
-                          all = get_x_all(object),
-                          train = get_x_train(object),
-                          test = get_x_test(object)
+                          all = get_x_all(object, xprep),
+                          train = get_x_train(object, xprep),
+                          test = get_x_test(object, xprep)
               )
               y <- switch(current_subset,
-                          all = get_y_all(object, ytype),
-                          train = get_y_train(object, ytype),
-                          test = get_y_test(object, ytype)
+                          all = get_y_all(object, yprep),
+                          train = get_y_train(object, yprep),
+                          test = get_y_test(object, yprep)
               )
 
               y_hat <- predict(model, x)
@@ -70,7 +70,7 @@ setMethod("ml_evaluate", signature(object = "preproc_data"),
             results_df <- t(do.call(rbind, results_list))
             colnames(results_df) <- subsets
             rownames(results_df) <- c("R2", "MSE", "RMSE", "MAE", "BIAS")
-            results_df <- as_tibble(results_df, rownames = "metric") |> # Corrected: rownames = "metric"
+            results_df <- as_tibble(results_df, rownames = "metric") |>
               relocate(metric, .before = 1)
 
             return(results_df)

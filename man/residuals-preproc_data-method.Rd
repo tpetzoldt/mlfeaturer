@@ -4,14 +4,24 @@
 \alias{residuals,preproc_data-method}
 \title{Extract Model Residuals Using `preproc_data` Objects}
 \usage{
-\S4method{residuals}{preproc_data}(object, model, type = c("all", "test", "train"), ...)
+\S4method{residuals}{preproc_data}(
+  object,
+  model,
+  subset = c("all", "test", "train"),
+  prep = c("both", "scale", "transform", "none"),
+  ...
+)
 }
 \arguments{
 \item{object}{A `preproc_data` object.}
 
 \item{model}{A fitted model object.}
 
-\item{type}{Subset of the `preproc` data set.}
+\item{subset}{Subset of the `preproc` data set.}
+
+\item{prep}{Character argument if transformed data ("transform"),
+scaled data ("scale" ), transformed and scaled data ("both") or
+original raw data ("none") will be returned.}
 
 \item{...}{Additional arguments (currently not used).}
 }

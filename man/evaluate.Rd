@@ -10,8 +10,8 @@ ml_evaluate(object, model, ...)
 \S4method{ml_evaluate}{preproc_data}(
   object,
   model,
-  xtype = c("both", "scale", "transform", "none"),
-  ytype = c("transform", "none"),
+  xprep = c("both", "scale", "transform", "none"),
+  yprep = c("both", "scale", "transform", "none"),
   ...
 )
 }
@@ -22,11 +22,11 @@ ml_evaluate(object, model, ...)
 
 \item{...}{Additional arguments (currently ignored).}
 
-\item{xtype}{Character argument if transformed input data ("transform"),
+\item{xprep}{Character argument if transformed input data ("transform"),
 scaled data ("scale" ), transformed and scaled data ("both") or
 original raw x data ("none") are used.}
 
-\item{ytype}{Character argument if transformed target values ("transform") or
+\item{yprep}{Character argument if transformed target values ("transform") or
 original raw y-values ("none") are used.}
 }
 \value{
@@ -40,8 +40,8 @@ Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and Mean Absolute
 Error (MAE), for different subsets of data (all, train, and test).
 }
 \details{
-The `xtype` must be exactly the same that was used as input for the
-  fitted model, while `ytype` may be "transform" (the scale used for model
+The `xprep` must be exactly the same that was used as input for the
+  fitted model, while `yprep` may be "transform" (the scale used for model
   fitting) or "none", i.e. the original scale.
 }
 \section{Functions}{
