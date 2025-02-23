@@ -40,9 +40,9 @@ Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and Mean Absolute
 Error (MAE), for different subsets of data (all, train, and test).
 }
 \details{
-The `xprep` must be exactly the same that was used as input for the
-  fitted model, while `yprep` may be "transform" (the scale used for model
-  fitting) or "none", i.e. the original scale.
+The parameters `xprep` and `yprep` must be exactly the same
+  that were used as input and output for the fitted model,
+  Rescaling of `yprep` will be implemented in future versions of the package.
 }
 \section{Functions}{
 \itemize{

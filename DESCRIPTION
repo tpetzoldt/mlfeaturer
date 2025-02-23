@@ -1,8 +1,8 @@
 Package: mlfeaturer
 Type: Package
 Title: Machine Learning Feature Engineering with R
-Version: 0.2
-Date: 2025-02-22
+Version: 0.2.1
+Date: 2025-02-23
 Authors@R: c(person("Thomas","Petzoldt", role = c("aut", "cre"),
                      email = "thomas.petzoldt@tu-dresden.de",
                      comment = c(ORCID = "0000-0002-4951-6468")))
@@ -12,8 +12,8 @@ URL: https://tpetzoldt.github.io/mlfeaturer/
 License: GPL (>= 2)
 Depends: R (>= 4.1.0)
 Imports: dplyr, stats, graphics, utils, methods, tidyr, purrr, lubridate, 
-  knitr, jsonlite, quarto
-Suggests: keras3
+  knitr, jsonlite
+Suggests: keras3, nnet, quarto
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: quarto

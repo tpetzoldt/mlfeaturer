@@ -18,13 +18,14 @@ dt4 <-
 
 
 ## use scaled data for both, x and y
-net <- nnet(get_x_train(dt4), get_y_train(dt4, prep="scale"),
+set.seed(1234)
+net <- nnet(get_x_train(dt4), get_y_train(dt4, prep="both"),
             size=10, maxit=1000, trace=FALSE)
 
 plot(get_y_train(dt4, "both"), predict(net),
      pch = "+", col=as.factor(get_id_train(dt4)[,"species"]))
 
-ml_evaluate(dt4, net)
+ml_evaluate(dt4, net, xtype="both", ytype="both")
 
 # check coefficient of determination
 cat("R^2 (train)=", 1 - var(residuals(net))/var(get_y_train(dt4, "both")), "\n")
