@@ -44,13 +44,13 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">inverse_transform</span><span class="op">(</span><span class="va">object</span>, <span class="va">params</span>, <span class="va">funs</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S4 method for class 'preproc_data,ANY,ANY'</span></span>
+<span><span class="co"># S4 method for class 'feature_data,ANY,ANY'</span></span>
 <span><span class="fu">inverse_transform</span><span class="op">(</span><span class="va">object</span>, <span class="va">params</span>, <span class="va">funs</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S4 method for class 'preproc_data,missing,list'</span></span>
+<span><span class="co"># S4 method for class 'feature_data,missing,list'</span></span>
 <span><span class="fu">inverse_transform</span><span class="op">(</span><span class="va">object</span>, <span class="va">params</span>, <span class="va">funs</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S4 method for class 'data.frame,preproc_params,missing'</span></span>
+<span><span class="co"># S4 method for class 'data.frame,feature_params,missing'</span></span>
 <span><span class="fu">inverse_transform</span><span class="op">(</span><span class="va">object</span>, <span class="va">params</span>, <span class="va">funs</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -59,11 +59,11 @@
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>A `preproc_data` object.</p></dd>
+<dd><p>A `feature_data` object.</p></dd>
 
 
 <dt id="arg-params">params<a class="anchor" aria-label="anchor" href="#arg-params"></a></dt>
-<dd><p>A `preproc_params` object with transformation and scaling parameters</p></dd>
+<dd><p>A `feature_params` object with transformation and scaling parameters</p></dd>
 
 
 <dt id="arg-funs">funs<a class="anchor" aria-label="anchor" href="#arg-funs"></a></dt>
@@ -76,14 +76,14 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A `preproc_data` object or a `data.frame` with the inverse transformed data.</p>
+    <p>A `feature_data` object or a `data.frame` with the inverse transformed data.</p>
     </div>
     <div class="section level2">
     <h2 id="methods-by-class-">Methods (by class)<a class="anchor" aria-label="anchor" href="#methods-by-class-"></a></h2>
 
-<ul><li><p><code>inverse_transform(object = preproc_data, params = ANY, funs = ANY)</code>: Method for inverse transforming data in a `preproc_data` object.</p></li>
-<li><p><code>inverse_transform(object = preproc_data, params = missing, funs = list)</code>: Method for transforming data in a `preproc_data` object and user-defined functions (deprecated).</p></li>
-<li><p><code>inverse_transform(object = data.frame, params = preproc_params, funs = missing)</code>: Method for a `data frame`.</p></li>
+<ul><li><p><code>inverse_transform(object = feature_data, params = ANY, funs = ANY)</code>: Method for inverse transforming data in a `feature_data` object.</p></li>
+<li><p><code>inverse_transform(object = feature_data, params = missing, funs = list)</code>: Method for transforming data in a `feature_data` object and user-defined functions (deprecated).</p></li>
+<li><p><code>inverse_transform(object = data.frame, params = feature_params, funs = missing)</code>: Method for a `data frame`.</p></li>
 </ul></div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
