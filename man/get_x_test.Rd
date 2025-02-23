@@ -2,19 +2,19 @@
 % Please edit documentation in R/get.R
 \name{get_x_test}
 \alias{get_x_test}
-\alias{get_x_test,preproc_data-method}
+\alias{get_x_test,feature_data-method}
 \title{Get Test Data (X)}
 \usage{
 get_x_test(object, ...)
 
-\S4method{get_x_test}{preproc_data}(
+\S4method{get_x_test}{feature_data}(
   object,
   prep = c("both", "scale", "transform", "none"),
   as_matrix = TRUE
 )
 }
 \arguments{
-\item{object}{A `preproc_data` object.}
+\item{object}{A `feature_data` object.}
 
 \item{...}{Additional arguments (currently not used).}
 
@@ -33,6 +33,6 @@ Extracts the test data (X) from the preprocessed data.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{get_x_test(preproc_data)}: Method for extracting test data (X).
+\item \code{get_x_test(feature_data)}: Method for extracting test data (X).
 
 }}

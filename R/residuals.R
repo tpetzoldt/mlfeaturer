@@ -1,8 +1,8 @@
-#' Extract Model Residuals Using `preproc_data` Objects
+#' Extract Model Residuals Using `feature_data` Objects
 #'
-#' Extract residuals from a machine learning model compared to a `preproc_data` object.
+#' Extract residuals from a machine learning model compared to a `feature_data` object.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param model A fitted model object.
 #' @param subset Subset of the `preproc` data set.
 #' @param prep Character argument if transformed data ("transform"),
@@ -16,7 +16,7 @@
 #'
 #'
 #' @export
-setMethod("residuals", signature(object = "preproc_data"),
+setMethod("residuals", signature(object = "feature_data"),
           function(object, model,
 		    subset = c("all", "test", "train"),
 			prep = c("both", "scale", "transform", "none"),	...) {

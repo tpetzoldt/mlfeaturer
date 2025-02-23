@@ -2,35 +2,35 @@
 % Please edit documentation in R/scale_x.R
 \name{scale_x}
 \alias{scale_x}
-\alias{scale_x,preproc_data,missing-method}
-\alias{scale_x,data.frame,preproc_params-method}
+\alias{scale_x,feature_data,missing-method}
+\alias{scale_x,data.frame,feature_params-method}
 \title{Scale Data}
 \usage{
 scale_x(object, params, ...)
 
-\S4method{scale_x}{preproc_data,missing}(object, params, ...)
+\S4method{scale_x}{feature_data,missing}(object, params, ...)
 
-\S4method{scale_x}{data.frame,preproc_params}(object, params, transformed = FALSE, ...)
+\S4method{scale_x}{data.frame,feature_params}(object, params, transformed = FALSE, ...)
 }
 \arguments{
-\item{object}{A `preproc_data` object or a data frame.}
+\item{object}{A `feature_data` object or a data frame.}
 
-\item{params}{n `preproc_params` object with scaling parameters}
+\item{params}{n `feature_params` object with scaling parameters}
 
 \item{...}{Additional arguments (currently not used).}
 
 \item{transformed}{`TRUE` to use parameters of transformed data.}
 }
 \value{
-A `preproc_data` object with the scaled data.
+A `feature_data` object with the scaled data.
 }
 \description{
 Scales the data using the stored parameters.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{scale_x(object = preproc_data, params = missing)}: Method for scaling data in a `preproc_data` object.
+\item \code{scale_x(object = feature_data, params = missing)}: Method for scaling data in a `feature_data` object.
 
-\item \code{scale_x(object = data.frame, params = preproc_params)}: Method for scaling data in a `preproc_data` object.
+\item \code{scale_x(object = data.frame, params = feature_params)}: Method for scaling data in a `feature_data` object.
 
 }}

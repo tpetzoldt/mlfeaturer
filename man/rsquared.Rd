@@ -2,12 +2,12 @@
 % Please edit documentation in R/rsquared.R
 \name{rsquared}
 \alias{rsquared}
-\alias{rsquared,preproc_data-method}
-\title{Nonlinear Coefficient of Determination Using `preproc_data` Objects}
+\alias{rsquared,feature_data-method}
+\title{Nonlinear Coefficient of Determination Using `feature_data` Objects}
 \usage{
 rsquared(object, ...)
 
-\S4method{rsquared}{preproc_data}(
+\S4method{rsquared}{feature_data}(
   object,
   model,
   subset = c("all", "test", "train"),
@@ -16,7 +16,7 @@ rsquared(object, ...)
 )
 }
 \arguments{
-\item{object}{A `preproc_data` object.}
+\item{object}{A `feature_data` object.}
 
 \item{...}{Additional arguments (currently not used).}
 
@@ -33,14 +33,14 @@ The coefficient of determination.
 }
 \description{
 Estimates the nonlinear R2 from a machine learning model compared to a
-  `preproc_data` object.
+  `feature_data` object.
 }
 \details{
 Currently only certain Keras models can be used as fitted models.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{rsquared(preproc_data)}: Method for estimating the coefficient of determination of
-a model for a `preproc_data` object.
+\item \code{rsquared(feature_data)}: Method for estimating the coefficient of determination of
+a model for a `feature_data` object.
 
 }}

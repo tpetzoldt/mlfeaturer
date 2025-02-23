@@ -40,16 +40,16 @@ transformations of `fun_transform`.  These are applied during the
 `inverse_transform` method.}
 }
 \value{
-A `preproc_data` object.
+A `feature_data` object.
 }
 \description{
-Constructs a `preproc_data` object, calculates scaling parameters,
+Constructs a `feature_data` object, calculates scaling parameters,
   and optionally applies initial data transformations.
 }
 \details{
 This function calculates scaling parameters (mean, standard deviation, min, max)
 based on the specified `scale_option` and `scale_method`. It then creates a
-`preproc_data` object, storing the original data and the calculated parameters.
+`feature_data` object, storing the original data and the calculated parameters.
 If `fun_transform` is provided, it applies the specified transformations to
 the data before creating the object.
 

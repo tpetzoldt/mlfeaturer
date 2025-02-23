@@ -2,40 +2,40 @@
 % Please edit documentation in R/inverse_transform.R
 \name{inverse_transform}
 \alias{inverse_transform}
-\alias{inverse_transform,preproc_data,ANY,ANY-method}
-\alias{inverse_transform,preproc_data,missing,list-method}
-\alias{inverse_transform,data.frame,preproc_params,missing-method}
+\alias{inverse_transform,feature_data,ANY,ANY-method}
+\alias{inverse_transform,feature_data,missing,list-method}
+\alias{inverse_transform,data.frame,feature_params,missing-method}
 \title{Inverse Transform Data}
 \usage{
 inverse_transform(object, params, funs, ...)
 
-\S4method{inverse_transform}{preproc_data,ANY,ANY}(object, params, funs, ...)
+\S4method{inverse_transform}{feature_data,ANY,ANY}(object, params, funs, ...)
 
-\S4method{inverse_transform}{preproc_data,missing,list}(object, params, funs, ...)
+\S4method{inverse_transform}{feature_data,missing,list}(object, params, funs, ...)
 
-\S4method{inverse_transform}{data.frame,preproc_params,missing}(object, params, funs, ...)
+\S4method{inverse_transform}{data.frame,feature_params,missing}(object, params, funs, ...)
 }
 \arguments{
-\item{object}{A `preproc_data` object.}
+\item{object}{A `feature_data` object.}
 
-\item{params}{A `preproc_params` object with transformation and scaling parameters}
+\item{params}{A `feature_params` object with transformation and scaling parameters}
 
 \item{funs}{A list of inverse data transformation functions.}
 
 \item{...}{Additional arguments (currently not used).}
 }
 \value{
-A `preproc_data` object or a `data.frame` with the inverse transformed data.
+A `feature_data` object or a `data.frame` with the inverse transformed data.
 }
 \description{
 Applies the inverse transformation to the data.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{inverse_transform(object = preproc_data, params = ANY, funs = ANY)}: Method for inverse transforming data in a `preproc_data` object.
+\item \code{inverse_transform(object = feature_data, params = ANY, funs = ANY)}: Method for inverse transforming data in a `feature_data` object.
 
-\item \code{inverse_transform(object = preproc_data, params = missing, funs = list)}: Method for transforming data in a `preproc_data` object and user-defined functions (deprecated).
+\item \code{inverse_transform(object = feature_data, params = missing, funs = list)}: Method for transforming data in a `feature_data` object and user-defined functions (deprecated).
 
-\item \code{inverse_transform(object = data.frame, params = preproc_params, funs = missing)}: Method for a `data frame`.
+\item \code{inverse_transform(object = data.frame, params = feature_params, funs = missing)}: Method for a `data frame`.
 
 }}

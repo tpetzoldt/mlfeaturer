@@ -1,16 +1,16 @@
-#' Convert preproc_data to a list
+#' Convert feature_data to a list
 #'
-#' Coerces a `preproc_data` object to a `list` object.
+#' Coerces a `feature_data` object to a `list` object.
 #'
-#' @param x A `preproc_data` object.
+#' @param x A `feature_data` object.
 #'
 #' @return A `list` object.
 #'
 #' @export
-setMethod("as.list", signature = "preproc_data",
+setMethod("as.list", signature = "feature_data",
           function(x) {
-            L <- as(x, "preproc_data_list") # Convert to preproc_data_list first
-            # Now convert the preproc_data_list object to a regular list
+            L <- as(x, "feature_data_list") # Convert to feature_data_list first
+            # Now convert the feature_data_list object to a regular list
             list(
               x_train = L@x_train,
               x_test = L@x_test,

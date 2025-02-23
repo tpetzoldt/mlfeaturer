@@ -2,19 +2,19 @@
 % Please edit documentation in R/get.R
 \name{get_data}
 \alias{get_data}
-\alias{get_data,preproc_data-method}
+\alias{get_data,feature_data-method}
 \title{Get All Data (X and Y)}
 \usage{
 get_data(object, ...)
 
-\S4method{get_data}{preproc_data}(
+\S4method{get_data}{feature_data}(
   object,
   prep = c("both", "scale", "transform", "none"),
   as_matrix = TRUE
 )
 }
 \arguments{
-\item{object}{A `preproc_data` object.}
+\item{object}{A `feature_data` object.}
 
 \item{...}{Additional arguments (currently not used).}
 
@@ -33,6 +33,6 @@ Access complete data set from the preprocessed data.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{get_data(preproc_data)}: Method for extracting all data.
+\item \code{get_data(feature_data)}: Method for extracting all data.
 
 }}

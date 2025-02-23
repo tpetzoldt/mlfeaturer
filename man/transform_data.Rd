@@ -2,44 +2,44 @@
 % Please edit documentation in R/transform_data.R
 \name{transform_data}
 \alias{transform_data}
-\alias{transform_data,preproc_data,ANY,ANY-method}
-\alias{transform_data,preproc_data,missing,list-method}
-\alias{transform_data,data.frame,preproc_params,missing-method}
+\alias{transform_data,feature_data,ANY,ANY-method}
+\alias{transform_data,feature_data,missing,list-method}
+\alias{transform_data,data.frame,feature_params,missing-method}
 \alias{transform_data,data.frame,missing,list-method}
 \title{Transform Data}
 \usage{
 transform_data(object, params, funs, ...)
 
-\S4method{transform_data}{preproc_data,ANY,ANY}(object, params, funs, ...)
+\S4method{transform_data}{feature_data,ANY,ANY}(object, params, funs, ...)
 
-\S4method{transform_data}{preproc_data,missing,list}(object, params, funs, ...)
+\S4method{transform_data}{feature_data,missing,list}(object, params, funs, ...)
 
-\S4method{transform_data}{data.frame,preproc_params,missing}(object, params, funs, ...)
+\S4method{transform_data}{data.frame,feature_params,missing}(object, params, funs, ...)
 
 \S4method{transform_data}{data.frame,missing,list}(object, params, funs, ...)
 }
 \arguments{
-\item{object}{A `preproc_data` object or a data frame.}
+\item{object}{A `feature_data` object or a data frame.}
 
-\item{params}{A `preproc_params` object with transformation and scaling parameters}
+\item{params}{A `feature_params` object with transformation and scaling parameters}
 
 \item{funs}{A list of data transformation functions .}
 
 \item{...}{Additional arguments (currently not used).}
 }
 \value{
-A `preproc_data` object or a `data.frame` with the transformed data.
+A `feature_data` object or a `data.frame` with the transformed data.
 }
 \description{
 Transforms the data using the provided functions.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{transform_data(object = preproc_data, params = ANY, funs = ANY)}: Method for transforming data in a `preproc_data` object.
+\item \code{transform_data(object = feature_data, params = ANY, funs = ANY)}: Method for transforming data in a `feature_data` object.
 
-\item \code{transform_data(object = preproc_data, params = missing, funs = list)}: Method for transforming data in a `preproc_data` object and user-defined functions (deprecated).
+\item \code{transform_data(object = feature_data, params = missing, funs = list)}: Method for transforming data in a `feature_data` object and user-defined functions (deprecated).
 
-\item \code{transform_data(object = data.frame, params = preproc_params, funs = missing)}: Method for a `data frame`.
+\item \code{transform_data(object = data.frame, params = feature_params, funs = missing)}: Method for a `data frame`.
 
 \item \code{transform_data(object = data.frame, params = missing, funs = list)}: Method for a `data frame`.
 

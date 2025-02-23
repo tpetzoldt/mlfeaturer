@@ -2,19 +2,19 @@
 % Please edit documentation in R/get.R
 \name{get_x_train}
 \alias{get_x_train}
-\alias{get_x_train,preproc_data-method}
+\alias{get_x_train,feature_data-method}
 \title{Get Training Data (X)}
 \usage{
 get_x_train(object, ...)
 
-\S4method{get_x_train}{preproc_data}(
+\S4method{get_x_train}{feature_data}(
   object,
   prep = c("both", "scale", "transform", "none"),
   as_matrix = TRUE
 )
 }
 \arguments{
-\item{object}{A `preproc_data` object.}
+\item{object}{A `feature_data` object.}
 
 \item{...}{Additional arguments (currently not used).}
 
@@ -33,6 +33,6 @@ Extracts the training data (X) from the preprocessed data.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{get_x_train(preproc_data)}: Method for extracting training data (X).
+\item \code{get_x_train(feature_data)}: Method for extracting training data (X).
 
 }}

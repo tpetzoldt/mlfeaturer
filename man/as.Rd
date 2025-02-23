@@ -2,17 +2,17 @@
 % Please edit documentation in R/setAs.R
 \name{as}
 \alias{as}
-\title{Convert preproc_data to preproc_data_list}
+\title{Convert feature_data to feature_data_list}
 \arguments{
-\item{from}{A `preproc_data` object.}
+\item{from}{A `feature_data` object.}
 }
 \value{
-A `preproc_data_list` object.
+A `feature_data_list` object.
 
 A `list` object.
 }
 \description{
-Coerces a `preproc_data` object to a `preproc_data_list` object.
+Coerces a `feature_data` object to a `feature_data_list` object.
 
-Coerces a `preproc_data` object to a standard R `list` object.
+Coerces a `feature_data` object to a standard R `list` object.
 }

@@ -2,15 +2,15 @@
 % Please edit documentation in R/get_id.R
 \name{get_id_test}
 \alias{get_id_test}
-\alias{get_id_test,preproc_data-method}
+\alias{get_id_test,feature_data-method}
 \title{Get ID Columns for test data}
 \usage{
 get_id_test(object, ...)
 
-\S4method{get_id_test}{preproc_data}(object, as_matrix = TRUE)
+\S4method{get_id_test}{feature_data}(object, as_matrix = TRUE)
 }
 \arguments{
-\item{object}{A `preproc_data` object.}
+\item{object}{A `feature_data` object.}
 
 \item{...}{Additional arguments (currently not used).}
 
@@ -25,6 +25,6 @@ Extracts ID columns (ID) from the preprocessed data.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{get_id_test(preproc_data)}: Method for extracting id columns for the test data
+\item \code{get_id_test(feature_data)}: Method for extracting id columns for the test data
 
 }}

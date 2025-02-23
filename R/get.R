@@ -4,7 +4,7 @@
 #'
 #' @description Extracts the training data (X) from the preprocessed data.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
@@ -20,7 +20,7 @@ setGeneric("get_x_train", function(object, ...) standardGeneric("get_x_train"))
 #'
 #' @description Extracts the test data (X) from the preprocessed data.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
@@ -36,7 +36,7 @@ setGeneric("get_x_test", function(object, ...) standardGeneric("get_x_test"))
 #'
 #' @description Extracts all the data (X) from the preprocessed data.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
@@ -52,7 +52,7 @@ setGeneric("get_x_all", function(object, ...) standardGeneric("get_x_all"))
 #'
 #' @description Extracts the training data (Y) from the preprocessed data.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
@@ -68,7 +68,7 @@ setGeneric("get_y_train", function(object, ...) standardGeneric("get_y_train"))
 #'
 #' @description Extracts the test data (Y) from the preprocessed data.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
@@ -84,7 +84,7 @@ setGeneric("get_y_test", function(object, ...) standardGeneric("get_y_test"))
 #'
 #' @description Extracts all the data (Y) from the preprocessed data.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
@@ -100,7 +100,7 @@ setGeneric("get_y_all", function(object, ...) standardGeneric("get_y_all"))
 #'
 #' @description Access complete data set from the preprocessed data.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param prep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") will be returned.
@@ -114,7 +114,7 @@ setGeneric("get_data", function(object, ...) standardGeneric("get_data"))
 
 
 #' @describeIn get_x_train Method for extracting training data (X).
-setMethod("get_x_train", signature = "preproc_data",
+setMethod("get_x_train", signature = "feature_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
             prep = match.arg(prep)
             params <- object@params
@@ -136,7 +136,7 @@ setMethod("get_x_train", signature = "preproc_data",
           })
 
 #' @describeIn get_x_test Method for extracting test data (X).
-setMethod("get_x_test", signature = "preproc_data",
+setMethod("get_x_test", signature = "feature_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
             prep = match.arg(prep)
             params <- object@params
@@ -157,7 +157,7 @@ setMethod("get_x_test", signature = "preproc_data",
           })
 
 #' @describeIn get_x_all Method for extracting all data (X).
-setMethod("get_x_all", signature = "preproc_data",
+setMethod("get_x_all", signature = "feature_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
             prep = match.arg(prep)
             params <- object@params
@@ -177,7 +177,7 @@ setMethod("get_x_all", signature = "preproc_data",
           })
 
 #' @describeIn get_y_train Method for extracting training data (Y).
-setMethod("get_y_train", signature = "preproc_data",
+setMethod("get_y_train", signature = "feature_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
 
             prep = match.arg(prep)
@@ -198,7 +198,7 @@ setMethod("get_y_train", signature = "preproc_data",
           })
 
 #' @describeIn get_y_test Method for extracting test data (Y).
-setMethod("get_y_test", signature = "preproc_data",
+setMethod("get_y_test", signature = "feature_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
 
             prep = match.arg(prep)
@@ -219,7 +219,7 @@ setMethod("get_y_test", signature = "preproc_data",
           })
 
 #' @describeIn get_y_all Method for extracting all data (Y).
-setMethod("get_y_all", signature = "preproc_data",
+setMethod("get_y_all", signature = "feature_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
             prep = match.arg(prep)
             #if (prep %in% c("both", "scale")) warning("scaling not implemented for y")
@@ -240,7 +240,7 @@ setMethod("get_y_all", signature = "preproc_data",
 
 
 #' @describeIn get_data Method for extracting all data.
-setMethod("get_data", signature = "preproc_data",
+setMethod("get_data", signature = "feature_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
             prep = match.arg(prep)
             params <- object@params

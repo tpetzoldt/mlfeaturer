@@ -1,9 +1,9 @@
-#' Nonlinear Coefficient of Determination Using `preproc_data` Objects
+#' Nonlinear Coefficient of Determination Using `feature_data` Objects
 #'
 #' Estimates the nonlinear R2 from a machine learning model compared to a
-#'   `preproc_data` object.
+#'   `feature_data` object.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param model A fitted model object.
 #' @param subset Subset of the `preproc` data set.
 #' @param prep Character argument if transformed data ("transform"),
@@ -20,8 +20,8 @@
 setGeneric("rsquared", function(object, ...) standardGeneric("rsquared"))
 
 #' @describeIn rsquared Method for estimating the coefficient of determination of
-#'   a model for a `preproc_data` object.
-setMethod("rsquared", signature(object = "preproc_data"),
+#'   a model for a `feature_data` object.
+setMethod("rsquared", signature(object = "feature_data"),
           function(object, model,
 		    subset = c("all", "test", "train"),
 		    prep = c("both", "scale", "transform", "none"), ...) {

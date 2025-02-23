@@ -1,6 +1,6 @@
 #' @title Create Preprocessed Data Object
 #'
-#' @description Constructs a `preproc_data` object, calculates scaling parameters,
+#' @description Constructs a `feature_data` object, calculates scaling parameters,
 #'   and optionally applies initial data transformations.
 #'
 #' @param data A data frame containing the raw data.
@@ -19,12 +19,12 @@
 #'   transformations of `fun_transform`.  These are applied during the
 #'   `inverse_transform` method.
 #'
-#' @return A `preproc_data` object.
+#' @return A `feature_data` object.
 #'
 #' @details
 #' This function calculates scaling parameters (mean, standard deviation, min, max)
 #' based on the specified `scale_option` and `scale_method`. It then creates a
-#' `preproc_data` object, storing the original data and the calculated parameters.
+#' `feature_data` object, storing the original data and the calculated parameters.
 #' If `fun_transform` is provided, it applies the specified transformations to
 #' the data before creating the object.
 #'
@@ -80,7 +80,7 @@ create_preprocessed_data <- function(data, target_col,
   }
 
   if (is.null(split_col)) {
-    if ("split" %in% names(data)) error('Column "split" not set as "split_col".')
+    if ("split" %in% names(data)) stop('Column "split" not set as "split_col".')
     data <- data |>
       mutate(split = sample(c(TRUE, FALSE), n(), replace = TRUE))
     split_col <- "split"
@@ -126,7 +126,7 @@ create_preprocessed_data <- function(data, target_col,
   t_max_vals  <- apply(data_for_scaling, 2, max)
 
 
-  params <- new("preproc_params",
+  params <- new("feature_params",
                 id_col = id_col, target_col = target_col, split_col = split_col,
                 scale_option = scale_option, scale_method = scale_method,
                 mean_vals = mean_vals, sd_vals = sd_vals,
@@ -137,6 +137,6 @@ create_preprocessed_data <- function(data, target_col,
                 fun_transform = fun_transform, fun_inverse = fun_inverse,
                 transformed = FALSE)
 
-  return(new("preproc_data", data = data, params = params))
+  return(new("feature_data", data = data, params = params))
 }
 

@@ -4,7 +4,7 @@
 #' Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and Mean Absolute
 #' Error (MAE), for different subsets of data (all, train, and test).
 #'
-#' @param object An object of class `preproc_data` containing the data subsets.
+#' @param object An object of class `feature_data` containing the data subsets.
 #' @param model The fitted model to be evaluated.
 #' @param xprep Character argument if transformed input data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
@@ -26,8 +26,8 @@
 setGeneric("ml_evaluate", function(object, model, ...) standardGeneric("ml_evaluate"))
 
 #' @describeIn evaluate Method for estimating a set of model evaluation criteria
-#' for a model and a `preproc_data` object.
-setMethod("ml_evaluate", signature(object = "preproc_data"),
+#' for a model and a `feature_data` object.
+setMethod("ml_evaluate", signature(object = "feature_data"),
           function(object, model,
                    xprep = c("both", "scale", "transform", "none"),
                    yprep = c("both", "scale", "transform", "none"), ...) {
@@ -70,7 +70,8 @@ setMethod("ml_evaluate", signature(object = "preproc_data"),
             results_df <- t(do.call(rbind, results_list))
             colnames(results_df) <- subsets
             rownames(results_df) <- c("R2", "MSE", "RMSE", "MAE", "BIAS")
-            results_df <- as_tibble(results_df, rownames = "metric") |>
+            results_df <- as_tibble(results_df) |>
+              rownames_to_column(var = "metric") |>
               relocate(metric, .before = 1)
 
             return(results_df)

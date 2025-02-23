@@ -1,15 +1,15 @@
-#' @title Convert preproc_data to preproc_data_list
+#' @title Convert feature_data to feature_data_list
 #'
-#' @description Coerces a `preproc_data` object to a `preproc_data_list` object.
+#' @description Coerces a `feature_data` object to a `feature_data_list` object.
 #'
-#' @param from A `preproc_data` object.
+#' @param from A `feature_data` object.
 #'
-#' @return A `preproc_data_list` object.
+#' @return A `feature_data_list` object.
 #' @name as
 #' @export
-setAs("preproc_data", "preproc_data_list",
+setAs("feature_data", "feature_data_list",
       function(from) {
-        new("preproc_data_list",
+        new("feature_data_list",
             x_train = get_x_train(from),
             x_test = get_x_test(from),
             x_all = get_x_all(from),
@@ -23,19 +23,19 @@ setAs("preproc_data", "preproc_data_list",
         )
       })
 
-#' @title Convert preproc_data to list
+#' @title Convert feature_data to list
 #'
-#' @description Coerces a `preproc_data` object to a standard R `list` object.
+#' @description Coerces a `feature_data` object to a standard R `list` object.
 #'
-#' @param from A `preproc_data` object.
+#' @param from A `feature_data` object.
 #'
 #' @return A `list` object.
 #' @name as
 #' @export
-setAs("preproc_data", "list", # New coercion method
+setAs("feature_data", "list", # New coercion method
       function(from) {
-        L <- as(from, "preproc_data_list") # Convert to preproc_data_list first
-        # Now convert the preproc_data_list object to a regular list
+        L <- as(from, "feature_data_list") # Convert to feature_data_list first
+        # Now convert the feature_data_list object to a regular list
         list(
           x_train = L@x_train,
           x_test = L@x_test,

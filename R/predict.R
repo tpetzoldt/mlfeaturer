@@ -1,8 +1,8 @@
-#' Model Predictions with `preproc_data` Objects
+#' Model Predictions with `feature_data` Objects
 #'
-#' Makes predictions from a machine learning model with a `preproc_data` object.
+#' Makes predictions from a machine learning model with a `feature_data` object.
 #'
-#' @param object A `preproc_data` object.
+#' @param object A `feature_data` object.
 #' @param model A fitted model object.
 #' @param subset Subset of the `preproc` data set.
 #' @param prep Character argument if transformed data ("transform"),
@@ -16,7 +16,7 @@
 #'
 #'
 #' @export
-setMethod("predict", signature(object = "preproc_data"),
+setMethod("predict", signature(object = "feature_data"),
           function(object, model,
 		    subset = c("all", "test", "train"),
             prep = c("both", "scale", "transform", "none"), ...) {

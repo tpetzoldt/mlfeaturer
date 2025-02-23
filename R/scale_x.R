@@ -2,17 +2,17 @@
 #'
 #' @description Scales the data using the stored parameters.
 #'
-#' @param object A `preproc_data` object or a data frame.
-#' @param params n `preproc_params` object with scaling parameters
+#' @param object A `feature_data` object or a data frame.
+#' @param params n `feature_params` object with scaling parameters
 #' @param transformed `TRUE` to use parameters of transformed data.
 #' @param ... Additional arguments (currently not used).
 #'
-#' @return A `preproc_data` object with the scaled data.
+#' @return A `feature_data` object with the scaled data.
 #' @export
 setGeneric("scale_x", function(object, params, ...) standardGeneric("scale_x"))
 
-#' @describeIn scale_x Method for scaling data in a `preproc_data` object.
-setMethod("scale_x", signature = c(object = "preproc_data", params = "missing"),
+#' @describeIn scale_x Method for scaling data in a `feature_data` object.
+setMethod("scale_x", signature = c(object = "feature_data", params = "missing"),
           function(object, ...) {
             params <- object@params
             df <- object@data
@@ -46,8 +46,8 @@ setMethod("scale_x", signature = c(object = "preproc_data", params = "missing"),
             #return(scaled_df)
           })
 
-#' @describeIn scale_x Method for scaling data in a `preproc_data` object.
-setMethod("scale_x", signature = c(object = "data.frame", params = "preproc_params"),
+#' @describeIn scale_x Method for scaling data in a `feature_data` object.
+setMethod("scale_x", signature = c(object = "data.frame", params = "feature_params"),
           function(object, params, transformed = FALSE, ...) {
             #cat("data frame method \n")
             df <- object

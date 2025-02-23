@@ -2,15 +2,15 @@
 % Please edit documentation in R/set_transformations.R
 \name{set_transformations}
 \alias{set_transformations}
-\alias{set_transformations,preproc_data-method}
+\alias{set_transformations,feature_data-method}
 \title{Set Transformations}
 \usage{
 set_transformations(object, fun_transform = NULL, fun_inverse = NULL)
 
-\S4method{set_transformations}{preproc_data}(object, fun_transform = NULL, fun_inverse = NULL)
+\S4method{set_transformations}{feature_data}(object, fun_transform = NULL, fun_inverse = NULL)
 }
 \arguments{
-\item{object}{A `preproc_data` object.}
+\item{object}{A `feature_data` object.}
 
 \item{fun_transform}{A named list of functions to apply to the data.  T
 he names should correspond to the columns, and the values should be the functions.}
@@ -19,13 +19,13 @@ he names should correspond to the columns, and the values should be the function
 transformations.  The structure should be the same as `fun_transform`.}
 }
 \value{
-A `preproc_data` object with the updated transformation functions.
+A `feature_data` object with the updated transformation functions.
 }
 \description{
-Sets the transformation functions for a `preproc_data` object.
+Sets the transformation functions for a `feature_data` object.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{set_transformations(preproc_data)}: Method for setting transformations in a `preproc_data` object.
+\item \code{set_transformations(feature_data)}: Method for setting transformations in a `feature_data` object.
 
 }}

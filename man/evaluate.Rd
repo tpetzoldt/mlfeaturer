@@ -2,12 +2,12 @@
 % Please edit documentation in R/ml_evaluate.R
 \name{ml_evaluate}
 \alias{ml_evaluate}
-\alias{ml_evaluate,preproc_data-method}
+\alias{ml_evaluate,feature_data-method}
 \title{Evaluates model performance across different data subsets.}
 \usage{
 ml_evaluate(object, model, ...)
 
-\S4method{ml_evaluate}{preproc_data}(
+\S4method{ml_evaluate}{feature_data}(
   object,
   model,
   xprep = c("both", "scale", "transform", "none"),
@@ -16,7 +16,7 @@ ml_evaluate(object, model, ...)
 )
 }
 \arguments{
-\item{object}{An object of class `preproc_data` containing the data subsets.}
+\item{object}{An object of class `feature_data` containing the data subsets.}
 
 \item{model}{The fitted model to be evaluated.}
 
@@ -46,7 +46,7 @@ The `xprep` must be exactly the same that was used as input for the
 }
 \section{Functions}{
 \itemize{
-\item \code{ml_evaluate(preproc_data)}: Method for estimating a set of model evaluation criteria
-for a model and a `preproc_data` object.
+\item \code{ml_evaluate(feature_data)}: Method for estimating a set of model evaluation criteria
+for a model and a `feature_data` object.
 
 }}
