@@ -8,7 +8,8 @@
   object,
   model,
   subset = c("all", "test", "train"),
-  prep = c("both", "scale", "transform", "none"),
+  xprep = c("both", "scale", "transform", "none"),
+  yprep = c("both", "scale", "transform", "none"),
   to_original_scale = FALSE,
   ...
 )
@@ -20,11 +21,11 @@
 
 \item{subset}{Subset of the `preproc` data set.}
 
+\item{...}{Additional arguments (currently not used).}
+
 \item{prep}{Character argument if transformed data ("transform"),
 scaled data ("scale" ), transformed and scaled data ("both") or
 original raw data ("none") will be returned.}
-
-\item{...}{Additional arguments (currently not used).}
 }
 \value{
 A matrix or vector with the predictions.

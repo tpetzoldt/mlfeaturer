@@ -9,7 +9,7 @@
 #' @param split_col Character vector specifying the name of the column used for
 #'   train/test split.
 #' @param scale_option Character string specifying the scaling option.
-#'   Must be one of "train", "test", or "both". Defaults to "train".
+#'   Must be one of "train", "test", or "all". Defaults to "train".
 #' @param scale_method Character string specifying the scaling method.
 #'   Must be one of "zscore" (standardization) or "minmax" (normalization).
 #'   Defaults to "zscore".
@@ -62,7 +62,7 @@
 #' @export
 create_preprocessed_data <- function(data, target_col,
                                      id_col = NULL, split_col = NULL,
-                                     scale_option = c("train", "test", "both"),
+                                     scale_option = c("train", "test", "all"),
                                      scale_method = c("zscore", "minmax", "none"),
                                      fun_transform = NULL, fun_inverse = NULL) {
 
@@ -103,7 +103,7 @@ create_preprocessed_data <- function(data, target_col,
            test =  data |>
              dplyr::filter(!.data[[split_col]]) |>
              select(-all_of(cols_to_remove)),
-           both =  data   |>
+           all =  data   |>
               select(-all_of(cols_to_remove)),
     )
 

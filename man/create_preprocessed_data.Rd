@@ -9,7 +9,7 @@ create_preprocessed_data(
   target_col,
   id_col = NULL,
   split_col = NULL,
-  scale_option = c("train", "test", "both"),
+  scale_option = c("train", "test", "all"),
   scale_method = c("zscore", "minmax", "none"),
   fun_transform = NULL,
   fun_inverse = NULL
@@ -26,7 +26,7 @@ create_preprocessed_data(
 train/test split.}
 
 \item{scale_option}{Character string specifying the scaling option.
-Must be one of "train", "test", or "both". Defaults to "train".}
+Must be one of "train", "test", or "all". Defaults to "train".}
 
 \item{scale_method}{Character string specifying the scaling method.
 Must be one of "zscore" (standardization) or "minmax" (normalization).

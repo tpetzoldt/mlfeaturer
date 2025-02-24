@@ -17,7 +17,7 @@ setClassUnion("list_or_NULL", c("list", "NULL"))
 #' @slot id_col Character vector specifying the name of the ID column.
 #' @slot target_col Character vector specifying the name of the target variable column.
 #' @slot split_col Character vector specifying the name of the column used for train/test split.
-#' @slot scale_option Character string specifying the scaling option ("train", "test", "both").
+#' @slot scale_option Character string specifying the scaling option ("train", "test", "all").
 #' @slot scale_method Character string specifying the scaling method ("scale", "norm").
 #' @slot mean_vals Numeric vector storing the mean values for z-score scaling.
 #' @slot sd_vals Numeric vector storing the standard deviation values for z-score scaling.

@@ -19,15 +19,17 @@
 setMethod("predict", signature(object = "feature_data"),
           function(object, model,
                    subset = c("all", "test", "train"),
-                   # todo: xprep, yprep
-                   prep = c("both", "scale", "transform", "none"),
-                   to_original_scale=FALSE, ...) {
-            subset <- match.arg(subset)
-            prep <- match.arg(prep)
+                   xprep = c("both", "scale", "transform", "none"),
+                   yprep = c("both", "scale", "transform", "none"),
+                   to_original_scale = FALSE, ...) {
+
+                        subset <- match.arg(subset)
+            xprep <- match.arg(xprep)
+            yprep <- match.arg(yprep)
             x <- switch(subset,
-                        all = get_x_all(object, prep = prep),
-                        train = get_x_train(object, prep = prep),
-                        test = get_x_test(object, prep = prep)
+                        all = get_x_all(object, prep = xprep),
+                        train = get_x_train(object, prep = xprep),
+                        test = get_x_test(object, prep = xprep)
             )
 
             # todo: create wrapper for compatibility between model types
@@ -40,9 +42,9 @@ setMethod("predict", signature(object = "feature_data"),
               colnames(ret) <- params@target_col
 
               ret |>
-                (\(.) if (prep %in% c("both")) inv_scale_y(., params, transformed = TRUE) else .)() |>
-                (\(.) if (prep %in% c("scale")) inv_scale_y(., params) else .)() |>
-                (\(.) if (prep %in% c("both", "transform")) inverse_transform(., params) else .)()
+                (\(.) if (yprep %in% c("both")) inv_scale_y(., params, transformed = TRUE) else .)() |>
+                (\(.) if (yprep %in% c("scale")) inv_scale_y(., params) else .)() |>
+                (\(.) if (yprep %in% c("both", "transform")) inverse_transform(., params) else .)()
             }
             return(ret)
           })

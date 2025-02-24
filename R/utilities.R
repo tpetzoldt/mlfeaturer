@@ -33,8 +33,6 @@ inv_scale_y <- function(object, params, transformed = FALSE, ...) {
     max_vals <- params@max_vals
   }
 
-  print(names(object))
-
   scaled_df <- object |>
     mutate(across(everything(),
                   \(.x) {

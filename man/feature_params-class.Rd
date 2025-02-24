@@ -16,7 +16,7 @@ An S4 class to store the parameters used in the preprocessing pipeline.
 
 \item{\code{split_col}}{Character vector specifying the name of the column used for train/test split.}
 
-\item{\code{scale_option}}{Character string specifying the scaling option ("train", "test", "both").}
+\item{\code{scale_option}}{Character string specifying the scaling option ("train", "test", "all").}
 
 \item{\code{scale_method}}{Character string specifying the scaling method ("scale", "norm").}
 
