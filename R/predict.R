@@ -36,12 +36,13 @@ setMethod("predict", signature(object = "feature_data"),
             ret <- predict(model, x)
 
             if (to_original_scale) {
+              cat("to original scale\n")
 
               params <- object@params
               ret <- as.data.frame(ret)
               colnames(ret) <- params@target_col
 
-              ret |>
+              ret <- ret |>
                 (\(.) if (yprep %in% c("both")) inv_scale_y(., params, transformed = TRUE) else .)() |>
                 (\(.) if (yprep %in% c("scale")) inv_scale_y(., params) else .)() |>
                 (\(.) if (yprep %in% c("both", "transform")) inverse_transform(., params) else .)()
