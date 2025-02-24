@@ -5,9 +5,13 @@
 #' @param object A `feature_data` object.
 #' @param model A fitted model object.
 #' @param subset Subset of the `preproc` data set.
-#' @param prep Character argument if transformed data ("transform"),
+#' @param xprep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
-#'  original raw data ("none") will be returned.
+#'  original raw data ("none") are used for x.
+#' @param yprep Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transformed and scaled data ("both") or
+#'  original raw data ("none") are used for y.
+#'
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A matrix or vector with the residuals.
@@ -19,20 +23,25 @@
 setMethod("residuals", signature(object = "feature_data"),
           function(object, model,
                    subset = c("all", "test", "train"),
-                   prep = c("both", "scale", "transform", "none"),	...) {
+                   xprep = c("both", "scale", "transform", "none"),
+                   yprep = c("both", "scale", "transform", "none"),
+                   to_original_scale = FALSE,
+                   as_matrix = TRUE,...) {
 
             subset <- match.arg(subset)
-            prep <- match.arg(prep)
+            xprep <- match.arg(xprep)
+            yprep <- match.arg(yprep)
 
             x <- switch(subset,
-                        all = get_x_all(object),
-                        train = get_x_train(object),
-                        test = get_x_test(object)
+                        all = get_x_all(object, prep = xprep),
+                        train = get_x_train(object, prep = xprep),
+                        test = get_x_test(object, prep = xprep)
             )
             y <- switch(subset,
-                        all = get_y_all(object, prep = prep),
-                        train = get_y_train(object, prep = prep),
-                        test = get_y_test(object, prep = prep)
+                        all = get_y_all(object, prep = yprep),
+                        train = get_y_train(object, prep = yprep),
+                        test = get_y_test(object, prep = yprep)
             )
-            y - predict(model, x)
+            y - predict(model, x, xprep = xprep, yprep = yprep,
+                        to_original_scale = to_original_scale)
           })

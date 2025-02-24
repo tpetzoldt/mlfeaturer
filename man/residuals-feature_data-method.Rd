@@ -8,7 +8,10 @@
   object,
   model,
   subset = c("all", "test", "train"),
-  prep = c("both", "scale", "transform", "none"),
+  xprep = c("both", "scale", "transform", "none"),
+  yprep = c("both", "scale", "transform", "none"),
+  to_original_scale = FALSE,
+  as_matrix = TRUE,
   ...
 )
 }
@@ -19,9 +22,13 @@
 
 \item{subset}{Subset of the `preproc` data set.}
 
-\item{prep}{Character argument if transformed data ("transform"),
+\item{xprep}{Character argument if transformed data ("transform"),
 scaled data ("scale" ), transformed and scaled data ("both") or
-original raw data ("none") will be returned.}
+original raw data ("none") are used for x.}
+
+\item{yprep}{Character argument if transformed data ("transform"),
+scaled data ("scale" ), transformed and scaled data ("both") or
+original raw data ("none") are used for y.}
 
 \item{...}{Additional arguments (currently not used).}
 }

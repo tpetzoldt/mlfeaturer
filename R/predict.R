@@ -5,9 +5,12 @@
 #' @param object A `feature_data` object.
 #' @param model A fitted model object.
 #' @param subset Subset of the `preproc` data set.
-#' @param prep Character argument if transformed data ("transform"),
+#' @param xprep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
-#'  original raw data ("none") will be returned.
+#'  original raw data ("none") are used for x.
+#' @param yprep Character argument if transformed data ("transform"),
+#'  scaled data ("scale" ), transformed and scaled data ("both") or
+#'  original raw data ("none") are used for y.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A matrix or vector with the predictions.
@@ -21,30 +24,35 @@ setMethod("predict", signature(object = "feature_data"),
                    subset = c("all", "test", "train"),
                    xprep = c("both", "scale", "transform", "none"),
                    yprep = c("both", "scale", "transform", "none"),
-                   to_original_scale = FALSE, ...) {
+                   to_original_scale = FALSE,
+                   as_matrix = TRUE, ...) {
 
-                        subset <- match.arg(subset)
+            subset <- match.arg(subset)
             xprep <- match.arg(xprep)
             yprep <- match.arg(yprep)
+            params <- object@params
+
             x <- switch(subset,
-                        all = get_x_all(object, prep = xprep),
+                        all =   get_x_all(object, prep = xprep),
                         train = get_x_train(object, prep = xprep),
-                        test = get_x_test(object, prep = xprep)
+                        test =  get_x_test(object, prep = xprep)
             )
 
             # todo: create wrapper for compatibility between model types
-            ret <- predict(model, x)
+            ret <- predict(model, x) |>
+              as.data.frame()
+            colnames(ret) <- params@target_col
 
             if (to_original_scale) {
-
-              params <- object@params
-              ret <- as.data.frame(ret)
-              colnames(ret) <- params@target_col
-
               ret <- ret |>
-                (\(.) if (yprep %in% c("both")) inverse_scaling(., params, transformed = TRUE) else .)() |>
-                (\(.) if (yprep %in% c("scale")) inverse_scaling(., params) else .)() |>
-                (\(.) if (yprep %in% c("both", "transform")) inverse_transform(., params) else .)()
+                (\(.) if (yprep %in% c("both")) inv_scale_data(., params, transformed = TRUE) else .)() |>
+                (\(.) if (yprep %in% c("scale")) inv_scale_data(., params) else .)() |>
+                (\(.) if (yprep %in% c("both", "transform")) inv_transform_data(., params) else .)()
             }
-            return(ret)
+
+            if (as_matrix) {
+              return(as.matrix(ret))
+            } else {
+              return(ret)
+            }
           })

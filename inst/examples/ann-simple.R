@@ -14,54 +14,55 @@ dt4 <-
   create_preprocessed_data(target_col = "growthrate",
                            id_col = c("species", "no"),
                            scale_method = "minmax",
-                           scale_option = "all") # should be train
+                           scale_option = "train")
 
 
 ## use scaled data for both, x and y
 set.seed(1234)
 net <- nnet(get_x_train(dt4, prep="both"), get_y_train(dt4, prep="both"),
-            size=10, maxit=1000, trace=FALSE)
+            size=8, maxit=1000, trace=FALSE)
 
 plot(get_y_train(dt4, "both"), predict(net),
      pch = "+", col=as.factor(get_id_train(dt4)[,"species"]))
 
+ml_evaluate(dt4, net) # "both" is the default
 ml_evaluate(dt4, net, xprep="both", yprep="both")
 ml_evaluate(dt4, net, xprep="scale", yprep="scale") # same if no transformation
 
-# check coefficient of determination
-cat("R^2 (train)=", 1 - var(residuals(net))/var(get_y_train(dt4, "both")), "\n")
+# check coefficient of determination manually
+cat("R^2 (train)=", 1 - var(residuals(net))/var(get_y_train(dt4)), "\n")
 
 
-# compare mlfeaturer results with default functions
-#cbind(predict(net), predict(dt4, net, subset="train"))
-#cbind(residuals(net), residuals(dt4, net, subset="train"))
-
-y_pred <- predict(dt4, net) |>
+## compare prediction and data in the transformed scale
+y_pred <-
+  predict(dt4, net, xprep="both", yprep="both") |>
   as.data.frame() |>
-  rename(yy = growthrate)
+  # rename column to avoid duplication with original data
+  rename(growthrate_pred = growthrate)
 
-df <- get_data(dt4, prep="scale", as_matrix=FALSE) |>
-  bind_cols(y_pred)
-
-
-
-df |>
+get_data(dt4, prep="both", as_matrix=FALSE) |>
+  bind_cols(y_pred) |>
   ggplot(aes(light, growthrate)) + geom_point() +
-  geom_line(aes(light, yy)) +
+  geom_line(aes(light, growthrate_pred)) +
   facet_grid(species ~ temperature)
 
-y_pred_orig_scale <- predict(dt4, net,
-                             xprep="scale", yprep="scale",
-                             subset="all", to_original_scale = TRUE) |>
-  rename(growthrate_orig = growthrate)
+## compare prediction and data in the original scale
+y_pred_orig_scale <-
+  predict(dt4, net,
+          xprep="both", yprep="both",
+          #subset="all",
+          to_original_scale = TRUE) |>
+  as.data.frame() |>
+  rename(growthrate_pred = growthrate)
 
-df2 <- get_data(dt4, prep="none", as_matrix=FALSE) |>
-  bind_cols(y_pred_orig_scale)
-
-
-df2 |>
+get_data(dt4, prep="none", as_matrix=FALSE) |>
+  bind_cols(y_pred_orig_scale) |>
   ggplot(aes(light, growthrate)) + geom_point() +
-  geom_line(aes(light, growthrate_orig)) +
+  geom_line(aes(light, growthrate_pred)) +
   facet_grid(species ~ temperature)
 
+
+plot(predict(dt4, net), residuals(dt4, net))
+
+plot(predict(dt4, net, to_original_scale=TRUE), residuals(dt4, net))
 

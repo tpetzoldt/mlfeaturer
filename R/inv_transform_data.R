@@ -9,16 +9,16 @@
 #' @param ... Additional arguments (currently not used).
 #'
 #' @export
-setGeneric("inverse_transform", function(object, params, funs, ...) standardGeneric("inverse_transform"))
+setGeneric("inv_transform_data", function(object, params, funs, ...) standardGeneric("inv_transform_data"))
 
 
-#' @describeIn inverse_transform Method for inverse transforming data in a `feature_data` object.
-setMethod("inverse_transform", signature = c(object = "feature_data"),
+#' @describeIn inv_transform_data Method for inverse transforming data in a `feature_data` object.
+setMethod("inv_transform_data", signature = c(object = "feature_data"),
           function(object, ...) {
             if (object@params@transformed) {
               df <- object@data
               funs <- object@params@fun_inverse
-              if (is.null(funs)) warning("Inverse transformations not available")
+              #if (is.null(funs)) warning("Inverse transformations not available")
               for (col in intersect(names(df), names(funs))) {
                 df <- df |>
                   mutate(across(all_of(col), .fns = funs[[col]]))
@@ -26,7 +26,7 @@ setMethod("inverse_transform", signature = c(object = "feature_data"),
               object@data <- df
               object@params@transformed <- FALSE
             } else {
-              warning("No inverse transformation. Object was not transformed.")
+              #warning("No inverse transformation. Object was not transformed.")
             }
             # mark inverse transformed object with NA to avoid further transformations
             object@params@transformed <- NA
@@ -34,11 +34,11 @@ setMethod("inverse_transform", signature = c(object = "feature_data"),
           })
 
 
-#' @describeIn inverse_transform Method for transforming data in a `feature_data` object and user-defined functions (deprecated).
-setMethod("inverse_transform", signature = c(object = "feature_data", funs = "list", params = "missing"),
+#' @describeIn inv_transform_data Method for transforming data in a `feature_data` object and user-defined functions (deprecated).
+setMethod("inv_transform_data", signature = c(object = "feature_data", funs = "list", params = "missing"),
           function(object, funs, ...) {
             df <- object@data
-            if (is.null(funs)) warning("Inverse transformations not available")
+            #if (is.null(funs)) warning("Inverse transformations not available")
             for (col in intersect(names(df), names(funs))) {
               df <- df |>
                 mutate(across(all_of(col), .fns = funs[[col]]))
@@ -48,12 +48,12 @@ setMethod("inverse_transform", signature = c(object = "feature_data", funs = "li
             return(object)
           })
 
-#' @describeIn inverse_transform Method for a `data frame`.
-setMethod("inverse_transform", signature = c(object = "data.frame", funs="missing", params="feature_params"),
+#' @describeIn inv_transform_data Method for a `data frame`.
+setMethod("inv_transform_data", signature = c(object = "data.frame", funs="missing", params="feature_params"),
           function(object, params, ...) {
             df <- object
             funs <- params@fun_inverse
-            if (is.null(funs)) warning("Inverse transformations not available")
+            #if (is.null(funs)) warning("Inverse transformations not available")
             for (col in intersect(names(df), names(funs))) {
               df <- df |>
                 mutate(across(all_of(col), .fns = funs[[col]]))

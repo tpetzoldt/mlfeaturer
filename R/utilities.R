@@ -17,7 +17,7 @@ inv_scale <- function(x, center, scale) {
   center + x * scale
 }
 
-inverse_scaling <- function(object, params, transformed = FALSE, ...) {
+inv_scale_data <- function(object, params, transformed = FALSE, ...) {
 
   if (transformed) {
     # use transformed scaling parameters
