@@ -9,10 +9,10 @@
 #'
 #' @return A `feature_data` object with the scaled data.
 #' @export
-setGeneric("scale_x", function(object, params, ...) standardGeneric("scale_x"))
+setGeneric("scale_cols", function(object, params, ...) standardGeneric("scale_cols"))
 
-#' @describeIn scale_x Method for scaling data in a `feature_data` object.
-setMethod("scale_x", signature = c(object = "feature_data", params = "missing"),
+#' @describeIn scale_cols Method for scaling data in a `feature_data` object.
+setMethod("scale_cols", signature = c(object = "feature_data", params = "missing"),
           function(object, ...) {
             params <- object@params
             df <- object@data
@@ -46,8 +46,8 @@ setMethod("scale_x", signature = c(object = "feature_data", params = "missing"),
             #return(scaled_df)
           })
 
-#' @describeIn scale_x Method for scaling data in a `feature_data` object.
-setMethod("scale_x", signature = c(object = "data.frame", params = "feature_params"),
+#' @describeIn scale_cols Method for scaling data in a `feature_data` object.
+setMethod("scale_cols", signature = c(object = "data.frame", params = "feature_params"),
           function(object, params, transformed = FALSE, ...) {
             #cat("data frame method \n")
             df <- object

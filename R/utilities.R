@@ -10,7 +10,7 @@ minmax <- function(x, xmin, xmax) {
 
 
 inv_minmax <- function(x, xmin, xmax) {
-  x * (xmax - xmin) + xmin
+  xmin + x * (xmax - xmin)
 }
 
 inv_scale <- function(x, center, scale) {
@@ -18,7 +18,6 @@ inv_scale <- function(x, center, scale) {
 }
 
 inv_scale_y <- function(object, params, transformed = FALSE, ...) {
-  df <- object
 
   if (transformed) {
     # use transformed scaling parameters
@@ -34,7 +33,9 @@ inv_scale_y <- function(object, params, transformed = FALSE, ...) {
     max_vals <- params@max_vals
   }
 
-  scaled_df <- df |>
+  print(names(object))
+
+  scaled_df <- object |>
     mutate(across(everything(),
                   \(.x) {
                     if (params@scale_method == "zscore") {

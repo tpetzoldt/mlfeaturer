@@ -31,7 +31,7 @@ Collate:
     'predict.R'
     'residuals.R'
     'rsquared.R'
-    'scale_x.R'
+    'scale_cols.R'
     'setAs.R'
     'set_transformations.R'
     'transform_data.R'

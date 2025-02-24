@@ -125,8 +125,8 @@ setMethod("get_x_train", signature = "feature_data",
               dplyr::filter(!.data[[params@split_col]]) |>
               select(-all_of(cols_to_remove)) |>
               (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("scale")) scale_cols(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_cols(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(x_train))
@@ -146,8 +146,8 @@ setMethod("get_x_test", signature = "feature_data",
               dplyr::filter(.data[[params@split_col]]) |>
               select(-all_of(cols_to_remove))  |>
               (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("scale")) scale_cols(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_cols(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(x_test))
@@ -166,8 +166,8 @@ setMethod("get_x_all", signature = "feature_data",
             x_all <- df |>
               select(-all_of(cols_to_remove)) |>
               (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("scale")) scale_cols(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_cols(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(x_all))
@@ -187,8 +187,8 @@ setMethod("get_y_train", signature = "feature_data",
               dplyr::filter(!.data[[params@split_col]]) |>
               select(all_of(params@target_col)) |>
               (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("scale")) scale_cols(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_cols(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(y_train))
@@ -208,8 +208,8 @@ setMethod("get_y_test", signature = "feature_data",
               dplyr::filter(.data[[params@split_col]]) |>
               select(all_of(params@target_col)) |>
               (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("scale")) scale_cols(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_cols(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(y_test))
@@ -228,8 +228,8 @@ setMethod("get_y_all", signature = "feature_data",
             y_all <- df |>
               select(all_of(params@target_col)) |>
               (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("scale")) scale_cols(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_cols(., params, transformed = TRUE) else .)()
 
             if (as_matrix) {
               return(as.matrix(y_all))
@@ -249,8 +249,8 @@ setMethod("get_data", signature = "feature_data",
             xy_all <- df |>
               select(-all_of(cols_to_remove)) |>
               (\(.) if (prep %in% c("both", "transform")) transform_data(., params) else .)() |>
-              (\(.) if (prep %in% c("scale")) scale_x(., params) else .)() |>
-              (\(.) if (prep %in% c("both")) scale_x(., params, transformed = TRUE) else .)()
+              (\(.) if (prep %in% c("scale")) scale_cols(., params) else .)() |>
+              (\(.) if (prep %in% c("both")) scale_cols(., params, transformed = TRUE) else .)()
 
             # combine transformed/scaled columns with id, target and split
             xy_all <- bind_cols(xy_all, select(df, all_of(cols_to_remove))) |>

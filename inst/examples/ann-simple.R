@@ -32,32 +32,37 @@ cat("R^2 (train)=", 1 - var(residuals(net))/var(get_y_train(dt4, "both")), "\n")
 
 
 # compare mlfeaturer results with default functions
-cbind(predict(net), predict(dt4, net, subset="train"))
-cbind(residuals(net), residuals(dt4, net, subset="train"))
+#cbind(predict(net), predict(dt4, net, subset="train"))
+#cbind(residuals(net), residuals(dt4, net, subset="train"))
 
-y_pred <- predict(dt4, net)
+y_pred <- predict(dt4, net) |>
+  as.data.frame() |>
+  rename(yy = growthrate)
 
-pred <- tibble(y_pred = y_pred)
-df <- get_data(dt4, prep="scale", as_matrix=FALSE)
+df <- get_data(dt4, prep="scale", as_matrix=FALSE) |>
+  bind_cols(y_pred)
 
 
-df <- cbind(pred, df)
 
 df |>
   ggplot(aes(light, growthrate)) + geom_point() +
-  geom_line(aes(light, y_pred)) +
+  geom_line(aes(light, yy)) +
   facet_grid(species ~ temperature)
+
+
 
 y_pred_orig_scale <- predict(dt4, net,
                              prep = "scale", subset = "all",
-                             to_original_scale = TRUE)
+                             to_original_scale = TRUE) |>
+  rename(yyy = growthrate)
 
-df2 <- get_data(dt4, prep="none", as_matrix=FALSE) |>
-  select(-growthrate) |>
+df2 <- get_data(dt4, prep="scale", as_matrix=FALSE) |>
   bind_cols(y_pred_orig_scale)
+
 
 df2 |>
   ggplot(aes(light, growthrate)) + geom_point() +
-  geom_line(aes(light, y_pred)) +
+  geom_line(aes(light, yyy)) +
   facet_grid(species ~ temperature)
+
 
