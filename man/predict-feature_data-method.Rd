@@ -9,6 +9,7 @@
   model,
   subset = c("all", "test", "train"),
   prep = c("both", "scale", "transform", "none"),
+  to_original_scale = FALSE,
   ...
 )
 }

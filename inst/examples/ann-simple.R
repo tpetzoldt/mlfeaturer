@@ -48,20 +48,13 @@ df |>
   geom_line(aes(light, y_pred)) +
   facet_grid(species ~ temperature)
 
-## todo: implement invscale method
+y_pred_orig_scale <- predict(dt4, net,
+                             prep = "scale", subset = "all",
+                             to_original_scale = TRUE)
 
-## test code, generalize this ....
-invscale <- function(x, center, scale) {
-  center + x * scale
-}
-
-y_pred2 <- data.frame(y_pred = unname(invscale(predict(dt4, net),
-                    dt4@params@min_vals["growthrate"],
-                    dt4@params@max_vals["growthrate"])))
-
-df2 <- get_data(dt4, prep="none", as_matrix=FALSE)
-
-df2 <- cbind(y_pred2, df2)
+df2 <- get_data(dt4, prep="none", as_matrix=FALSE) |>
+  select(-growthrate) |>
+  bind_cols(y_pred_orig_scale)
 
 df2 |>
   ggplot(aes(light, growthrate)) + geom_point() +
