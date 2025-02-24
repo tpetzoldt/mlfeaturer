@@ -50,7 +50,7 @@
 <span>  <span class="va">target_col</span>,</span>
 <span>  id_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  scale_option <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"train"</span>, <span class="st">"test"</span>, <span class="st">"both"</span><span class="op">)</span>,</span>
+<span>  scale_option <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"train"</span>, <span class="st">"test"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
 <span>  scale_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"zscore"</span>, <span class="st">"minmax"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  fun_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fun_inverse <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -80,7 +80,7 @@ train/test split.</p></dd>
 
 <dt id="arg-scale-option">scale_option<a class="anchor" aria-label="anchor" href="#arg-scale-option"></a></dt>
 <dd><p>Character string specifying the scaling option.
-Must be one of "train", "test", or "both". Defaults to "train".</p></dd>
+Must be one of "train", "test", or "all". Defaults to "train".</p></dd>
 
 
 <dt id="arg-scale-method">scale_method<a class="anchor" aria-label="anchor" href="#arg-scale-method"></a></dt>
@@ -212,12 +212,12 @@ the data before creating the object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (y) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sqrt(5 + y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5608be341ab8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x564b349563d8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $z</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (z) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> z^2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5608be341ab8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x564b349563d8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slot "fun_inverse":</span>
@@ -227,7 +227,7 @@ the data before creating the object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (y) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> y^2 - 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5608be341ab8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x564b349563d8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $z</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x)  .Primitive("sqrt")</span>

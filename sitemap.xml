@@ -25,13 +25,13 @@
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/get_y_test.html</loc></url>
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/get_y_train.html</loc></url>
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/index.html</loc></url>
-<url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/inverse_transform.html</loc></url>
+<url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/inv_transform_data.html</loc></url>
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/list_or_NULL-class.html</loc></url>
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/mlfeaturer-package.html</loc></url>
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/predict-feature_data-method.html</loc></url>
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/residuals-feature_data-method.html</loc></url>
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/rsquared.html</loc></url>
-<url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/scale_x.html</loc></url>
+<url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/scale_data.html</loc></url>
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/set_transformations.html</loc></url>
 <url><loc>https://tpetzoldt.github.io/mlfeaturer/reference/transform_data.html</loc></url>
 </urlset>
