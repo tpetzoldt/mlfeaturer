@@ -14,7 +14,7 @@ dt4 <-
   create_preprocessed_data(target_col = "growthrate",
                            id_col = c("species", "no"),
                            scale_method = "minmax",
-                           scale_option = "all")
+                           scale_option = "all") # should be train
 
 
 ## use scaled data for both, x and y
@@ -25,7 +25,8 @@ net <- nnet(get_x_train(dt4, prep="both"), get_y_train(dt4, prep="both"),
 plot(get_y_train(dt4, "both"), predict(net),
      pch = "+", col=as.factor(get_id_train(dt4)[,"species"]))
 
-ml_evaluate(dt4, net, xtype="both", ytype="both")
+ml_evaluate(dt4, net, xprep="both", yprep="both")
+ml_evaluate(dt4, net, xprep="scale", yprep="scale") # same if no transformation
 
 # check coefficient of determination
 cat("R^2 (train)=", 1 - var(residuals(net))/var(get_y_train(dt4, "both")), "\n")
@@ -49,19 +50,10 @@ df |>
   geom_line(aes(light, yy)) +
   facet_grid(species ~ temperature)
 
-
-y_pred_orig_scale <- mlfeaturer:::inv_minmax(y_pred,
-                                            dt4@params@min_vals["growthrate"],
-                                            dt4@params@max_vals["growthrate"])
-
-
-tmp <- predict(dt4, net, xprep="both", yprep="both", subset="all")
-
-
-#y_pred_orig_scale <- predict(dt4, net,
-#                             prep = "scale", subset = "all",
-#                             to_original_scale = TRUE) |>
-#  rename(yyy = growthrate)
+y_pred_orig_scale <- predict(dt4, net,
+                             xprep="scale", yprep="scale",
+                             subset="all", to_original_scale = TRUE) |>
+  rename(growthrate_orig = growthrate)
 
 df2 <- get_data(dt4, prep="none", as_matrix=FALSE) |>
   bind_cols(y_pred_orig_scale)
@@ -69,7 +61,7 @@ df2 <- get_data(dt4, prep="none", as_matrix=FALSE) |>
 
 df2 |>
   ggplot(aes(light, growthrate)) + geom_point() +
-  geom_line(aes(light, yy)) +
+  geom_line(aes(light, growthrate_orig)) +
   facet_grid(species ~ temperature)
 
 
