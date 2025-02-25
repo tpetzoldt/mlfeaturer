@@ -30,6 +30,12 @@ original raw data ("none") are used for x.}
 scaled data ("scale" ), transformed and scaled data ("both") or
 original raw data ("none") are used for y.}
 
+\item{to_original_scale}{Logical value to force re-transformation of
+predictions to the original scale.}
+
+\item{as_matrix}{logical TRUE if the function should return matrix,
+or a data frame or tibble otherwise.}
+
 \item{...}{Additional arguments (currently not used).}
 }
 \value{

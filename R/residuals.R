@@ -11,7 +11,10 @@
 #' @param yprep Character argument if transformed data ("transform"),
 #'  scaled data ("scale" ), transformed and scaled data ("both") or
 #'  original raw data ("none") are used for y.
-#'
+#' @param to_original_scale Logical value to force re-transformation of
+#'   predictions to the original scale.
+#' @param as_matrix logical TRUE if the function should return matrix,
+#'   or a data frame or tibble otherwise.
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return A matrix or vector with the residuals.

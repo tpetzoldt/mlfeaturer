@@ -1,17 +1,18 @@
 ---
-title: "Neural Networks with nnet"
+title: "Neural Networks with mlfeaturer and nnet"
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
 bibliography: bib.bib
 vignette: >
-  %\VignetteIndexEntry{Neural Networks with nnet}
+  %\VignetteIndexEntry{Neural Networks with mlfeaturer and nnet}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
 
 ```{r opts, echo = FALSE, message = FALSE}
-library("dplyr")
+## make the example reproducible
+set.seed(1234)
 ```
 
 
@@ -32,10 +33,185 @@ Package installation
 To install the package, first install **remotes** from CRAN. Then install 
 **mlfeatures** from Github:
 
-```
+```{r eval=FALSE}
 remotes::install_.packages_github("https://github.com/tpetzoldt/mlfeaturer")
 ```
 
+And then load the required packages:
+
+```{r}
+library("mlfeaturer")
+library("dplyr")
+library("ggplot2")
+library("nnet")
+```
+
+
+
+Prepare data
+============
+
+Here we set up an object `dt4` with the data and the preprocessing machinery.
+Before creating this object with `create_preprocessed_data` we first add some
+additional columns. As the species names are nominal data, i.e. a character column, 
+that are not directly supported by **nnet**, we convert it into so-called 
+"dummy variables", four rows containing 0 or 1:
+
+
+```{r}
+## phytoplankton growth rate data set
+data(dauta4)
+
+spec_dummy <- 
+  model.matrix(~ species - 1, dauta4) |>
+  as.data.frame()
+head(spec_dummy)
+```
+
+
+The original species column and an additional `no` column are declared as 
+id-columns (`id_cols`) that are not used as input and output, but can be used to 
+identify the observations afterwards.
+
+Then we create a `split` vector that assigns about 60% of the data randomly to 
+the training set and 40% to the test set. 
+
+The `growthrate` column is used as target (`y`) variable and the others as inputs.
+
+For the **nnet** package, input and output data need to be scaled to the 
+interval $[0, 1]$, so we use scale method `minmax` with parameters `min`and 
+`max` that are derived from all data, while for other machine learning applications,
+the scaling parameters are usually derived from the training set only.
+
+
+```{r}
+dt4 <-
+  dauta4 |>
+  bind_cols(spec_dummy) |>                     # add columns of dummy variables
+  mutate(no = 1:n(),
+         split = sample(c(TRUE, FALSE), n(),   # create random split column
+                        prob = c(0.6, 0.4), replace = TRUE)) |>
+  create_preprocessed_data(target_col = "growthrate",
+                           id_col = c("species", "no"),
+                           split_col = "split",
+                           scale_method = "minmax",
+                           scale_option = "all" # min/max from complete data set
+  )
+```
+
+Fit a neural network
+====================
+
+To fit a neural network with 8 neurons, we can access the required data subsets 
+using `get_`-functions. In the case below, the data are split according to the split-column
+and automatically scaled according to the scaling method `minmax` defined above:
+
+```{r}
+net <- nnet(get_x_train(dt4), get_y_train(dt4),
+            size = 8, maxit = 200, trace = FALSE)
+```
+
+Evaluate the network
+====================
+
+To check whether the training was successful, we can compare the original 
+(scaled) data with the scaled model outputs. Here we use the standard method
+`predict` from the **nnet** package:
+
+<!-- todo: add also test data -->
+
+```{r}
+plot(get_y_train(dt4), 
+     predict(net),
+     pch = "+")
+```
+
+Function `ml_evaluate` can then be used to calculate a standard set of 
+evaluation metrics.
+
+```{r}
+ml_evaluate(dt4, net) # default is to use scaled data
+```
+
+We can of course also calculate metrics "manually", e.g. the coefficient of 
+determination for comparison:
+
+```{r}
+paste("R^2 (train) =", 1 - var(residuals(net))/var(get_y_train(dt4)))
+```
+
+We can also check the residuals for remaining patterns:
+
+
+```{r}
+plot(predict(dt4, net), residuals(dt4, net), col = factor(get_data(dt4)[, "split"]))
+```
+
+Here we use functions `predict` and `residuals` from the **mlfeaturer** package 
+that, in contrast to the default `predict` and `residuals`-functions have the
+preprocessed data object `dt4` at the first position to support pipelining of 
+the data. In the function call above, the complete data set from `dt4` is used,
+the training set in black and the test set in red. We can see poor performance
+for the test set, especially at high values, that may probably result of the
+sub-optimal random splitting strategy.
+
+<!--
+plot(predict(dt4, net, to_original_scale=TRUE), residuals(dt4, net))
+--->
+
+
+Graphical comparison of the results
+===================================
+
+```{r}
+y_pred <-
+  predict(dt4, net) |>
+  as.data.frame() |>
+  # rename column to avoid duplication with original data
+  rename(growthrate_pred = growthrate)
+```
+
+```{r}
+get_data(dt4) |>
+  as.data.frame() |>
+  bind_cols(y_pred) |>
+  ggplot(aes(light, growthrate)) + geom_point() +
+  geom_line(aes(light, growthrate_pred)) +
+  facet_grid(species ~ temperature)
+```
+
+So far, neural network training and model evaluation occurred in the transformed 
+scales (in our case minmax for both, x and y). In this case, we can re-transform
+the predictions with the optional argument `to_original_scale` and compare it
+with the original y-data by switching off preprocessing with `prep = "none"`.
+
+
+```{r}
+y_pred_orig_scale <-
+  predict(dt4, net,
+          to_original_scale = TRUE) |>
+  as.data.frame() |>
+  rename(growthrate_pred = growthrate)
+
+get_data(dt4, prep = "none") |>
+  as_data_frame() |>
+  bind_cols(y_pred_orig_scale) |>
+  ggplot(aes(light, growthrate)) + geom_point() +
+  geom_line(aes(light, growthrate_pred)) +
+  facet_grid(species ~ temperature)
+```
+
+The results shown, are just for demonstration purposes and can surely be improved, 
+e.g. by increasing the number of epochs, by trying multiple fits, by applying more intelligent splitting (e.g. 
+stratified instead of random), by cross-validation, or by using another machine learning 
+framework.
+
+
+<!--
+plot(predict(dt4, net), residuals(dt4, net))
+
+plot(predict(dt4, net, to_original_scale=TRUE), residuals(dt4, net))
+--->
 
 
 

@@ -6,11 +6,17 @@ library("ggplot2")
 ## phytoplankton growth rate data set
 data(dauta4)
 
-## scale data, no transformation
+
+## convert factor with species to rows of dummy variables
+spec_dummy <-
+  model.matrix(~ species - 1, dauta4) |>
+  as.data.frame()
+
+
 dt4 <-
   dauta4 |>
-  mutate(species_code = as.numeric(species),
-         no=1:n()) |>
+  bind_cols(spec_dummy) |>
+  mutate(no=1:n()) |>
   create_preprocessed_data(target_col = "growthrate",
                            id_col = c("species", "no"),
                            scale_method = "minmax",
