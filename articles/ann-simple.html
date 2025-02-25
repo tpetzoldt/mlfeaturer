@@ -83,30 +83,15 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://tpetzoldt.github.io/mlfeaturer/">"mlfeaturer"</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">"nnet"</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="prepare-data">Prepare data<a class="anchor" aria-label="anchor" href="#prepare-data"></a>
 </h2>
 <p>Here we set up an object <code>dt4</code> with the data and the preprocessing machinery. Before creating this object with <code>create_preprocessed_data</code> we first add some additional columns. As the species names are nominal data, i.e. a character column, that are not directly supported by <strong>nnet</strong>, we convert it into so-called “dummy variables”, four rows containing 0 or 1:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## phytoplankton growth rate data set</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dauta4</span><span class="op">)</span></span>
 <span></span>
@@ -129,7 +114,7 @@ Attaching package: 'dplyr'</code></pre>
 <p>The <code>growthrate</code> column is used as target (<code>y</code>) variable and the others as inputs.</p>
 <p>For the <strong>nnet</strong> package, input and output data need to be scaled to the interval <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[0, 1]</annotation></semantics></math>, so we use scale method <code>minmax</code> with parameters <code>min</code>and <code>max</code> that are derived from all data, while for other machine learning applications, the scaling parameters are usually derived from the training set only.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dt4</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">dauta4</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">spec_dummy</span><span class="op">)</span> <span class="op">|&gt;</span>                     <span class="co"># add columns of dummy variables</span></span>
@@ -147,7 +132,7 @@ Attaching package: 'dplyr'</code></pre>
 </h2>
 <p>To fit a neural network with 8 neurons, we can access the required data subsets using <code>get_</code>-functions. In the case below, the data are split according to the split-column and automatically scaled according to the scaling method <code>minmax</code> defined above:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_x_train.html">get_x_train</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span>, <span class="fu"><a href="../reference/get_y_train.html">get_y_train</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span>,</span>
 <span>            size <span class="op">=</span> <span class="fl">8</span>, maxit <span class="op">=</span> <span class="fl">200</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -156,7 +141,7 @@ Attaching package: 'dplyr'</code></pre>
 <p>To check whether the training was successful, we can compare the original (scaled) data with the scaled model outputs. Here we use the standard method <code>predict</code> from the <strong>nnet</strong> package:</p>
 <!-- todo: add also test data -->
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_y_train.html">get_y_train</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span>, </span>
 <span>     <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>,</span>
 <span>     pch <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span></span></code></pre></div>
@@ -169,7 +154,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>Function <code>ml_evaluate</code> can then be used to calculate a standard set of evaluation metrics.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate.html">ml_evaluate</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span><span class="op">)</span> <span class="co"># default is to use scaled data</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
@@ -184,7 +169,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>We can of course also calculate metrics “manually”, e.g. the coefficient of determination for comparison:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"R^2 (train) ="</span>, <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_y_train.html">get_y_train</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "R^2 (train) = 0.969164040334653"</code></pre>
@@ -192,7 +177,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <p>We can also check the residuals for remaining patterns:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span><span class="op">)</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_data.html">get_data</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span><span class="op">[</span>, <span class="st">"split"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
@@ -208,7 +193,7 @@ plot(predict(dt4, net, to_original_scale=TRUE), residuals(dt4, net))
 </section><section class="section level2"><h2 id="graphical-comparison-of-the-results">Graphical comparison of the results<a class="anchor" aria-label="anchor" href="#graphical-comparison-of-the-results"></a>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y_pred</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -216,7 +201,7 @@ plot(predict(dt4, net, to_original_scale=TRUE), residuals(dt4, net))
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>growthrate_pred <span class="op">=</span> <span class="va">growthrate</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_data.html">get_data</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">y_pred</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -232,7 +217,7 @@ plot(predict(dt4, net, to_original_scale=TRUE), residuals(dt4, net))
 </div>
 <p>So far, neural network training and model evaluation occurred in the transformed scales (in our case minmax for both, x and y). In this case, we can re-transform the predictions with the optional argument <code>to_original_scale</code> and compare it with the original y-data by switching off preprocessing with <code>prep = "none"</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y_pred_orig_scale</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span>,</span>
 <span>          to_original_scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
