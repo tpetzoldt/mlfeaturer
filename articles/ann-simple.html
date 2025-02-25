@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Neural Networks with nnet • mlfeaturer</title>
+<title>Neural Networks with mlfeaturer and nnet • mlfeaturer</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="ann-simple_files/libs/quarto-html/popper.min.js"></script><script src="ann-simple_files/libs/quarto-html/tippy.umd.min.js"></script><link href="ann-simple_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="ann-simple_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Neural Networks with nnet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Neural Networks with mlfeaturer and nnet">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mlfeaturer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/ann-simple.html">Neural Networks with nnet</a></li>
+<li><a class="dropdown-item" href="../articles/ann-simple.html">Neural Networks with mlfeaturer and nnet</a></li>
     <li><a class="dropdown-item" href="../articles/Introduction.html">Transformation of Features with Package mlfeaturer</a></li>
   </ul>
 </li>
@@ -53,10 +53,10 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Neural Networks with nnet</h1>
+      <h1>Neural Networks with mlfeaturer and nnet</h1>
 
       <p class="author">Thomas Petzoldt</p>
-      <p class="date">2025-02-24</p>
+      <p class="date">2025-02-25</p>
 
 
       <div class="d-none name"><code></code></div>
@@ -75,7 +75,194 @@
 </section><section class="section level2"><h2 id="package-installation">Package installation<a class="anchor" aria-label="anchor" href="#package-installation"></a>
 </h2>
 <p>To install the package, first install <strong>remotes</strong> from CRAN. Then install <strong>mlfeatures</strong> from Github:</p>
-<pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_.packages_github</span><span class="op">(</span><span class="st">"https://github.com/tpetzoldt/mlfeaturer"</span><span class="op">)</span></span></code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_.packages_github</span><span class="op">(</span><span class="st">"https://github.com/tpetzoldt/mlfeaturer"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<p>And then load the required packages:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://tpetzoldt.github.io/mlfeaturer/">"mlfeaturer"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">"nnet"</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+</section><section class="section level2"><h2 id="prepare-data">Prepare data<a class="anchor" aria-label="anchor" href="#prepare-data"></a>
+</h2>
+<p>Here we set up an object <code>dt4</code> with the data and the preprocessing machinery. Before creating this object with <code>create_preprocessed_data</code> we first add some additional columns. As the species names are nominal data, i.e. a character column, that are not directly supported by <strong>nnet</strong>, we convert it into so-called “dummy variables”, four rows containing 0 or 1:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## phytoplankton growth rate data set</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dauta4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">spec_dummy</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="va">species</span> <span class="op">-</span> <span class="fl">1</span>, <span class="va">dauta4</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">spec_dummy</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  speciesChlorella speciesFragilaria speciesStaurastrum speciesSynechocystis
+1                1                 0                  0                    0
+2                1                 0                  0                    0
+3                1                 0                  0                    0
+4                1                 0                  0                    0
+5                1                 0                  0                    0
+6                1                 0                  0                    0</code></pre>
+</div>
+</div>
+<p>The original species column and an additional <code>no</code> column are declared as id-columns (<code>id_cols</code>) that are not used as input and output, but can be used to identify the observations afterwards.</p>
+<p>Then we create a <code>split</code> vector that assigns about 60% of the data randomly to the training set and 40% to the test set.</p>
+<p>The <code>growthrate</code> column is used as target (<code>y</code>) variable and the others as inputs.</p>
+<p>For the <strong>nnet</strong> package, input and output data need to be scaled to the interval <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[0, 1]</annotation></semantics></math>, so we use scale method <code>minmax</code> with parameters <code>min</code>and <code>max</code> that are derived from all data, while for other machine learning applications, the scaling parameters are usually derived from the training set only.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dt4</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">dauta4</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">spec_dummy</span><span class="op">)</span> <span class="op">|&gt;</span>                     <span class="co"># add columns of dummy variables</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>no <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>         split <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>,   <span class="co"># create random split column</span></span>
+<span>                        prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">0.4</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/create_preprocessed_data.html">create_preprocessed_data</a></span><span class="op">(</span>target_col <span class="op">=</span> <span class="st">"growthrate"</span>,</span>
+<span>                           id_col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"no"</span><span class="op">)</span>,</span>
+<span>                           split_col <span class="op">=</span> <span class="st">"split"</span>,</span>
+<span>                           scale_method <span class="op">=</span> <span class="st">"minmax"</span>,</span>
+<span>                           scale_option <span class="op">=</span> <span class="st">"all"</span> <span class="co"># min/max from complete data set</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+</div>
+</section><section class="section level2"><h2 id="fit-a-neural-network">Fit a neural network<a class="anchor" aria-label="anchor" href="#fit-a-neural-network"></a>
+</h2>
+<p>To fit a neural network with 8 neurons, we can access the required data subsets using <code>get_</code>-functions. In the case below, the data are split according to the split-column and automatically scaled according to the scaling method <code>minmax</code> defined above:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_x_train.html">get_x_train</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span>, <span class="fu"><a href="../reference/get_y_train.html">get_y_train</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span>,</span>
+<span>            size <span class="op">=</span> <span class="fl">8</span>, maxit <span class="op">=</span> <span class="fl">200</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</div>
+</section><section class="section level2"><h2 id="evaluate-the-network">Evaluate the network<a class="anchor" aria-label="anchor" href="#evaluate-the-network"></a>
+</h2>
+<p>To check whether the training was successful, we can compare the original (scaled) data with the scaled model outputs. Here we use the standard method <code>predict</code> from the <strong>nnet</strong> package:</p>
+<!-- todo: add also test data -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_y_train.html">get_y_train</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span>, </span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>,</span>
+<span>     pch <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="ann-simple_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Function <code>ml_evaluate</code> can then be used to calculate a standard set of evaluation metrics.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/evaluate.html">ml_evaluate</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span><span class="op">)</span> <span class="co"># default is to use scaled data</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  metrics train               test               all
+  &lt;chr&gt;   &lt;chr&gt;               &lt;chr&gt;              &lt;chr&gt;
+1 R2      0.969164040334653   0.694730304047481  0.810535429705921
+2 MSE     0.00237812881808903 0.019137223670471  0.0132004225419519
+3 RMSE    0.0487660621548329  0.138337354573777  0.114893091793858
+4 MAE     0.0354220561680988  0.102759300830686  0.0789055167435704
+5 BIAS    0.00124145884313852 0.0252304049446036 0.0167324756983281</code></pre>
+</div>
+</div>
+<p>We can of course also calculate metrics “manually”, e.g. the coefficient of determination for comparison:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"R^2 (train) ="</span>, <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_y_train.html">get_y_train</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "R^2 (train) = 0.969164040334653"</code></pre>
+</div>
+</div>
+<p>We can also check the residuals for remaining patterns:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span><span class="op">)</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_data.html">get_data</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span><span class="op">[</span>, <span class="st">"split"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="ann-simple_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here we use functions <code>predict</code> and <code>residuals</code> from the <strong>mlfeaturer</strong> package that, in contrast to the default <code>predict</code> and <code>residuals</code>-functions have the preprocessed data object <code>dt4</code> at the first position to support pipelining of the data. In the function call above, the complete data set from <code>dt4</code> is used, the training set in black and the test set in red. We can see poor performance for the test set, especially at high values, that may probably result of the sub-optimal random splitting strategy.</p>
+<!--
+plot(predict(dt4, net, to_original_scale=TRUE), residuals(dt4, net))
+--->
+</section><section class="section level2"><h2 id="graphical-comparison-of-the-results">Graphical comparison of the results<a class="anchor" aria-label="anchor" href="#graphical-comparison-of-the-results"></a>
+</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">y_pred</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># rename column to avoid duplication with original data</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>growthrate_pred <span class="op">=</span> <span class="va">growthrate</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_data.html">get_data</a></span><span class="op">(</span><span class="va">dt4</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">y_pred</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">light</span>, <span class="va">growthrate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">light</span>, <span class="va">growthrate_pred</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="va">temperature</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="ann-simple_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So far, neural network training and model evaluation occurred in the transformed scales (in our case minmax for both, x and y). In this case, we can re-transform the predictions with the optional argument <code>to_original_scale</code> and compare it with the original y-data by switching off preprocessing with <code>prep = "none"</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">y_pred_orig_scale</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">dt4</span>, <span class="va">net</span>,</span>
+<span>          to_original_scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>growthrate_pred <span class="op">=</span> <span class="va">growthrate</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/get_data.html">get_data</a></span><span class="op">(</span><span class="va">dt4</span>, prep <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/deprecated.html" class="external-link">as_data_frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">y_pred_orig_scale</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">light</span>, <span class="va">growthrate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">light</span>, <span class="va">growthrate_pred</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="va">temperature</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `as_data_frame()` was deprecated in tibble 2.0.0.
+ℹ Please use `as_tibble()` (with slightly different semantics) to convert to a
+  tibble, or `as.data.frame()` to convert to a data frame.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="ann-simple_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The results shown, are just for demonstration purposes and can surely be improved, e.g. by increasing the number of epochs, by trying multiple fits, by applying more intelligent splitting (e.g.  stratified instead of random), by cross-validation, or by using another machine learning framework.</p>
+<!--
+plot(predict(dt4, net), residuals(dt4, net))
+
+plot(predict(dt4, net, to_original_scale=TRUE), residuals(dt4, net))
+--->
 </section><section class="section level2"><h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
 </h2>
 <p>Many thanks to the R Core Team <span class="citation" data-cites="RCore2024">(<a href="#ref-RCore2024" role="doc-biblioref">R Core Team 2024</a>)</span> for developing and maintaining <strong>R</strong>. This documentation was written using <strong>knitr</strong> <span class="citation" data-cites="knitr">(<a href="#ref-knitr" role="doc-biblioref">Xie 2024</a>)</span> and <strong>rmarkdown</strong> <span class="citation" data-cites="rmarkdown">(<a href="#ref-rmarkdown" role="doc-biblioref">Allaire et al. 2024</a>)</span>.</p>
