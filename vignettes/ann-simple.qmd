@@ -11,6 +11,8 @@ vignette: >
 
 
 ```{r opts, echo = FALSE, message = FALSE}
+## preload it to suppress messages
+library("dplyr")
 ## make the example reproducible
 set.seed(1234)
 ```
