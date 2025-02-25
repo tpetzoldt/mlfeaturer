@@ -32,6 +32,7 @@ Collate:
     'residuals.R'
     'rsquared.R'
     'scale_data.R'
+    'select_and_transform.R'
     'setAs.R'
     'set_transformations.R'
     'transform_data.R'

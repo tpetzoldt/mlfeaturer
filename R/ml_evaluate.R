@@ -37,6 +37,7 @@ setMethod("ml_evaluate", signature(object = "feature_data"),
 
             calc_metrics <- function(x, y) {
               y_hat <- predict(model, x)
+
               ## todo: implement inverse transformation
               residuals <- y - y_hat
 
