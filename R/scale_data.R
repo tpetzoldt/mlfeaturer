@@ -43,7 +43,6 @@ setMethod("scale_data", signature = c(object = "feature_data", params = "missing
 
             object@data <- scaled_df
             return(object)
-            #return(scaled_df)
           })
 
 #' @describeIn scale_data Method for scaling data in a `feature_data` object.

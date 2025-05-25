@@ -16,7 +16,7 @@ spec_dummy <-
 dt4 <-
   dauta4 |>
   bind_cols(spec_dummy) |>
-  mutate(no=1:n()) |>
+  mutate(no = seq_len(n())) |>
   create_preprocessed_data(target_col = "growthrate",
                            id_col = c("species", "no"),
                            scale_method = "minmax",

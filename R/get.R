@@ -159,7 +159,7 @@ setMethod("get_x_all", signature = "feature_data",
 setMethod("get_y_train", signature = "feature_data",
           function(object, prep = c("both", "scale", "transform", "none"), as_matrix = TRUE) {
 
-            prep = match.arg(prep)
+            prep <- match.arg(prep)
             params <- object@params
             df <- object@data
             y_train <- df |>

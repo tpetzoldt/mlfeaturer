@@ -75,7 +75,7 @@ create_preprocessed_data <- function(data, target_col,
   if (is.null(id_col)) {
     if ("id" %in% names(data)) stop('Column "id" not set as "id_col".')
     data <- data |>
-      mutate(id = 1:n())
+      mutate(id = seq_len(n()))
     id_col <- "id"
   }
 
